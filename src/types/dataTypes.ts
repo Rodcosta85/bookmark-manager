@@ -1,4 +1,4 @@
-export interface DataProps {
+export interface DataTypes {
     id: string,
     title: string,
     url: string,
