@@ -1,11 +1,11 @@
 import useBookmarks from '../hooks/useBookmark'
 import avatar from './../assets/Avatar.png'
 
-interface profDropProps {
-    handleSlider: (e: React.ChangeEvent<HTMLInputElement>) => void
-}
+// interface profDropProps {
+//     handleSlider: (e: React.ChangeEvent<HTMLInputElement>) => void
+// }
 
-const ProfileDropdown: React.FC<profDropProps> = ({ handleSlider }) => {
+const ProfileDropdown = ({  }) => {
 
     const { sliderTheme, currentTheme } = useBookmarks()
 
@@ -47,9 +47,7 @@ const ProfileDropdown: React.FC<profDropProps> = ({ handleSlider }) => {
                     rounded-4
                     bg-white'>
                        <img src={`${currentTheme.moon}`} alt="a moon icon" className='w-3.5 h-3.5' /> 
-                    </button>
-                    
-                    
+                    </button>   
                 </div>
             </div>
             <div className='flex justify-start items-center gap-150

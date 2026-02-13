@@ -1,6 +1,8 @@
 export interface ThemeTypes {
     mode: 'light' | 'dark'
     bg: string,
+    secondaryBg: string,
+    terciaryBg: string,
     logo: string,
     headerText: string,
     paragraphOne: string,
@@ -14,4 +16,10 @@ export interface ThemeTypes {
     iconTheme: string
     iconLogout: string,
     iconCopy: string,
+    iconClose: string,
+    iconThreeDots: string
+    iconEye: string,
+    iconClock: string,
+    iconCalendar: string,
+    iconPin: string
 }

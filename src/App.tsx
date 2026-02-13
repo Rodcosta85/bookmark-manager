@@ -1,58 +1,24 @@
-import { useEffect } from "react"
+// import { useEffect } from "react"
 import useBookmarks from "./hooks/useBookmark"
-import type { DataTypes } from "./types/dataTypes"
-import themes from './styles/styles'
+// import type { DataTypes } from "./types/dataTypes"
+// import themes from './styles/styles'
 import ProfileDropdown from "./components/ProfileDropdown"
+import InputComp from "./components/InputComp"
+import TextareaComp from "./components/TextareaComp"
+import AddBookmark from "./components/AddBookmark"
+import MappedCard from "./components/mappedCard"
 
 function App() {
 
-  const { data, sliderTheme, currentTheme, setData, setSliderTheme, setCurrentTheme } = useBookmarks()
-
-  const handleSlider = (e: React.ChangeEvent<HTMLButtonElement>) => {
-    setSliderTheme(parseInt(e.target.value));
-  }
-
-  const detectColorScheme = () => {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 2; // Dark theme
-    } else {
-      return 1; // Light theme
-    }
-  };
-
-  useEffect(() => {
-    const initialTheme = detectColorScheme();
-    setSliderTheme(initialTheme);
-    setCurrentTheme(themes[initialTheme - 1]);
-
-    const colorSchemeListener = (e: MediaQueryListEvent) => {
-      const newTheme = e.matches ? 2 : 1;
-      setSliderTheme(newTheme);
-      setCurrentTheme(themes[newTheme - 1]);
-    };
-
-    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', colorSchemeListener);
-
-    return () => {
-      window.matchMedia('(prefers-color-scheme: dark)').removeEventListener('change', colorSchemeListener);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (sliderTheme === 1) {
-      setCurrentTheme(themes[0]);
-      console.log('slider on position 0')
-      // light
-    } else if (sliderTheme === 2) {
-      setCurrentTheme(themes[1]);
-      console.log('slider on position 1')
-      // dark
-    }
-  }, [sliderTheme])
+  // const { data, sliderTheme, currentTheme, setData, setSliderTheme, setCurrentTheme } = useBookmarks()
 
   return (
-    <div className="font-manrope">
-      <ProfileDropdown handleSlider={handleSlider} />
+    <div className="font-manrope flex flex-col gap-8 p-8">
+      <ProfileDropdown  />
+      <InputComp label="" />
+      <TextareaComp label="" />
+      <AddBookmark />
+      <MappedCard />
     </div>
   )
 }

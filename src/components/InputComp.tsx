@@ -1,11 +1,15 @@
 import magGlass from './../assets/icon-search.svg'
 
-const InputComp = () => {
+interface inputCompProps {
+  label: string
+}
+
+const InputComp: React.FC<inputCompProps> = ({ label }) => {
 
 
   return (
     <div className="flex flex-col gap-1.5 text-preset-4">
-      <p>Label do input</p>
+      <p className="text-light-neutral-900">{label}</p>
       <div className='flex justify-start items-center gap-100 
       p-150 rounded-8 
       border border-light-neutral-500
