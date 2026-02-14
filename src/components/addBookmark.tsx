@@ -1,6 +1,6 @@
 import useBookmarks from "../hooks/useBookmark"
-import InputComp from "./InputComp"
-import TextareaComp from "./TextareaComp"
+import InputComp from "./inputComp"
+import TextareaComp from "./textareaComp"
 
 const AddBookmark = () => {
 

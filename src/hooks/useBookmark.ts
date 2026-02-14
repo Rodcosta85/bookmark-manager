@@ -1,10 +1,11 @@
 import { create } from 'zustand'
+import data from './../data.json'
 import type { DataTypes } from '../types/dataTypes'
 import type { ThemeTypes } from '../types/themeTypes'
 import themes from './../styles/styles'
 
 interface BookmarkStates {
-    data: DataTypes[],
+    bookmarks: DataTypes[],
     sliderTheme: number,
     sidebar: boolean, // mobile only
     profileDropdown: boolean,
@@ -15,9 +16,8 @@ interface BookmarkStates {
     currentTheme: ThemeTypes,
     limit: boolean
 
-    setData: (data: DataTypes[]) => void,
     setSliderTheme: (slider: number) => void,
-    setSideBar: () => void, // mobile only
+    setSidebar: () => void, // mobile only
     setProfileDropdown: () => void,
     setSearchBar: (searchBar: string) => void,
     setInputs: (inputs: string) => void,
@@ -28,7 +28,7 @@ interface BookmarkStates {
 }
 
 const useBookmarks = create<BookmarkStates>((set) => ({
-    data: [] as DataTypes[],
+    bookmarks: data as DataTypes[],
     sliderTheme: 1,
     sidebar: false, // mobile only
     profileDropdown: false,
@@ -39,9 +39,8 @@ const useBookmarks = create<BookmarkStates>((set) => ({
     currentTheme: themes[0],
     limit: false,
 
-    setData: (data: DataTypes[]) => set({ data }),
     setSliderTheme: () => set({}),
-    setSideBar: () => set({ sidebar: true }), // mobile only
+    setSidebar: () => set((state) => ({ sidebar: !state.sidebar })), // mobile only
     setProfileDropdown: () => set({ profileDropdown: true }),
     setSearchBar: (newValue: string) => set({ searchBar: newValue }),
     setInputs: (newValue: string) => set({ inputs: newValue }),

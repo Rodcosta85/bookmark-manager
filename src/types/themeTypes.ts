@@ -22,4 +22,6 @@ export interface ThemeTypes {
     iconClock: string,
     iconCalendar: string,
     iconPin: string
+    iconArchive: string,
+    iconHome: string
 }

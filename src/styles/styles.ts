@@ -24,6 +24,10 @@ import lightClock from './../assets/icon-clock.svg'
 import darkClock from './../assets/icon-clock-dark.svg'
 import lightCalendarIcon from './../assets/icon-calendar.svg'
 import darkCalendarIcon from './../assets/icon-calendar-dark.svg'
+import lightArchive from './../assets/icon-archive.svg'
+import darkArchive from './../assets/icon-archive-dark.svg'
+import lightHome from './../assets/icon-home.svg'
+import darkHome from './../assets/icon-home-dark.svg'
 
 
 
@@ -51,7 +55,9 @@ const themes: ThemeTypes[] = [
         iconEye: lightEyeIcon,
         iconClock: lightClock,
         iconCalendar: lightCalendarIcon,
-        iconPin: lightPinIcon
+        iconPin: lightPinIcon,
+        iconArchive: lightArchive,
+        iconHome: lightHome
     },
     {
         mode: 'dark',
@@ -76,7 +82,9 @@ const themes: ThemeTypes[] = [
         iconEye: darkEyeIcon,
         iconClock: darkClock,
         iconCalendar: darkCalendarIcon,
-        iconPin: darkPinIcon
+        iconPin: darkPinIcon,
+        iconArchive: darkArchive,
+        iconHome: darkHome
     }
 ]
 
