@@ -9,33 +9,59 @@ import TextareaComp from "./components/textareaComp"
 import AddBookmark from "./components/addBookmark"
 import MappedCard from "./components/mappedCard"
 import SidebarComp from "./components/sidebarComp"
+import SortBy from './components/sortBy'
 
 function App() {
 
-  const { sidebar, setSidebar } = useBookmarks()
+  const { sidebar, sortDropdown, setSidebar, setCardDropdown, setSortDropdown } = useBookmarks()
 
   const handleSideBar = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
     setSidebar()
   }
 
+  const handleCardDropdown = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    setCardDropdown
+  }
+
+  const handleSortDropdown = (e: MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    setSortDropdown()
+  }
+
+
+
+
   return (
     <div className="font-manrope flex flex-col gap-8 p-8 relative">
+
       <ProfileDropdown />
       <InputComp label="" />
       <TextareaComp label="" />
       <AddBookmark />
-      <MappedCard />
+      <MappedCard handleCardDropdown={handleCardDropdown} />
       <button
         onClick={handleSideBar}
         type="button"
-        className="cursor-pointer">
+        className="w-fit cursor-pointer">
         OPEN SIDE BAR
       </button>
       {sidebar ?
         <SidebarComp handleSidebar={handleSideBar} />
         :
         null
+      }
+      <div className="relative w-fit">
+        <button
+          onClick={handleSortDropdown}
+          type="button"
+          className="w-fit cursor-pointer">OPEN SORT BY</button>
+      </div>
+      {sortDropdown ?
+      <SortBy />
+      :
+      null
       }
     </div>
   )

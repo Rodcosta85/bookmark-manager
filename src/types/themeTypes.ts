@@ -24,4 +24,7 @@ export interface ThemeTypes {
     iconPin: string
     iconArchive: string,
     iconHome: string
+    iconVisit: string,
+    iconEdit: string,
+    iconCheck: string
 }

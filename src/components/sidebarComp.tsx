@@ -7,7 +7,7 @@ interface sidebarProps {
 
 const SidebarComp: React.FC<sidebarProps> = ({ handleSidebar }) => {
 
-    const { bookmarks, currentTheme } = useBookmarks()
+    const { bookmarks, contentType, currentTheme, setHomeArchived } = useBookmarks()
 
     const allTags = bookmarks.flatMap(item => item.tags);
     console.log(allTags);
@@ -38,7 +38,7 @@ const SidebarComp: React.FC<sidebarProps> = ({ handleSidebar }) => {
                         type="button"
                         onClick={handleSidebar}
                         className="cursor-pointer">
-                        <img src={`${currentTheme.iconClose}`} alt="" />
+                        <img src={currentTheme.iconClose} alt="" />
                     </button>
                 </div>
                 {/* img + btn */}
@@ -47,21 +47,25 @@ const SidebarComp: React.FC<sidebarProps> = ({ handleSidebar }) => {
 
                     {/* home + archived */}
                     <div>
-                        <button className="flex justify-start items-center gap-150
+                        <button 
+                        onClick={() => setHomeArchived('home')}
+                        className={`flex justify-start items-center gap-150
                         w-full pl-150 pr-150 pt-100 pb-100
                         rounded-6
-                        bg-light-neutral-100
+                        ${contentType === 'home' ? 'bg-light-neutral-100' : 'bg-transparent transtion-colors durantion-200 ease-in-out'}
                         text-preset-3 text-light-neutral-900
-                        cursor-pointer">
+                        cursor-pointer`}>
                             <img src={`${currentTheme.iconHome}`} alt="" />
                             Home
                         </button>
-                        <button className="flex justify-start items-center gap-150
+                        <button 
+                        onClick={() => setHomeArchived('archived')}
+                        className={`flex justify-start items-center gap-150
                         w-full pl-150 pr-150 pt-100 pb-100
                         rounded-6
-                        bg-light-neutral-100
+                        ${contentType === 'archived' ? 'bg-light-neutral-100' : 'bg-transparent transition-colors durantion-200 ease-in-out'}
                         text-preset-3 text-light-neutral-900
-                        cursor-pointer">
+                        cursor-pointer`}>
                             <img src={`${currentTheme.iconArchive}`} alt="" />
                             Archived
                         </button>
@@ -93,7 +97,14 @@ const SidebarComp: React.FC<sidebarProps> = ({ handleSidebar }) => {
                                     </div>
                                     {/* checkbox + label */}
 
-                                    <p>{elementCount[item]}</p>
+                                    <p className="pt-025 pb-025 pl-100 pr-100
+                                    rounded-full 
+                                    bg-light-neutral-100
+                                    border border-light-neutral-300
+                                    text-center text-preset-5 text-light-neutral-800
+                                    ">
+                                        {elementCount[item]}
+                                    </p>
                                 </div>
                             ))}
                             {/* checkbox/label + numero de ocorrencias */}

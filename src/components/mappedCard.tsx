@@ -1,12 +1,15 @@
 import useBookmarks from "../hooks/useBookmark"
 import Tag from "./tag"
 import FreeCodeCamp from './../assets/favicon-freecodecamp.png'
+import DropdownMappedCard from "./dropdownMappedCard"
 
+interface MappedCardProps {
+    handleCardDropdown: (e: any) => void
+}
 
+const MappedCard: React.FC<MappedCardProps> = ({ handleCardDropdown }) => {
 
-const MappedCard = () => {
-
-    const { currentTheme } = useBookmarks()
+    const { currentTheme, cardDropdown } = useBookmarks()
 
     return (
         <div className="flex flex-col
@@ -34,21 +37,31 @@ const MappedCard = () => {
                         </div>
                     </div>
 
-                    <button className="flex justify-center items-center
-                    w-8 h-8
-                    rounded-8
-                    border border-light-neutral-400
-                    cursor-pointer
-                    ">
-                        <img src={`${currentTheme.iconThreeDots}`} alt="" />
-                    </button>
+                    <div className="relative flex flex-col items-end">
+                        <button
+                            className={`flex justify-center items-center
+                            w-8 h-8
+                            rounded-8
+                            border ${cardDropdown ? 'border-2 border-teal-700' : 'border-light-neutral-400'}
+                            cursor-pointer`}
+                            onClick={handleCardDropdown}
+                        >
+                            <img src={`${currentTheme.iconThreeDots}`} alt="" />
+                        </button>
+                        {cardDropdown ?
+                        <DropdownMappedCard />
+                        :
+                        null
+                        }
+                    </div>
+
                 </div>
                 {/* imagem, titulos e tres pontos */}
                 <p className="text-preset-4-medium text-light-neutral-800">Improve your front-end coding skills by building real projects. Solve real-world HTML, CSS and JavaScript challenges whilst working to professional designs.</p>
                 <div className="flex flex-wrap gap-100">
-                    <Tag label="Practice"/>
-                    <Tag label="Learning"/>
-                    <Tag label="Community"/>
+                    <Tag label="Practice" />
+                    <Tag label="Learning" />
+                    <Tag label="Community" />
                 </div>
             </div>
 
@@ -72,9 +85,9 @@ const MappedCard = () => {
                     </div>
                 </div>
                 <button className="cursor-pointer">
-                   <img src={`${currentTheme.iconPin}`} alt="" /> 
+                    <img src={`${currentTheme.iconPin}`} alt="" />
                 </button>
-                
+
             </div>
             {/* infos + pin */}
         </div>

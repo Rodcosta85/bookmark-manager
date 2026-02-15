@@ -1,6 +1,8 @@
 import useBookmarks from "../hooks/useBookmark"
 import InputComp from "./inputComp"
 import TextareaComp from "./textareaComp"
+import GreenButton from "./Buttons/greenButton"
+import BorderButton from './Buttons/borderButton'
 
 const AddBookmark = () => {
 
@@ -38,8 +40,8 @@ const AddBookmark = () => {
                 <InputComp label="Tags *" />
             </form>
             <div className="flex justify-end gap-200">
-                <button className="pt-3 pb-3 pl-4 pr-4 rounded-8 border border-light-neutral-400 text-light-neutral-900 cursor-pointer">Cancel</button>
-                <button className="pt-3 pb-3 pl-4 pr-4 rounded-8 bg-teal-700 text-white cursor-pointer">Save Bookmark</button>
+                <BorderButton label="Cancel" />
+                <GreenButton label="Save Bookmark"/>
             </div>
         </div>
     )

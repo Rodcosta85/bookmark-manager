@@ -28,6 +28,12 @@ import lightArchive from './../assets/icon-archive.svg'
 import darkArchive from './../assets/icon-archive-dark.svg'
 import lightHome from './../assets/icon-home.svg'
 import darkHome from './../assets/icon-home-dark.svg'
+import lightVisit from './../assets/icon-visit.svg'
+import darkVisit from './../assets/icon-visit-dark.svg'
+import lightEdit from './../assets/icon-edit.svg'
+import darkEdit from './../assets/icon-edit-dark.svg'
+import lightCheck from './../assets/icon-check.svg' 
+import darkCheck from './../assets/icon-check-dark.svg'
 
 
 
@@ -57,7 +63,10 @@ const themes: ThemeTypes[] = [
         iconCalendar: lightCalendarIcon,
         iconPin: lightPinIcon,
         iconArchive: lightArchive,
-        iconHome: lightHome
+        iconHome: lightHome,
+        iconVisit: lightVisit,
+        iconEdit: lightEdit,
+        iconCheck: lightCheck,
     },
     {
         mode: 'dark',
@@ -84,7 +93,10 @@ const themes: ThemeTypes[] = [
         iconCalendar: darkCalendarIcon,
         iconPin: darkPinIcon,
         iconArchive: darkArchive,
-        iconHome: darkHome
+        iconHome: darkHome,
+        iconVisit: darkVisit,
+        iconEdit: darkEdit,
+        iconCheck: darkCheck
     }
 ]
 
