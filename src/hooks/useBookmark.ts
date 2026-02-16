@@ -7,10 +7,11 @@ import themes from './../styles/styles'
 // modal de "sort by"
 type SortType = 'recently_added' | 'recently_visited' | 'most_visited'
 type HomeArchived = 'home' | 'archived'
+type themeChanger = typeof themes[number]
 
 interface BookmarkStates {
+    activeTheme: themeChanger,
     bookmarks: DataTypes[],
-    sliderTheme: number,
     sidebar: boolean,
     profileDropdown: boolean,
     searchBar: string,
@@ -23,7 +24,7 @@ interface BookmarkStates {
     activeSort: string,
     contentType: string
 
-    setSliderTheme: (slider: number) => void,
+    setActiveTheme: (theme: themeChanger) => void,
     setSidebar: () => void,
     setProfileDropdown: () => void,
     setSearchBar: (searchBar: string) => void,
@@ -38,7 +39,7 @@ interface BookmarkStates {
 
 const useBookmarks = create<BookmarkStates>((set) => ({
     bookmarks: data as DataTypes[],
-    sliderTheme: 1,
+    activeTheme: themes[0],
     sidebar: false,
     profileDropdown: false,
     searchBar: '',
@@ -51,7 +52,7 @@ const useBookmarks = create<BookmarkStates>((set) => ({
     activeSort: 'recently_added',
     contentType: 'home',
 
-    setSliderTheme: () => set({}),
+    setActiveTheme: (theme) => set({activeTheme: theme}),
     setSidebar: () => set((state) => ({ sidebar: !state.sidebar })),
     setProfileDropdown: () => set((state) => ({ profileDropdown: !state.profileDropdown })),
     setSearchBar: (newValue: string) => set({ searchBar: newValue }),

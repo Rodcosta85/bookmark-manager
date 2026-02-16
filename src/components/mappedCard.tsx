@@ -9,22 +9,20 @@ interface MappedCardProps {
 
 const MappedCard: React.FC<MappedCardProps> = ({ handleCardDropdown }) => {
 
-    const { currentTheme, cardDropdown } = useBookmarks()
+    const { activeTheme, cardDropdown } = useBookmarks()
 
     return (
-        <div className="flex flex-col
+        <div className={`flex flex-col
         w-84.5 h-fit
         rounded-12
-        border border-black
-        ">
-            <div className="flex flex-col gap-200 
+        ${activeTheme.cardBg}`}>
+            <div className={`flex flex-col gap-200 
             p-4
-            border-b border-b-light-neutral-300
-            ">
+            border-b ${activeTheme.cardBorder}`}>
                 {/* imagem, titulos e tres pontos */}
-                <div className="flex justify-between gap-150
+                <div className={`flex justify-between gap-150
                 pb-4
-                border-b border-b-light-neutral-300">
+                border-b ${activeTheme.cardBorder}`}>
                     <div className="flex gap-100">
                         <img
                             src={FreeCodeCamp}
@@ -32,8 +30,8 @@ const MappedCard: React.FC<MappedCardProps> = ({ handleCardDropdown }) => {
                             className="w-11 h-11 rounded-8 border border-light-neutral-100"
                         />
                         <div className="flex flex-col gap-050">
-                            <h2 className="text-preset-2 text-light-neutral-900">Frontend Mentor</h2>
-                            <p className="text-preset-5 text-light-neutral-800">frontendmentor.io</p>
+                            <h2 className={`text-preset-2 ${activeTheme.headerText}`}>Frontend Mentor</h2>
+                            <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>frontendmentor.io</p>
                         </div>
                     </div>
 
@@ -42,11 +40,11 @@ const MappedCard: React.FC<MappedCardProps> = ({ handleCardDropdown }) => {
                             className={`flex justify-center items-center
                             w-8 h-8
                             rounded-8
-                            border ${cardDropdown ? 'border-2 border-teal-700' : 'border-light-neutral-400'}
+                            ${cardDropdown ? 'border-2 border-teal-700' : 'border border-light-neutral-400'}
                             cursor-pointer`}
                             onClick={handleCardDropdown}
                         >
-                            <img src={`${currentTheme.iconThreeDots}`} alt="" />
+                            <img src={activeTheme.iconThreeDots} alt="vertical three dots" />
                         </button>
                         {cardDropdown ?
                         <DropdownMappedCard />
@@ -57,7 +55,7 @@ const MappedCard: React.FC<MappedCardProps> = ({ handleCardDropdown }) => {
 
                 </div>
                 {/* imagem, titulos e tres pontos */}
-                <p className="text-preset-4-medium text-light-neutral-800">Improve your front-end coding skills by building real projects. Solve real-world HTML, CSS and JavaScript challenges whilst working to professional designs.</p>
+                <p className={`text-preset-4-medium ${activeTheme.paragraphOne}`}>Improve your front-end coding skills by building real projects. Solve real-world HTML, CSS and JavaScript challenges whilst working to professional designs.</p>
                 <div className="flex flex-wrap gap-100">
                     <Tag label="Practice" />
                     <Tag label="Learning" />
@@ -72,20 +70,20 @@ const MappedCard: React.FC<MappedCardProps> = ({ handleCardDropdown }) => {
                 <div className="flex gap-200
                 w-fit">
                     <div className="flex items-center gap-075 w-fit">
-                        <img src={`${currentTheme.iconEye}`} alt="" />
-                        <p className="text-preset-5 text-light-neutral-800">47</p>
+                        <img src={activeTheme.iconEye} alt="" />
+                        <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>47</p>
                     </div>
                     <div className="flex items-center gap-075 w-fit">
-                        <img src={`${currentTheme.iconClock}`} alt="" />
-                        <p className="text-preset-5 text-light-neutral-800">23 Sep </p>
+                        <img src={activeTheme.iconClock} alt="" />
+                        <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>23 Sep </p>
                     </div>
                     <div className="flex items-center gap-075 w-fit">
-                        <img src={`${currentTheme.iconCalendar}`} alt="" />
-                        <p className="text-preset-5 text-light-neutral-800">15 Jan</p>
+                        <img src={activeTheme.iconCalendar} alt="" />
+                        <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>15 Jan</p>
                     </div>
                 </div>
                 <button className="cursor-pointer">
-                    <img src={`${currentTheme.iconPin}`} alt="" />
+                    <img src={activeTheme.iconPin} alt="" />
                 </button>
 
             </div>

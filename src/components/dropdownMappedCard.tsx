@@ -3,7 +3,7 @@ import useBookmarks from "../hooks/useBookmark"
 
 const dropdownMappedCard = () => {
 
-    const { currentTheme } = useBookmarks()
+    const { activeTheme } = useBookmarks()
 
     return (
         <div className="absolute top-500
@@ -18,7 +18,7 @@ const dropdownMappedCard = () => {
             border-2 border-transparent hover:border-teal-700
             text-preset-4 text-light-neutral-800
             cursor-pointer">
-                <img src={`${currentTheme.iconVisit}`} alt="" />
+                <img src={activeTheme.iconVisit} alt="" />
                 Visit
             </button>
             <button className="flex justify-start items-center gap-125 
@@ -27,7 +27,7 @@ const dropdownMappedCard = () => {
             border-2 border-transparent hover:border-teal-700
             text-preset-4 text-light-neutral-800
             cursor-pointer">
-                <img src={`${currentTheme.iconCopy}`} alt="" />
+                <img src={activeTheme.iconCopy} alt="" />
                 Copy URL
             </button>
 
@@ -38,7 +38,7 @@ const dropdownMappedCard = () => {
             border-2 border-transparent hover:border-teal-700
             text-preset-4 text-light-neutral-800
             cursor-pointer">
-                <img src={`${currentTheme.iconPin}`} alt="" />
+                <img src={activeTheme.iconPin} alt="" />
                 Pin
             </button>
 
@@ -49,7 +49,7 @@ const dropdownMappedCard = () => {
             border-2 border-transparent hover:border-teal-700
             text-preset-4 text-light-neutral-800
             cursor-pointer">
-                <img src={`${currentTheme.iconEdit}`} alt="" />
+                <img src={activeTheme.iconEdit} alt="" />
                 Edit
             </button>
 
@@ -60,7 +60,7 @@ const dropdownMappedCard = () => {
             border-2 border-transparent hover:border-teal-700
             text-preset-4 text-light-neutral-800
             cursor-pointer">
-                <img src={`${currentTheme.iconArchive}`} alt="" />
+                <img src={activeTheme.iconArchive} alt="" />
                 Archive
             </button>
 

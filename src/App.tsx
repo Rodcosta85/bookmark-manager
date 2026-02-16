@@ -1,8 +1,8 @@
-// import { useEffect } from "react"
+import { useEffect } from "react"
 import { type MouseEvent } from "react"
 import useBookmarks from "./hooks/useBookmark"
 // import type { DataTypes } from "./types/dataTypes"
-// import themes from './styles/styles'
+import themes from './styles/styles'
 import ProfileDropdown from "./components/profileDropdown"
 import InputComp from "./components/inputComp"
 import TextareaComp from "./components/textareaComp"
@@ -10,10 +10,11 @@ import AddBookmark from "./components/addBookmark"
 import MappedCard from "./components/mappedCard"
 import SidebarComp from "./components/sidebarComp"
 import SortBy from './components/sortBy'
+import whiteSun from './assets/icon-white-sun.svg'
 
 function App() {
 
-  const { sidebar, sortDropdown, setSidebar, setCardDropdown, setSortDropdown } = useBookmarks()
+  const { sidebar, sortDropdown, activeTheme, setSidebar, setCardDropdown, setSortDropdown } = useBookmarks()
 
   const handleSideBar = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -34,11 +35,9 @@ function App() {
 
 
   return (
-    <div className="font-manrope flex flex-col gap-8 p-8 relative">
-
+    <div className={`font-manrope flex flex-col gap-8 p-8 relative
+    ${activeTheme.bg}`}>
       <ProfileDropdown />
-      <InputComp label="" />
-      <TextareaComp label="" />
       <AddBookmark />
       <MappedCard handleCardDropdown={handleCardDropdown} />
       <button
@@ -59,11 +58,12 @@ function App() {
           className="w-fit cursor-pointer">OPEN SORT BY</button>
       </div>
       {sortDropdown ?
-      <SortBy />
-      :
-      null
+        <SortBy />
+        :
+        null
       }
     </div>
+
   )
 }
 

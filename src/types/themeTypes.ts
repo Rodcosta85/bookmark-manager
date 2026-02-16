@@ -3,12 +3,17 @@ export interface ThemeTypes {
     bg: string,
     secondaryBg: string,
     terciaryBg: string,
+    quaternaryBg: string,
+    cardBg: string,
+    tagBg: string,
     logo: string,
     headerText: string,
     paragraphOne: string,
     paragraphTwo: string,
     inputBorder: string,
+    cardBorder: string,
     buttonBg: string,
+    buttonBorder: string,
     errorBg: string,
     errorBorder: string,
     sun: string,
@@ -26,5 +31,6 @@ export interface ThemeTypes {
     iconHome: string
     iconVisit: string,
     iconEdit: string,
-    iconCheck: string
+    iconCheck: string,
+    iconSearch: string
 }

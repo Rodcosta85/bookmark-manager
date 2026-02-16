@@ -1,14 +1,19 @@
+import useBookmarks from "../../hooks/useBookmark"
+
 interface borderButtonProps {
     label: string
 }
 
 const borderButton: React.FC<borderButtonProps> = ({ label }) => {
+    
+    const { activeTheme } = useBookmarks()
+
     return (
-        <button className="pt-3 pb-3 pl-4 pr-4 
+        <button className={`pt-3 pb-3 pl-4 pr-4 
         rounded-8 
-        border border-light-neutral-400 
-        text-light-neutral-900 
-        cursor-pointer">
+        border ${activeTheme.buttonBorder} 
+        ${activeTheme.headerText} 
+        cursor-pointer`}>
             {label}
         </button>
     )

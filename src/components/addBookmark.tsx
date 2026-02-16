@@ -6,26 +6,24 @@ import BorderButton from './Buttons/borderButton'
 
 const AddBookmark = () => {
 
-    const { currentTheme } = useBookmarks()
+    const { activeTheme } = useBookmarks()
 
     return (
-        <div className='flex flex-col gap-400
+        <div className={`flex flex-col gap-400
         w-142.5 h-fit p-400
         rounded-16
-        border border-black
-        bg-white   
-        '>
+        ${activeTheme.cardBg}`}>
             {/* titulos e botao de fechar */}
             <div className="flex justify-between items-start">
                 <div className="flex flex-col gap-100">
-                    <h2 className="text-preset-1 text-light-neutral-900">Add a Bookmark</h2>
-                    <p className="text-preset-4-medium text-light-neutral-800">Save a link with details to keep your collection organized.</p>
+                    <h2 className={`text-preset-1 ${activeTheme.headerText}`}>Add a Bookmark</h2>
+                    <p className={`text-preset-4-medium ${activeTheme.paragraphOne}`}>Save a link with details to keep your collection organized.</p>
                 </div>
-                <button className="flex justify-center items-center
+                <button className={`flex justify-center items-center
                 w-8 h-8 
                 rounded-8 
-                border border-light-neutral-400">
-                    <img src={`${currentTheme.iconClose}`} alt="" />
+                border ${activeTheme.cardBorder}`}>
+                    <img src={activeTheme.iconClose} alt="" />
                 </button>
             </div>
             {/* titulos e botao de fechar */}

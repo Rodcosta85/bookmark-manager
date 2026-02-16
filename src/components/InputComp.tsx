@@ -1,4 +1,4 @@
-import magGlass from './../assets/icon-search.svg'
+import useBookmarks from "../hooks/useBookmark"
 
 interface inputCompProps {
   label: string
@@ -6,26 +6,28 @@ interface inputCompProps {
 
 const InputComp: React.FC<inputCompProps> = ({ label }) => {
 
+  const { activeTheme } = useBookmarks()
 
   return (
     <div className="flex flex-col gap-1.5 text-preset-4">
-      <p className="text-light-neutral-900">{label}</p>
-      <div className='flex justify-start items-center gap-100 
+      <p className={`${activeTheme.paragraphTwo}`}>{label}</p>
+      <div className={`flex justify-start items-center gap-100 
       p-150 rounded-8 
-      border border-light-neutral-500
-      '>
+      border ${activeTheme.inputBorder}`}>
         <img
-          src={magGlass}
+          src={activeTheme.iconSearch}
           alt="a magnifying glass"
           className='w-5 h-5'
         />
         <input 
         type="text" 
         placeholder='Search'
-        className='text-preset-4-medium focus:outline-none border-none bg-transparent'
+        className={`text-preset-4-medium ${activeTheme.paragraphTwo} 
+        focus:outline-none border-none 
+        bg-transparent`}
         />
       </div>
-      <p>This is a hint text to help the user.</p>
+      <p className={`${activeTheme.paragraphTwo}`}>This is a hint text to help the user.</p>
     </div>
   )
 }

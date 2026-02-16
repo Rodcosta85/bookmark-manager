@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import useBookmarks from '../hooks/useBookmark'
-import magGlass from './../assets/icon-search.svg'
 
 interface textareCompProps {
   label: string
@@ -8,7 +7,7 @@ interface textareCompProps {
 
 const TextareaComp: React.FC<textareCompProps> = ({ label }) => {
 
-  const { inputs, setInputs, limit, setLimit } = useBookmarks()
+  const { inputs, limit, activeTheme, setInputs, setLimit } = useBookmarks()
   const [charCount, setCharCount] = useState(0);
 
   const handleCharCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -19,7 +18,7 @@ const TextareaComp: React.FC<textareCompProps> = ({ label }) => {
 
   return (
     <div className="flex flex-col gap-1.5 text-preset-4">
-      <p className="text-light-neutral-900">{label}</p>
+      <p className={`${activeTheme.paragraphTwo}`}>{label}</p>
 
       {/* textarea + contador de caracteres */}
       <div className='flex flex-col gap-1.5'>
@@ -27,10 +26,10 @@ const TextareaComp: React.FC<textareCompProps> = ({ label }) => {
         {/* textarea */}
         <div className={`flex justify-start items-start gap-100 
       h-fit p-150 rounded-8 
-      border ${limit ? 'border-new-red-800' : 'border-light-neutral-500'} 
+      border ${limit ? 'border-new-red-800' : `${activeTheme.inputBorder}`} 
       `}>
           <img
-            src={magGlass}
+            src={activeTheme.iconSearch}
             alt="a magnifying glass"
             className='w-5 h-5'
           />
@@ -41,11 +40,11 @@ const TextareaComp: React.FC<textareCompProps> = ({ label }) => {
           />
         </div>
         {/* textarea */}
-        <p className='text-preset-5 self-end'>{charCount}/280</p>
+        <p className={`text-preset-5 self-end ${activeTheme.paragraphOne}`}>{charCount}/280</p>
       </div>
       {/* textarea + contador de caracteres */}
 
-      <p>This is a hint text to help the user.</p>
+      <p className={`${activeTheme.paragraphTwo}`}>This is a hint text to help the user.</p>
     </div>
   )
 }
