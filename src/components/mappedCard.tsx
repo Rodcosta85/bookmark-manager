@@ -27,7 +27,7 @@ const MappedCard: React.FC<MappedCardProps> = ({ handleCardDropdown }) => {
                         <img
                             src={FreeCodeCamp}
                             alt=""
-                            className="w-11 h-11 rounded-8 border border-light-neutral-100"
+                            className={`w-11 h-11 rounded-8 border ${activeTheme.cardBorder}`}
                         />
                         <div className="flex flex-col gap-050">
                             <h2 className={`text-preset-2 ${activeTheme.headerText}`}>Frontend Mentor</h2>

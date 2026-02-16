@@ -21,8 +21,8 @@ const InputComp: React.FC<inputCompProps> = ({ label }) => {
         />
         <input 
         type="text" 
-        placeholder='Search'
-        className={`text-preset-4-medium ${activeTheme.paragraphTwo} 
+        placeholder={label === 'Tags *' ? 'e.g. design, learning, tools' : 'Search'}
+        className={`text-preset-4-medium ${activeTheme.paragraphTwo} placeholder-${activeTheme.paragraphOne} 
         focus:outline-none border-none 
         bg-transparent`}
         />

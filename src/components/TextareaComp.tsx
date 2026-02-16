@@ -35,7 +35,10 @@ const TextareaComp: React.FC<textareCompProps> = ({ label }) => {
           />
           <textarea
             placeholder='Search'
-            className='text-preset-4-medium focus:outline-none border-none bg-transparent w-full'
+            className={`w-full
+            text-preset-4-medium ${activeTheme.paragraphTwo} placeholder-${activeTheme.paragraphOne}
+            focus:outline-none border-none 
+            bg-transparent`}
             onChange={handleCharCount}
           />
         </div>

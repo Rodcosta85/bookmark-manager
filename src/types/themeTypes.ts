@@ -6,6 +6,7 @@ export interface ThemeTypes {
     quaternaryBg: string,
     cardBg: string,
     tagBg: string,
+    hambBg: string,
     logo: string,
     headerText: string,
     paragraphOne: string,
@@ -32,5 +33,6 @@ export interface ThemeTypes {
     iconVisit: string,
     iconEdit: string,
     iconCheck: string,
-    iconSearch: string
+    iconSearch: string,
+    iconSort: string
 }

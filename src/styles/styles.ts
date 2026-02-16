@@ -36,6 +36,8 @@ import lightCheck from './../assets/icon-check.svg'
 import darkCheck from './../assets/icon-check-dark.svg'
 import lightMagGlass from './../assets/icon-search.svg'
 import darkMagGlass from './../assets/icon-search-dark.svg'
+import lightSort from './../assets/icon-sort.svg'
+import darkSort from './../assets/icon-sort-dark.svg'
 
 
 
@@ -48,6 +50,7 @@ const themes: ThemeTypes[] = [
         quaternaryBg: 'bg-light-neutral-500',
         tagBg: 'bg-light-neutral-100',
         cardBg: 'bg-white',
+        hambBg: 'bg-light-neutral-900',
         logo: lightThemeLogo,
         headerText: 'text-light-neutral-900',
         paragraphOne: 'text-light-neutral-800',
@@ -74,7 +77,8 @@ const themes: ThemeTypes[] = [
         iconVisit: lightVisit,
         iconEdit: lightEdit,
         iconCheck: lightCheck,
-        iconSearch: lightMagGlass
+        iconSearch: lightMagGlass,
+        iconSort: lightSort
     },
     {
         mode: 'dark',
@@ -84,6 +88,7 @@ const themes: ThemeTypes[] = [
         quaternaryBg: '',
         tagBg: 'bg-dark-neutral-600',
         cardBg: 'bg-dark-neutral-800',
+        hambBg: 'bg-white',
         logo: darkThemeLogo,
         headerText: 'text-white',
         paragraphOne: 'text-dark-neutral-100',
@@ -110,7 +115,8 @@ const themes: ThemeTypes[] = [
         iconVisit: darkVisit,
         iconEdit: darkEdit,
         iconCheck: darkCheck,
-        iconSearch: darkMagGlass
+        iconSearch: darkMagGlass,
+        iconSort: darkSort
     }
 ]
 

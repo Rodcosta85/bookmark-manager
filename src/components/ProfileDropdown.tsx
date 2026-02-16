@@ -8,7 +8,6 @@ const ProfileDropdown = () => {
 
     const { activeTheme, setActiveTheme } = useBookmarks()
 
-
     return (
         <div className={`flex flex-col justify-between
         w-62 h-42.75
@@ -33,13 +32,13 @@ const ProfileDropdown = () => {
                     <p className={`text-preset-4 ${activeTheme.paragraphOne}`}>Theme</p>
                 </div>
                 <div className={`flex justify-between items-center
-                w-16 h-7.5 p-050
+                w-16 h-7.5 p-025
                 rounded-4
                 ${activeTheme.terciaryBg}`}>
                     <button 
                     onClick={() => setActiveTheme(themes[0])}
                     className={`flex justify-center items-center
-                    w-7.5 p-050 
+                    w-7.5 h-full p-050 
                     rounded-4
                     ${activeTheme === themes[0] && activeTheme.secondaryBg}
                     cursor-pointer`}>
@@ -48,7 +47,7 @@ const ProfileDropdown = () => {
                     <button 
                     onClick={() => setActiveTheme(themes[1])}
                     className={`flex justify-center items-center
-                    w-7.5 p-050 
+                    w-7.5 h-full p-050 
                     rounded-4
                     ${activeTheme === themes[1] && activeTheme.secondaryBg}
                     cursor-pointer`}>

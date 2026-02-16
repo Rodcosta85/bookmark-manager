@@ -1,16 +1,15 @@
-import { useEffect } from "react"
 import { type MouseEvent } from "react"
 import useBookmarks from "./hooks/useBookmark"
 // import type { DataTypes } from "./types/dataTypes"
-import themes from './styles/styles'
 import ProfileDropdown from "./components/profileDropdown"
-import InputComp from "./components/inputComp"
-import TextareaComp from "./components/textareaComp"
 import AddBookmark from "./components/addBookmark"
 import MappedCard from "./components/mappedCard"
 import SidebarComp from "./components/sidebarComp"
-import SortBy from './components/sortBy'
-import whiteSun from './assets/icon-white-sun.svg'
+import SortBy from "./components/sortBy"
+import SortButton from "./components/Buttons/sortButton"
+import HambMenu from "./components/Buttons/hambMenu"
+import DialogModal from "./components/dialogModal"
+
 
 function App() {
 
@@ -31,37 +30,29 @@ function App() {
     setSortDropdown()
   }
 
-
-
-
   return (
     <div className={`font-manrope flex flex-col gap-8 p-8 relative
     ${activeTheme.bg}`}>
       <ProfileDropdown />
       <AddBookmark />
       <MappedCard handleCardDropdown={handleCardDropdown} />
-      <button
-        onClick={handleSideBar}
-        type="button"
-        className="w-fit cursor-pointer">
-        OPEN SIDE BAR
-      </button>
+      <HambMenu handleSideBar={handleSideBar} />
       {sidebar ?
         <SidebarComp handleSidebar={handleSideBar} />
         :
         null
       }
-      <div className="relative w-fit">
-        <button
-          onClick={handleSortDropdown}
-          type="button"
-          className="w-fit cursor-pointer">OPEN SORT BY</button>
+      <div className="flex flex-col gap-2.5 w-fit h-fit">
+        <SortButton handleSortDropdown={handleSortDropdown} />
+        {sortDropdown ?
+          <SortBy />
+          :
+          null
+        }
       </div>
-      {sortDropdown ?
-        <SortBy />
-        :
-        null
-      }
+      <DialogModal
+        title="Archive bookmark"
+        subtitle="Are you sure you want to archive this bookmark?" />
     </div>
 
   )
