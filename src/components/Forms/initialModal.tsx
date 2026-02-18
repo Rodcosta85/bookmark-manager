@@ -1,0 +1,87 @@
+import useBookmarks from "../../hooks/useBookmark"
+import InputComp from "../inputComp"
+
+interface InitialProps {
+  title: string,
+  subtitle: string
+  buttonText: string
+}
+
+const initialModal: React.FC<InitialProps> = ({ title, subtitle, buttonText }) => {
+
+  const { activeTheme, isLoggedIn } = useBookmarks()
+
+  return (
+    <div className="flex justify-center items-center
+    h-screen">
+      <div className={`
+    flex flex-col gap-8 
+    w-md h pt-500 pb-500 pl-400 pr-400
+    rounded-12
+    ${activeTheme.cardBg}
+    border ${activeTheme.cardBorder}`}>
+        <img
+          src={activeTheme.logo}
+          alt="the logo for Bookmark Manager"
+          className="w-53.5 h-8"
+        />
+        <div className="flex flex-col gap-075">
+          <h2 className={`text-preset-1 ${activeTheme.headerText}`}>
+            {title}
+          </h2>
+          <p className={`text-preset-4-medium ${activeTheme.paragraphOne}`}>
+            {subtitle}
+          </p>
+        </div>
+        <form className="flex flex-col gap-4">
+          {isLoggedIn ?
+            <div className="flex flex-col gap-4">
+              <InputComp label="Email" type="email" />
+              <InputComp label="Password" type="password" />
+            </div>
+            :
+            <div className="flex flex-col gap-4">
+              <InputComp label="Full name *" type="text" />
+              <InputComp label="Email address *" type="email" />
+              <InputComp label="Password *" type="password" />
+            </div>
+          }
+          <button className="w-full pl-200 pr-200 pt-150 pb-150
+        rounded-8
+        text-center text-preset-3 text-white
+        bg-teal-700">
+            {buttonText}
+          </button>
+        </form>
+
+        {isLoggedIn ?
+          <div className="flex flex-col gap-150">
+
+            {/* forgot password */}
+            <div className="flex justify-center items-center gap-075">
+              <span className={`text-preset-4-medium ${activeTheme.paragraphOne}`}>Forgot your password?</span>
+              <button className={`text-preset-4 ${activeTheme.paragraphTwo} cursor-pointer`}>Reset it</button>
+            </div>
+
+            {/* dont have an account */}
+            <div className="flex justify-center items-center gap-075">
+              <span className={`text-preset-4-medium ${activeTheme.paragraphOne}`}>Don’t have an account?</span>
+              <button className={`text-preset-4 ${activeTheme.paragraphTwo} cursor-pointer`}>Sign up</button>
+            </div>
+          </div>
+          :
+          <div className="flex justify-center items-center gap-075">
+            <span className={`text-preset-4-medium ${activeTheme.paragraphOne}`}>Already have an account?</span>
+            <button className={`text-preset-4 ${activeTheme.paragraphTwo} cursor-pointer`}>Log in</button>
+          </div>
+        }
+        {/* forgot password e dont have an account */}
+
+
+      </div>
+    </div>
+
+  )
+}
+
+export default initialModal

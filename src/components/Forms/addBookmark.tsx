@@ -1,8 +1,8 @@
-import useBookmarks from "../hooks/useBookmark"
-import InputComp from "./inputComp"
-import TextareaComp from "./textareaComp"
-import GreenButton from "./Buttons/greenButton"
-import BorderButton from './Buttons/borderButton'
+import useBookmarks from "../../hooks/useBookmark"
+import InputComp from "../inputComp"
+import TextareaComp from "../textareaComp"
+import GreenButton from "../Buttons/greenButton"
+import BorderButton from '../Buttons/borderButton'
 
 const AddBookmark = () => {
 
@@ -36,11 +36,12 @@ const AddBookmark = () => {
                 <TextareaComp label="Description *" />
                 <InputComp label="Website URLs *" />
                 <InputComp label="Tags *" />
-            </form>
-            <div className="flex justify-end gap-200">
+                <div className="flex justify-end gap-200">
                 <BorderButton label="Cancel" />
-                <GreenButton label="Save Bookmark"/>
+                <GreenButton label="Save Bookmark" type="submit" />
             </div>
+            </form>
+            
         </div>
     )
 }

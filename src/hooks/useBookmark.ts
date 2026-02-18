@@ -22,7 +22,8 @@ interface BookmarkStates {
     sortDropdown: boolean,
     activeSort: string,
     contentType: string,
-    appearNotif: boolean
+    appearNotif: boolean,
+    isLoggedIn: boolean,
 
     setActiveTheme: (theme: themeChanger) => void,
     setSidebar: () => void,
@@ -34,7 +35,8 @@ interface BookmarkStates {
     setSortDropdown: () => void,
     setSortType: (type: SortType) => void,
     setHomeArchived: (type: HomeArchived) => void,
-    setAppearNotif: () => void
+    setAppearNotif: () => void,
+    setIsLoggedIn: () => void
 }
 
 const useBookmarks = create<BookmarkStates>((set) => ({
@@ -75,6 +77,9 @@ const useBookmarks = create<BookmarkStates>((set) => ({
     // notificação de ação
     appearNotif: false,
 
+    // controla se o usuario esta logado ou nao
+    isLoggedIn: false,
+
     setActiveTheme: (theme) => set({activeTheme: theme}),
     setSidebar: () => set((state) => ({ sidebar: !state.sidebar })),
     setProfileDropdown: () => set((state) => ({ profileDropdown: !state.profileDropdown })),
@@ -93,6 +98,7 @@ const useBookmarks = create<BookmarkStates>((set) => ({
     setSortType: (type) => set({ activeSort: type }),
     setHomeArchived: (type) => set({ contentType: type }),
     setAppearNotif: () => set((state) => ({ appearNotif: !state.appearNotif })),
+    setIsLoggedIn: () => set((state) => ({ isLoggedIn: !state.isLoggedIn}))
 }))
 
 export default useBookmarks

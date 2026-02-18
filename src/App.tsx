@@ -1,86 +1,41 @@
-import { type MouseEvent } from "react"
+import { Navigate, Routes, Route } from "react-router-dom"
 import useBookmarks from "./hooks/useBookmark"
-// import type { DataTypes } from "./types/dataTypes"
-import ProfileDropdown from "./components/profileDropdown"
-import AddBookmark from "./components/addBookmark"
-import MappedCard from "./components/mappedCard"
-import SidebarComp from "./components/sidebarComp"
-import SortBy from "./components/sortBy"
-import SortButton from "./components/Buttons/sortButton"
-import HambMenu from "./components/Buttons/hambMenu"
-import DialogModal from "./components/dialogModal"
-import NotificationPopup from "./components/notificationPopup"
-
+import InitialModal from "./components/Forms/initialModal"
+import LoggedIn from "./pages/loggedIn"
 
 function App() {
 
-  const { sidebar,
-    sortDropdown,
-    activeTheme,
-    appearNotif,
-    bookmarks,
-    setSidebar,
-    setCardDropdown,
-    setSortDropdown,
-    setAppearNotif } = useBookmarks()
-
-  const handleSideBar = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    setSidebar()
-  }
-
-  const handleCardDropdown = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    setCardDropdown
-  }
-
-  const handleSortDropdown = (e: MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    setSortDropdown()
-  }
-
-  const allTags = bookmarks.flatMap(item => item.tags);
-    console.log(allTags);
-
-    const elementCount = allTags.reduce((acc: Record<string, number>, tag) => {
-        acc[tag] = (acc[tag] || 0) + 1;
-        return acc;
-    }, {});
-    console.log(elementCount);
-
-    const sortedUniqueTags = Object.keys(elementCount).sort((a, b) =>
-        a.localeCompare(b, undefined, { sensitivity: 'base' })
-    );
+  const { activeTheme, isLoggedIn } = useBookmarks()
 
   return (
-    <div className={`font-manrope flex flex-col gap-8 p-8 relative
+    <div className={`font-manrope
+      w-screen h-screen 
+      relative
     ${activeTheme.bg}`}>
-      <ProfileDropdown />
-      <AddBookmark />
-      <MappedCard handleCardDropdown={handleCardDropdown} />
-      <HambMenu handleSideBar={handleSideBar} />
-      {sidebar ?
-        <SidebarComp 
-        handleSidebar={handleSideBar} 
-        sortedTags={sortedUniqueTags}
-        elementCount={elementCount}
+      <Routes>
+        <Route
+          path="/login"
+
+          // condicional para renderizar o mesmo component só que com outro title, 
+          // subtitle e buttonText caso isLoggedIn seja true?
+          element={isLoggedIn ?
+            <InitialModal
+              title="Log in to your account"
+              subtitle="Welcome back! Please enter your details."
+              buttonText="Log in"
+            />
+            :
+            <InitialModal 
+            title="Create your account"
+            subtitle="Join us and start saving your favorite links — organized, searchable, and always within reach."
+            buttonText="Create account"
+            />
+          }
         />
-        :
-        null
-      }
-      <div className="flex flex-col gap-2.5 w-fit h-fit">
-        <SortButton handleSortDropdown={handleSortDropdown} />
-        {sortDropdown ?
-          <SortBy />
-          :
-          null
-        }
-      </div>
-      <DialogModal
-        title="Archive bookmark"
-        subtitle="Are you sure you want to archive this bookmark?" />
-      <NotificationPopup img={activeTheme.iconCheck} label="Bookmark added successfully." />
+        <Route path="/" element={<LoggedIn />} />
+      </Routes>
     </div>
+
   )
 }
 
