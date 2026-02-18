@@ -14,7 +14,7 @@ function App() {
     ${activeTheme.bg}`}>
       <Routes>
         <Route
-          path="/login"
+          path="/"
 
           // condicional para renderizar o mesmo component só que com outro title, 
           // subtitle e buttonText caso isLoggedIn seja true?
@@ -32,7 +32,7 @@ function App() {
             />
           }
         />
-        <Route path="/" element={<LoggedIn />} />
+        <Route path="/home" element={<LoggedIn />} />
       </Routes>
     </div>
 
