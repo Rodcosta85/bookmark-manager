@@ -7,6 +7,7 @@ export interface ThemeTypes {
     cardBg: string,
     tagBg: string,
     hambBg: string,
+    notificationBg: string,
     logo: string,
     headerText: string,
     paragraphOne: string,
@@ -34,5 +35,7 @@ export interface ThemeTypes {
     iconEdit: string,
     iconCheck: string,
     iconSearch: string,
-    iconSort: string
+    iconSort: string,
+    iconRestore: string,
+    iconDelete: string
 }

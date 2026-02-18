@@ -13,7 +13,7 @@ const dialogModal: React.FC<DialogModalProps> = ({ title, subtitle }) => {
 
     return (
         <div className={`flex flex-col gap-300
-        w-[340px] p-200
+        w-85 p-200
         rounded-12
         ${activeTheme.cardBg}`}>
 

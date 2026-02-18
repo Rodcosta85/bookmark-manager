@@ -1,13 +1,13 @@
 import { create } from 'zustand'
 import data from './../data.json'
 import type { DataTypes } from '../types/dataTypes'
-import type { ThemeTypes } from '../types/themeTypes'
 import themes from './../styles/styles'
 
 // modal de "sort by"
 type SortType = 'recently_added' | 'recently_visited' | 'most_visited'
 type HomeArchived = 'home' | 'archived'
 type themeChanger = typeof themes[number]
+
 
 interface BookmarkStates {
     activeTheme: themeChanger,
@@ -18,11 +18,11 @@ interface BookmarkStates {
     inputs: string,
     cardId: string | null,
     cardDropdown: boolean,
-    currentTheme: ThemeTypes,
     limit: boolean,
     sortDropdown: boolean,
     activeSort: string,
-    contentType: string
+    contentType: string,
+    appearNotif: boolean
 
     setActiveTheme: (theme: themeChanger) => void,
     setSidebar: () => void,
@@ -30,27 +30,50 @@ interface BookmarkStates {
     setSearchBar: (searchBar: string) => void,
     setInputs: (inputs: string) => void,
     setCardDropdown: (id: string) => void,
-    setCurrentTheme: (theme: ThemeTypes) => void,
     setLimit: (limit: boolean) => void,
     setSortDropdown: () => void,
     setSortType: (type: SortType) => void,
-    setHomeArchived: (type: HomeArchived) => void
+    setHomeArchived: (type: HomeArchived) => void,
+    setAppearNotif: () => void
 }
 
 const useBookmarks = create<BookmarkStates>((set) => ({
+    // data.json  
     bookmarks: data as DataTypes[],
+
+    // tema
     activeTheme: themes[0],
+
+    // barra lateral
     sidebar: false,
     profileDropdown: false,
+
+    // barra de procura do header
     searchBar: '',
+
+    // textarea?
     inputs: '',
+
+    // card em si
     cardId: null,
+
+    // dropdown dos tres pontos verticais
     cardDropdown: false,
-    currentTheme: themes[0],
+
+    // limite de caracteres da textarea
     limit: false,
+
+    // ativação do dropdown do "sort by"
     sortDropdown: false,
+
+    // sort em si
     activeSort: 'recently_added',
+
+    // home ou archived dentro da sidebar
     contentType: 'home',
+
+    // notificação de ação
+    appearNotif: false,
 
     setActiveTheme: (theme) => set({activeTheme: theme}),
     setSidebar: () => set((state) => ({ sidebar: !state.sidebar })),
@@ -65,11 +88,11 @@ const useBookmarks = create<BookmarkStates>((set) => ({
         return { cardDropdown: true, cardId: id };
     }),
 
-    setCurrentTheme: (theme) => set({ currentTheme: theme }),
     setLimit: () => set({ limit: true }),
     setSortDropdown: () => set((state) => ({ sortDropdown: !state.sortDropdown })),
     setSortType: (type) => set({ activeSort: type }),
-    setHomeArchived: (type) => set({ contentType: type })
+    setHomeArchived: (type) => set({ contentType: type }),
+    setAppearNotif: () => set((state) => ({ appearNotif: !state.appearNotif })),
 }))
 
 export default useBookmarks

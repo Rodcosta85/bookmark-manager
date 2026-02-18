@@ -38,6 +38,11 @@ import lightMagGlass from './../assets/icon-search.svg'
 import darkMagGlass from './../assets/icon-search-dark.svg'
 import lightSort from './../assets/icon-sort.svg'
 import darkSort from './../assets/icon-sort-dark.svg'
+import lightRestore from './../assets/icon-restore.svg'
+import darkRestore from './../assets/icon-restore-dark.svg'
+import lightDelete from './../assets/icon-delete.svg'
+import darkDelete from './../assets/icon-delete-dark.svg'
+
 
 
 
@@ -51,6 +56,7 @@ const themes: ThemeTypes[] = [
         tagBg: 'bg-light-neutral-100',
         cardBg: 'bg-white',
         hambBg: 'bg-light-neutral-900',
+        notificationBg: 'bg-white',
         logo: lightThemeLogo,
         headerText: 'text-light-neutral-900',
         paragraphOne: 'text-light-neutral-800',
@@ -78,7 +84,9 @@ const themes: ThemeTypes[] = [
         iconEdit: lightEdit,
         iconCheck: lightCheck,
         iconSearch: lightMagGlass,
-        iconSort: lightSort
+        iconSort: lightSort,
+        iconRestore: lightRestore,
+        iconDelete: lightDelete
     },
     {
         mode: 'dark',
@@ -89,6 +97,7 @@ const themes: ThemeTypes[] = [
         tagBg: 'bg-dark-neutral-600',
         cardBg: 'bg-dark-neutral-800',
         hambBg: 'bg-white',
+        notificationBg: 'bg-dark-neutral-500',
         logo: darkThemeLogo,
         headerText: 'text-white',
         paragraphOne: 'text-dark-neutral-100',
@@ -116,7 +125,9 @@ const themes: ThemeTypes[] = [
         iconEdit: darkEdit,
         iconCheck: darkCheck,
         iconSearch: darkMagGlass,
-        iconSort: darkSort
+        iconSort: darkSort,
+        iconRestore: darkRestore,
+        iconDelete: darkDelete
     }
 ]
 

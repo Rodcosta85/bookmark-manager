@@ -9,11 +9,20 @@ import SortBy from "./components/sortBy"
 import SortButton from "./components/Buttons/sortButton"
 import HambMenu from "./components/Buttons/hambMenu"
 import DialogModal from "./components/dialogModal"
+import NotificationPopup from "./components/notificationPopup"
 
 
 function App() {
 
-  const { sidebar, sortDropdown, activeTheme, setSidebar, setCardDropdown, setSortDropdown } = useBookmarks()
+  const { sidebar,
+    sortDropdown,
+    activeTheme,
+    appearNotif,
+    bookmarks,
+    setSidebar,
+    setCardDropdown,
+    setSortDropdown,
+    setAppearNotif } = useBookmarks()
 
   const handleSideBar = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
@@ -30,6 +39,19 @@ function App() {
     setSortDropdown()
   }
 
+  const allTags = bookmarks.flatMap(item => item.tags);
+    console.log(allTags);
+
+    const elementCount = allTags.reduce((acc: Record<string, number>, tag) => {
+        acc[tag] = (acc[tag] || 0) + 1;
+        return acc;
+    }, {});
+    console.log(elementCount);
+
+    const sortedUniqueTags = Object.keys(elementCount).sort((a, b) =>
+        a.localeCompare(b, undefined, { sensitivity: 'base' })
+    );
+
   return (
     <div className={`font-manrope flex flex-col gap-8 p-8 relative
     ${activeTheme.bg}`}>
@@ -38,7 +60,11 @@ function App() {
       <MappedCard handleCardDropdown={handleCardDropdown} />
       <HambMenu handleSideBar={handleSideBar} />
       {sidebar ?
-        <SidebarComp handleSidebar={handleSideBar} />
+        <SidebarComp 
+        handleSidebar={handleSideBar} 
+        sortedTags={sortedUniqueTags}
+        elementCount={elementCount}
+        />
         :
         null
       }
@@ -53,8 +79,8 @@ function App() {
       <DialogModal
         title="Archive bookmark"
         subtitle="Are you sure you want to archive this bookmark?" />
+      <NotificationPopup img={activeTheme.iconCheck} label="Bookmark added successfully." />
     </div>
-
   )
 }
 

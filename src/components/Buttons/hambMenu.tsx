@@ -35,7 +35,6 @@ const hambMenu: React.FC<HambMenuProps> = ({ handleSideBar }) => {
                     transition-transform duration-200 ease-in-out ${sidebar && 'transform -rotate-45 -translate-y-[8px]'}`}></div>
             </button>
         </div>
-
     )
 }
 
