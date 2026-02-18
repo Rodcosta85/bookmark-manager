@@ -17,7 +17,7 @@ function App() {
           path="/"
 
           // condicional para renderizar o mesmo component só que com outro title, 
-          // subtitle e buttonText caso isLoggedIn seja true?
+          // subtitle e buttonText caso isLoggedIn seja true...da pra fazer isso?
           element={isLoggedIn ?
             <InitialModal
               title="Log in to your account"
