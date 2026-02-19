@@ -1,19 +1,15 @@
 import useBookmarks from "../../hooks/useBookmark"
 
-interface HambMenuProps {
-    handleSideBar: (e: any) => void
-}
+const hambMenu: React.FC = () => {
 
-const hambMenu: React.FC<HambMenuProps> = ({ handleSideBar }) => {
-
-    const { activeTheme, sidebar } = useBookmarks()
+    const { activeTheme, sidebar, setSidebar } = useBookmarks()
 
     return (
         <div className={`flex justify-end items-center w-full h-15`}>
-            <button 
-            onClick={handleSideBar}
-            type="button"
-            className={`flex flex-col justify-between
+            <button
+                onClick={setSidebar}
+                type="button"
+                className={`flex flex-col justify-between
             w-10 h-10 p-125
             rounded-8
             border ${activeTheme.cardBorder}

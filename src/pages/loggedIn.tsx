@@ -1,6 +1,5 @@
-import { type MouseEvent } from "react"
 import useBookmarks from "../hooks/useBookmark"
-import ProfileDropdown from "../components/profileDropdown"
+import ProfileDropdown from "../components/ProfileDropdown"
 import AddBookmark from "../components/Forms/addBookmark"
 import MappedCard from "../components/mappedCard"
 import SidebarComp from "../components/sidebarComp"
@@ -12,66 +11,22 @@ import NotificationPopup from "../components/notificationPopup"
 
 const loggedIn = () => {
 
-    const { sidebar,
+    const {
+        sidebar,
         sortDropdown,
         activeTheme,
-        appearNotif,
-        bookmarks,
-        setSidebar,
-        setCardDropdown,
-        setSortDropdown,
-        setAppearNotif } = useBookmarks()
-
-    const handleSideBar = (e: MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-        setSidebar()
-    }
-
-    const handleCardDropdown = (e: MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-        setCardDropdown
-    }
-
-    const handleSortDropdown = (e: MouseEvent<HTMLButtonElement>) => {
-        e.preventDefault()
-        setSortDropdown()
-    }
-
-    const allTags = bookmarks.flatMap(item => item.tags);
-    console.log(allTags);
-
-    const elementCount = allTags.reduce((acc: Record<string, number>, tag) => {
-        acc[tag] = (acc[tag] || 0) + 1;
-        return acc;
-    }, {});
-    console.log(elementCount);
-
-    const sortedUniqueTags = Object.keys(elementCount).sort((a, b) =>
-        a.localeCompare(b, undefined, { sensitivity: 'base' })
-    );
+    } = useBookmarks()
 
     return (
         <div className="flex flex-col gap-8">
             <ProfileDropdown />
             <AddBookmark />
-            <MappedCard handleCardDropdown={handleCardDropdown} />
-            <HambMenu handleSideBar={handleSideBar} />
-            {sidebar ?
-                <SidebarComp
-                    handleSidebar={handleSideBar}
-                    sortedTags={sortedUniqueTags}
-                    elementCount={elementCount}
-                />
-                :
-                null
-            }
+            <MappedCard />
+            <HambMenu />
+            {sidebar && <SidebarComp />}
             <div className="flex flex-col gap-2.5 w-fit h-fit">
-                <SortButton handleSortDropdown={handleSortDropdown} />
-                {sortDropdown ?
-                    <SortBy />
-                    :
-                    null
-                }
+                <SortButton />
+                {sortDropdown && <SortBy />}
             </div>
             <DialogModal
                 title="Archive bookmark"

@@ -10,6 +10,7 @@ type themeChanger = typeof themes[number]
 
 
 interface BookmarkStates {
+    tagsFilters: string[],
     activeTheme: themeChanger,
     bookmarks: DataTypes[],
     sidebar: boolean,
@@ -25,6 +26,7 @@ interface BookmarkStates {
     appearNotif: boolean,
     isLoggedIn: boolean,
 
+    setTagsFilters: (tagsFilters: string[]) => void,
     setActiveTheme: (theme: themeChanger) => void,
     setSidebar: () => void,
     setProfileDropdown: () => void,
@@ -40,6 +42,8 @@ interface BookmarkStates {
 }
 
 const useBookmarks = create<BookmarkStates>((set) => ({
+    tagsFilters: [],
+
     // data.json  
     bookmarks: data as DataTypes[],
 
@@ -80,7 +84,8 @@ const useBookmarks = create<BookmarkStates>((set) => ({
     // controla se o usuario esta logado ou nao
     isLoggedIn: false,
 
-    setActiveTheme: (theme) => set({activeTheme: theme}),
+    setTagsFilters: (tagsFilters) => set({ tagsFilters }),
+    setActiveTheme: (activeTheme) => set({ activeTheme }),
     setSidebar: () => set((state) => ({ sidebar: !state.sidebar })),
     setProfileDropdown: () => set((state) => ({ profileDropdown: !state.profileDropdown })),
     setSearchBar: (newValue: string) => set({ searchBar: newValue }),
@@ -98,7 +103,7 @@ const useBookmarks = create<BookmarkStates>((set) => ({
     setSortType: (type) => set({ activeSort: type }),
     setHomeArchived: (type) => set({ contentType: type }),
     setAppearNotif: () => set((state) => ({ appearNotif: !state.appearNotif })),
-    setIsLoggedIn: () => set((state) => ({ isLoggedIn: !state.isLoggedIn}))
+    setIsLoggedIn: () => set((state) => ({ isLoggedIn: !state.isLoggedIn }))
 }))
 
 export default useBookmarks

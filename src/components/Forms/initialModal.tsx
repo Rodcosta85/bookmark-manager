@@ -1,19 +1,12 @@
 import useBookmarks from "../../hooks/useBookmark"
-import InputComp from "../inputComp"
+import InputComp from "../InputComp"
 
-interface InitialProps {
-  title: string,
-  subtitle: string
-  buttonText: string
-}
-
-const initialModal: React.FC<InitialProps> = ({ title, subtitle, buttonText }) => {
+const InitialModal: React.FC = () => {
 
   const { activeTheme, isLoggedIn } = useBookmarks()
 
   return (
-    <div className="flex justify-center items-center
-    h-screen">
+    <div className="flex justify-center items-center h-screen">
       <div className={`
     flex flex-col gap-8 
     w-md h pt-500 pb-500 pl-400 pr-400
@@ -27,10 +20,14 @@ const initialModal: React.FC<InitialProps> = ({ title, subtitle, buttonText }) =
         />
         <div className="flex flex-col gap-075">
           <h2 className={`text-preset-1 ${activeTheme.headerText}`}>
-            {title}
+            {isLoggedIn ? "Log in to your account" : "Create your account"}
           </h2>
           <p className={`text-preset-4-medium ${activeTheme.paragraphOne}`}>
-            {subtitle}
+            {
+              isLoggedIn
+                ? "Welcome back! Please enter your details."
+                : "Join us and start saving your favorite links — organized, searchable, and always within reach."
+            }
           </p>
         </div>
         <form className="flex flex-col gap-4">
@@ -50,11 +47,11 @@ const initialModal: React.FC<InitialProps> = ({ title, subtitle, buttonText }) =
         rounded-8
         text-center text-preset-3 text-white
         bg-teal-700">
-            {buttonText}
+            {isLoggedIn ? "Log in" : "Create account"}
           </button>
         </form>
 
-        {isLoggedIn ?
+        {isLoggedIn ? (
           <div className="flex flex-col gap-150">
 
             {/* forgot password */}
@@ -69,12 +66,12 @@ const initialModal: React.FC<InitialProps> = ({ title, subtitle, buttonText }) =
               <button className={`text-preset-4 ${activeTheme.paragraphTwo} cursor-pointer`}>Sign up</button>
             </div>
           </div>
-          :
+        ) : (
           <div className="flex justify-center items-center gap-075">
             <span className={`text-preset-4-medium ${activeTheme.paragraphOne}`}>Already have an account?</span>
             <button className={`text-preset-4 ${activeTheme.paragraphTwo} cursor-pointer`}>Log in</button>
           </div>
-        }
+        )}
         {/* forgot password e dont have an account */}
 
 
@@ -84,4 +81,4 @@ const initialModal: React.FC<InitialProps> = ({ title, subtitle, buttonText }) =
   )
 }
 
-export default initialModal
+export default InitialModal

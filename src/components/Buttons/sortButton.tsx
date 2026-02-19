@@ -1,16 +1,12 @@
 import useBookmarks from "../../hooks/useBookmark"
 
-interface sortButtonProps {
-    handleSortDropdown: (e: any) => void
-}
+const sortButton: React.FC = () => {
 
-const sortButton: React.FC<sortButtonProps> = ({ handleSortDropdown }) => {
-
-    const { activeTheme } = useBookmarks()
+    const { activeTheme, setSortDropdown } = useBookmarks()
 
     return (
         <button 
-        onClick={handleSortDropdown}
+        onClick={setSortDropdown}
         type="button"
         className={`flex justify-between items-center gap-200
         w-fit h-10.5 pl-150 pr-150 pt-125 pb-125

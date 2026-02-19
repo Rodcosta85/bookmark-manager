@@ -1,14 +1,34 @@
 import useBookmarks from "../hooks/useBookmark"
 
-interface sidebarProps {
-    handleSidebar: (e: any) => void,
-    sortedTags: string[],
-    elementCount: Record<string, number>;
-}
+const SidebarComp: React.FC = () => {
 
-const SidebarComp: React.FC<sidebarProps> = ({ handleSidebar, sortedTags, elementCount }) => {
+    const {
+        tagsFilters,
+        sidebar,
+        contentType,
+        activeTheme,
+        bookmarks,
+        setHomeArchived,
+        setSidebar,
+        setTagsFilters,
+    } = useBookmarks()
 
-    const { sidebar, contentType, activeTheme, setHomeArchived } = useBookmarks()
+    const allTags = bookmarks.flatMap(item => item.tags);
+
+    const elementCount = allTags.reduce((acc: Record<string, number>, tag) => {
+        acc[tag] = (acc[tag] || 0) + 1;
+        return acc;
+    }, {});
+
+    const sortedUniqueTags = Object.keys(elementCount).sort((a, b) => a.localeCompare(b));
+
+    function handleCheckTag(tag: string) {
+        if (tagsFilters.includes(tag)) {
+            setTagsFilters(tagsFilters.filter(t => t !== tag));
+            return;
+        }
+        setTagsFilters([...tagsFilters, tag]);
+    }
 
     return (
         <div className={`fixed top-0 left-0 z-99 
@@ -27,7 +47,7 @@ const SidebarComp: React.FC<sidebarProps> = ({ handleSidebar, sortedTags, elemen
                     <img src={activeTheme.logo} alt="the logo for Bookmark Manager" />
                     <button
                         type="button"
-                        onClick={handleSidebar}
+                        onClick={setSidebar}
                         className="cursor-pointer">
                         <img src={activeTheme.iconClose} alt="" />
                     </button>
@@ -66,12 +86,14 @@ const SidebarComp: React.FC<sidebarProps> = ({ handleSidebar, sortedTags, elemen
                         <p className="text-preset-5 text-light-neutral-800 font-bold">TAGS</p>
                         <div className="flex flex-col gap-200">
                             {/* checkbox/label + numero de ocorrencias */}
-                            {sortedTags.map((item, id) => (
+                            {sortedUniqueTags.map((item, id) => (
                                 <div
                                     key={id}
                                     className="flex justify-between items-center">
                                     {/* checkbox + label */}
-                                    <button className={`flex items-center gap-100 
+                                    <button
+                                        onClick={() => handleCheckTag(item)}
+                                        className={`flex items-center gap-100 
                                         w-full
                                         text-preset-3 ${activeTheme.paragraphOne}
                                         cursor-pointer`}>
@@ -79,7 +101,7 @@ const SidebarComp: React.FC<sidebarProps> = ({ handleSidebar, sortedTags, elemen
                                         w-4 h-4
                                         rounded-4
                                         border ${activeTheme.inputBorder}`}>
-                                            <img src={activeTheme.iconCheck} alt="a check icon" />
+                                            {tagsFilters.includes(item) && <img src={activeTheme.iconCheck} alt="a check icon" />}
                                         </div>
                                         {item}
                                     </button>

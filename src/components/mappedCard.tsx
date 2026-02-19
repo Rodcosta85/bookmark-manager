@@ -3,13 +3,9 @@ import Tag from "./tag"
 import FreeCodeCamp from './../assets/favicon-freecodecamp.png'
 import DropdownMappedCard from "./dropdownMappedCard"
 
-interface MappedCardProps {
-    handleCardDropdown: (e: any) => void
-}
+const MappedCard: React.FC = () => {
 
-const MappedCard: React.FC<MappedCardProps> = ({ handleCardDropdown }) => {
-
-    const { activeTheme, cardDropdown } = useBookmarks()
+    const { activeTheme, cardDropdown, setCardDropdown } = useBookmarks()
 
     return (
         <div className={`flex flex-col
@@ -42,7 +38,7 @@ const MappedCard: React.FC<MappedCardProps> = ({ handleCardDropdown }) => {
                             rounded-8
                             ${cardDropdown ? 'border-2 border-teal-700' : 'border border-light-neutral-400'}
                             cursor-pointer`}
-                            onClick={handleCardDropdown}
+                            onClick={() => setCardDropdown("")}
                         >
                             <img src={activeTheme.iconThreeDots} alt="vertical three dots" />
                         </button>
