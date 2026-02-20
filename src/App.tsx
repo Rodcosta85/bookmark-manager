@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom"
 import useBookmarks from "./hooks/useBookmark"
 import InitialModal from "./components/Forms/InitialModal"
 import LoggedIn from "./pages/loggedIn"
+import Users from "./pages/Users"
 
 function App() {
 
@@ -15,6 +16,7 @@ function App() {
       <Routes>
         <Route path="/" element={<InitialModal />} />
         <Route path="/home" element={<LoggedIn />} />
+        <Route path="/users" element={<Users />} />
       </Routes>
     </div>
 

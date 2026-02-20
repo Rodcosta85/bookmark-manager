@@ -82,7 +82,7 @@ const useBookmarks = create<BookmarkStates>((set) => ({
     appearNotif: false,
 
     // controla se o usuario esta logado ou nao
-    isLoggedIn: false,
+    isLoggedIn: true,
 
     setTagsFilters: (tagsFilters) => set({ tagsFilters }),
     setActiveTheme: (activeTheme) => set({ activeTheme }),

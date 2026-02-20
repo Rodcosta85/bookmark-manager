@@ -1,9 +1,23 @@
+import { useNavigate } from "react-router-dom"
 import useBookmarks from "../../hooks/useBookmark"
 import InputComp from "../InputComp"
+import type { BaseSyntheticEvent } from "react";
 
 const InitialModal: React.FC = () => {
 
-  const { activeTheme, isLoggedIn } = useBookmarks()
+  const navigate = useNavigate();
+
+  const { activeTheme, isLoggedIn, setIsLoggedIn } = useBookmarks()
+
+  async function handleLogin(e: BaseSyntheticEvent) {
+    e.preventDefault();
+    navigate("/home");
+  }
+
+  async function handleCreateAccount(e: BaseSyntheticEvent) {
+    e.preventDefault();
+    navigate("/home");
+  }
 
   return (
     <div className="flex justify-center items-center h-screen">
@@ -46,7 +60,8 @@ const InitialModal: React.FC = () => {
           <button className="w-full pl-200 pr-200 pt-150 pb-150
         rounded-8
         text-center text-preset-3 text-white
-        bg-teal-700">
+        bg-teal-700 cursor-pointer"
+            onClick={isLoggedIn ? handleLogin : handleCreateAccount}>
             {isLoggedIn ? "Log in" : "Create account"}
           </button>
         </form>
@@ -63,13 +78,13 @@ const InitialModal: React.FC = () => {
             {/* dont have an account */}
             <div className="flex justify-center items-center gap-075">
               <span className={`text-preset-4-medium ${activeTheme.paragraphOne}`}>Don’t have an account?</span>
-              <button className={`text-preset-4 ${activeTheme.paragraphTwo} cursor-pointer`}>Sign up</button>
+              <button className={`text-preset-4 ${activeTheme.paragraphTwo} cursor-pointer`} onClick={setIsLoggedIn}>Sign up</button>
             </div>
           </div>
         ) : (
           <div className="flex justify-center items-center gap-075">
             <span className={`text-preset-4-medium ${activeTheme.paragraphOne}`}>Already have an account?</span>
-            <button className={`text-preset-4 ${activeTheme.paragraphTwo} cursor-pointer`}>Log in</button>
+            <button className={`cursor-pointer text-preset-4 ${activeTheme.paragraphTwo}`} onClick={setIsLoggedIn}>Log in</button>
           </div>
         )}
         {/* forgot password e dont have an account */}
