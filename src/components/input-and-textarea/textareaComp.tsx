@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import useBookmarks from '../hooks/useBookmark'
+import useBookmarks from '../../hooks/useBookmark'
 
 interface textareCompProps {
   label: string
@@ -7,12 +7,12 @@ interface textareCompProps {
 
 const TextareaComp: React.FC<textareCompProps> = ({ label }) => {
 
-  const { inputs, limit, activeTheme, setInputs, setLimit } = useBookmarks()
+  const { limit, activeTheme, setTextareaVal, setLimit } = useBookmarks()
   const [charCount, setCharCount] = useState(0);
 
   const handleCharCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
-    setInputs(value);
+    setTextareaVal(value);
     setCharCount(value.length);
   }
 

@@ -1,15 +1,22 @@
 import useBookmarks from "../hooks/useBookmark"
+import type { DataTypes } from "../types/dataTypes"
 import Tag from "./tag"
-import FreeCodeCamp from './../assets/favicon-freecodecamp.png'
 import DropdownMappedCard from "./dropdownMappedCard"
 
-const MappedCard: React.FC = () => {
+interface MappedCardProps {
+    item: DataTypes,
+    key: string,
+}
+
+const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
 
     const { activeTheme, cardDropdown, setCardDropdown } = useBookmarks()
 
     return (
-        <div className={`flex flex-col
-        w-84.5 h-fit
+        <div
+            key={key}
+            className={`flex flex-col
+        h-fit
         rounded-12
         ${activeTheme.cardBg}`}>
             <div className={`flex flex-col gap-200 
@@ -21,13 +28,15 @@ const MappedCard: React.FC = () => {
                 border-b ${activeTheme.cardBorder}`}>
                     <div className="flex gap-100">
                         <img
-                            src={FreeCodeCamp}
+                            src={item.favicon}
                             alt=""
                             className={`w-11 h-11 rounded-8 border ${activeTheme.cardBorder}`}
                         />
                         <div className="flex flex-col gap-050">
-                            <h2 className={`text-preset-2 ${activeTheme.headerText}`}>Frontend Mentor</h2>
-                            <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>frontendmentor.io</p>
+                            <h2 className={`text-preset-2 ${activeTheme.headerText}`}>{item.title}</h2>
+                            <a href={item.url} target="_blank">
+                                <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>{item.url}</p>
+                            </a>
                         </div>
                     </div>
 
@@ -43,19 +52,21 @@ const MappedCard: React.FC = () => {
                             <img src={activeTheme.iconThreeDots} alt="vertical three dots" />
                         </button>
                         {cardDropdown ?
-                        <DropdownMappedCard />
-                        :
-                        null
+                            <DropdownMappedCard />
+                            :
+                            null
                         }
                     </div>
 
                 </div>
                 {/* imagem, titulos e tres pontos */}
-                <p className={`text-preset-4-medium ${activeTheme.paragraphOne}`}>Improve your front-end coding skills by building real projects. Solve real-world HTML, CSS and JavaScript challenges whilst working to professional designs.</p>
+                <p className={`text-preset-4-medium ${activeTheme.paragraphOne}`}>
+                    {item.description}
+                </p>
                 <div className="flex flex-wrap gap-100">
-                    <Tag label="Practice" />
-                    <Tag label="Learning" />
-                    <Tag label="Community" />
+                    {item.tags.map((tag, index) => (
+                        <Tag label={tag} key={index} />
+                    ))}
                 </div>
             </div>
 
@@ -67,15 +78,19 @@ const MappedCard: React.FC = () => {
                 w-fit">
                     <div className="flex items-center gap-075 w-fit">
                         <img src={activeTheme.iconEye} alt="" />
-                        <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>47</p>
+                        <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>{item.visitCount}</p>
                     </div>
+
+                    {/* precisa de tratamento */}
                     <div className="flex items-center gap-075 w-fit">
                         <img src={activeTheme.iconClock} alt="" />
-                        <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>23 Sep </p>
+                        <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>{item.createdAt}</p>
                     </div>
+
+                    {/* precisa de tratamento */}
                     <div className="flex items-center gap-075 w-fit">
                         <img src={activeTheme.iconCalendar} alt="" />
-                        <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>15 Jan</p>
+                        <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>{item.lastVisited}</p>
                     </div>
                 </div>
                 <button className="cursor-pointer">

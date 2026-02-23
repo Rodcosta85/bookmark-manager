@@ -6,7 +6,7 @@ const dropdownMappedCard = () => {
     const { activeTheme } = useBookmarks()
 
     return (
-        <div className={`absolute top-500
+        <div className={`absolute top-500 z-99
         flex flex-col gap-150
         w-50 h-fit p-100
         rounded-8

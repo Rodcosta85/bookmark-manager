@@ -1,4 +1,6 @@
 import useBookmarks from '../hooks/useBookmark'
+import { useNavigate } from "react-router-dom"
+import type { BaseSyntheticEvent } from "react";
 import themes from '../styles/styles'
 import avatar from './../assets/Avatar.png'
 
@@ -6,10 +8,19 @@ import avatar from './../assets/Avatar.png'
 
 const ProfileDropdown = () => {
 
+    const navigate = useNavigate();
+
+    async function handleLogout(e: BaseSyntheticEvent) {
+        e.preventDefault();
+        navigate("/");
+    }
+
     const { activeTheme, setActiveTheme } = useBookmarks()
 
     return (
-        <div className={`flex flex-col justify-between
+        <div className={`
+        absolute top-600   
+        flex flex-col justify-between
         w-62 h-42.75
         rounded-8
         ${activeTheme.secondaryBg}
@@ -35,18 +46,18 @@ const ProfileDropdown = () => {
                 w-16 h-7.5 p-025
                 rounded-4
                 ${activeTheme.terciaryBg}`}>
-                    <button 
-                    onClick={() => setActiveTheme(themes[0])}
-                    className={`flex justify-center items-center
+                    <button
+                        onClick={() => setActiveTheme(themes[0])}
+                        className={`flex justify-center items-center
                     w-7.5 h-full p-050 
                     rounded-4
                     ${activeTheme === themes[0] && activeTheme.secondaryBg}
                     cursor-pointer`}>
                         <img src={activeTheme.sun} alt="a sun icon" className='w-3.5 h-3.5' />
                     </button>
-                    <button 
-                    onClick={() => setActiveTheme(themes[1])}
-                    className={`flex justify-center items-center
+                    <button
+                        onClick={() => setActiveTheme(themes[1])}
+                        className={`flex justify-center items-center
                     w-7.5 h-full p-050 
                     rounded-4
                     ${activeTheme === themes[1] && activeTheme.secondaryBg}
@@ -55,7 +66,9 @@ const ProfileDropdown = () => {
                     </button>
                 </div>
             </div>
-            <button className={`flex justify-start items-center gap-150
+            <button 
+            onClick={handleLogout}
+            className={`flex justify-start items-center gap-150
             p-150
             text-preset-4 ${activeTheme.paragraphOne}
             cursor-pointer`}>

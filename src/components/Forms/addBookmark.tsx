@@ -1,6 +1,6 @@
 import useBookmarks from "../../hooks/useBookmark"
-import InputComp from "../inputComp"
-import TextareaComp from "../textareaComp"
+import InputComp from "../input-and-textarea/inputComp"
+import TextareaComp from "../input-and-textarea/textareaComp"
 import GreenButton from "../Buttons/greenButton"
 import BorderButton from '../Buttons/borderButton'
 
@@ -9,7 +9,9 @@ const AddBookmark = () => {
     const { activeTheme } = useBookmarks()
 
     return (
-        <div className={`flex flex-col gap-400
+        <div className={`
+        fixed top-[20%] left-[25%] z-99
+        flex flex-col gap-400
         w-142.5 h-fit p-400
         rounded-16
         ${activeTheme.cardBg}`}>
@@ -32,14 +34,14 @@ const AddBookmark = () => {
             action=""
             className="flex flex-col gap-250"
             >
-                <InputComp label="Title *" />
+                <InputComp label="Title *" id="" />
                 <TextareaComp label="Description *" />
-                <InputComp label="Website URLs *" />
-                <InputComp label="Tags *" />
+                <InputComp label="Website URLs *" id="" />
+                <InputComp label="Tags *" id="" />
                 <div className="flex justify-end gap-200">
-                <BorderButton label="Cancel" />
-                <GreenButton label="Save Bookmark" type="submit" />
-            </div>
+                    <BorderButton label="Cancel" />
+                    <GreenButton label="Save Bookmark" type="submit" />
+                </div>
             </form>
             
         </div>

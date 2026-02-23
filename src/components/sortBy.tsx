@@ -5,7 +5,9 @@ const sortBy = () => {
     const { activeTheme, activeSort, setSortType } = useBookmarks()
 
     return (
-        <div className={`flex flex-col gap-200
+        <div className={`
+        absolute top-600 z-99   
+        flex flex-col gap-200
         w-50 h-fit p-100
         rounded-8
         ${activeTheme.secondaryBg}`}>
