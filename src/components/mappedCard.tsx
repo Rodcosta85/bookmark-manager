@@ -5,20 +5,30 @@ import DropdownMappedCard from "./dropdownMappedCard"
 
 interface MappedCardProps {
     item: DataTypes,
-    key: string,
+    key: string
 }
 
 const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
 
-    const { activeTheme, cardDropdown, setCardDropdown } = useBookmarks()
+    const { activeTheme, cardDropdown, cardId, setCardDropdown } = useBookmarks()
+
+    const isCardOpen = cardDropdown && cardId === item.id;
+
+    const jsonDates = [item.createdAt, item.lastVisited]
+    const newDates = jsonDates.map((d) => {
+        return new Date(d).toLocaleDateString('en-GB', {
+            day: '2-digit',
+            month: 'short'
+        });
+    })
 
     return (
         <div
             key={key}
             className={`flex flex-col
-        h-fit
-        rounded-12
-        ${activeTheme.cardBg}`}>
+            h-fit
+            rounded-12
+            ${activeTheme.cardBg}`}>
             <div className={`flex flex-col gap-200 
             p-4
             border-b ${activeTheme.cardBorder}`}>
@@ -29,8 +39,8 @@ const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
                     <div className="flex gap-100">
                         <img
                             src={item.favicon}
-                            alt=""
-                            className={`w-11 h-11 rounded-8 border ${activeTheme.cardBorder}`}
+                            alt={`the logo of ${item.title}`}
+                            className={`w-11 h-11 rounded-8 bg-white border ${activeTheme.cardBorder}`}
                         />
                         <div className="flex flex-col gap-050">
                             <h2 className={`text-preset-2 ${activeTheme.headerText}`}>{item.title}</h2>
@@ -45,14 +55,14 @@ const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
                             className={`flex justify-center items-center
                             w-8 h-8
                             rounded-8
-                            ${cardDropdown ? 'border-2 border-teal-700' : 'border border-light-neutral-400'}
+                            ${isCardOpen ? 'border-2 border-teal-700' : 'border border-light-neutral-400'}
                             cursor-pointer`}
-                            onClick={() => setCardDropdown("")}
+                            onClick={() => setCardDropdown(item.id)}
                         >
                             <img src={activeTheme.iconThreeDots} alt="vertical three dots" />
                         </button>
-                        {cardDropdown ?
-                            <DropdownMappedCard />
+                        {isCardOpen ?
+                            <DropdownMappedCard item={item} />
                             :
                             null
                         }
@@ -84,13 +94,13 @@ const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
                     {/* precisa de tratamento */}
                     <div className="flex items-center gap-075 w-fit">
                         <img src={activeTheme.iconClock} alt="" />
-                        <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>{item.createdAt}</p>
+                        <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>{newDates[0]}</p>
                     </div>
 
                     {/* precisa de tratamento */}
                     <div className="flex items-center gap-075 w-fit">
                         <img src={activeTheme.iconCalendar} alt="" />
-                        <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>{item.lastVisited}</p>
+                        <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>{newDates[1]}</p>
                     </div>
                 </div>
                 <button className="cursor-pointer">

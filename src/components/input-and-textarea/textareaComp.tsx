@@ -18,7 +18,7 @@ const TextareaComp: React.FC<textareCompProps> = ({ label }) => {
 
   return (
     <div className="flex flex-col gap-1.5 text-preset-4">
-      <p className={`${activeTheme.paragraphTwo}`}>{label}</p>
+      <p className={`text-left ${activeTheme.paragraphTwo}`}>{label}</p>
 
       {/* textarea + contador de caracteres */}
       <div className='flex flex-col gap-1.5'>
@@ -47,7 +47,7 @@ const TextareaComp: React.FC<textareCompProps> = ({ label }) => {
       </div>
       {/* textarea + contador de caracteres */}
 
-      <p className={`${activeTheme.paragraphTwo}`}>This is a hint text to help the user.</p>
+      <p className={`text-left ${activeTheme.paragraphTwo}`}>This is a hint text to help the user.</p>
     </div>
   )
 }

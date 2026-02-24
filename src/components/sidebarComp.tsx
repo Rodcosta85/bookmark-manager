@@ -61,7 +61,7 @@ const SidebarComp: React.FC = () => {
                             className={`flex justify-start items-center gap-150
                         w-full pl-150 pr-150 pt-100 pb-100
                         rounded-6
-                        ${contentType === 'home' ? `${activeTheme.secondaryBg}` : 'bg-transparent transtion-colors durantion-200 ease-in-out'}
+                        ${contentType === 'home' ? `${activeTheme.bg}` : 'bg-transparent transtion-colors durantion-200 ease-in-out'}
                         text-preset-3 ${activeTheme.paragraphOne}
                         cursor-pointer`}>
                             <img src={activeTheme.iconHome} alt="" />
@@ -72,7 +72,7 @@ const SidebarComp: React.FC = () => {
                             className={`flex justify-start items-center gap-150
                         w-full pl-150 pr-150 pt-100 pb-100
                         rounded-6
-                        ${contentType === 'archived' ? `${activeTheme.secondaryBg} ${activeTheme.paragraphTwo}` : `${activeTheme.paragraphOne} bg-transparent transition-colors durantion-200 ease-in-out`}
+                        ${contentType === 'archived' ? `${activeTheme.bg} ${activeTheme.paragraphTwo}` : `${activeTheme.paragraphOne} bg-transparent transition-colors durantion-200 ease-in-out`}
                         text-preset-3
                         cursor-pointer`}>
                             <img src={activeTheme.iconArchive} alt="" />

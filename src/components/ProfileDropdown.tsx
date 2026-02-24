@@ -19,7 +19,7 @@ const ProfileDropdown = () => {
 
     return (
         <div className={`
-        absolute top-600   
+        absolute top-600 z-99  
         flex flex-col justify-between
         w-62 h-42.75
         rounded-8
@@ -66,6 +66,8 @@ const ProfileDropdown = () => {
                     </button>
                 </div>
             </div>
+
+            {/* vale a pena criar um modal de "confirmação de log out"? */}
             <button 
             onClick={handleLogout}
             className={`flex justify-start items-center gap-150

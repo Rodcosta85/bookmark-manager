@@ -9,24 +9,28 @@ const AddBookmark = () => {
     const { activeTheme } = useBookmarks()
 
     return (
-        <div className={`
-        fixed top-[20%] left-[25%] z-99
+        <div className="fixed top-0 left-0 z-99 
+        flex justify-center items-center
+        w-screen h-screen 
+        bg-[#00000083]
+        transition-opacity duration-300">
+           <div className={`
         flex flex-col gap-400
-        w-142.5 h-fit p-400
+        w-[90%] h-fit p-400
         rounded-16
         ${activeTheme.cardBg}`}>
-            {/* titulos e botao de fechar */}
-            <div className="flex justify-between items-start">
-                <div className="flex flex-col gap-100">
-                    <h2 className={`text-preset-1 ${activeTheme.headerText}`}>Add a Bookmark</h2>
-                    <p className={`text-preset-4-medium ${activeTheme.paragraphOne}`}>Save a link with details to keep your collection organized.</p>
-                </div>
-                <button className={`flex justify-center items-center
+            <button className={`flex justify-center items-center self-end
                 w-8 h-8 
                 rounded-8 
                 border ${activeTheme.cardBorder}`}>
                     <img src={activeTheme.iconClose} alt="" />
                 </button>
+            {/* titulos e botao de fechar */}
+            <div className="flex justify-between items-start">
+                <div className="flex flex-col gap-100">
+                    <h2 className={`text-left text-preset-1 ${activeTheme.headerText}`}>Add a Bookmark</h2>
+                    <p className={`text-left text-preset-4-medium ${activeTheme.paragraphOne}`}>Save a link with details to keep your collection organized.</p>
+                </div>
             </div>
             {/* titulos e botao de fechar */}
 
@@ -44,7 +48,9 @@ const AddBookmark = () => {
                 </div>
             </form>
             
+        </div> 
         </div>
+        
     )
 }
 

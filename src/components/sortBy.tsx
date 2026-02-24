@@ -10,7 +10,8 @@ const sortBy = () => {
         flex flex-col gap-200
         w-50 h-fit p-100
         rounded-8
-        ${activeTheme.secondaryBg}`}>
+        ${activeTheme.secondaryBg}
+        shadow-xl`}>
             <button
                 onClick={() => setSortType("recently_added")}
                 className={`flex justify-between items-center

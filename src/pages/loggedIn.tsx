@@ -1,24 +1,17 @@
 import useBookmarks from "../hooks/useBookmark"
-import ProfileDropdown from "../components/profileDropdown"
-import AddBookmark from "../components/Forms/addBookmark"
 import MappedCard from "../components/mappedCard"
 import SortBy from "../components/sortBy"
 import SortButton from "../components/Buttons/sortButton"
 import DialogModal from "../components/dialogModal"
 import NotificationPopup from "../components/notificationPopup"
 import Header from './../components/layout/Header'
-import IconPlus from "./../assets/icon-plus.svg"
-import Avatar from "./../assets/Avatar.png"
 
 const loggedIn = () => {
 
     const {
         bookmarks,
-        sidebar,
         sortDropdown,
         activeTheme,
-        appearprofDrop,
-        setAppearprofDrop
     } = useBookmarks()
 
     return (
@@ -42,23 +35,18 @@ const loggedIn = () => {
                         {sortDropdown && <SortBy />}
                     </div>
                 </div>
+
+                {/* está dando um erro com a key!!! */}
                 {bookmarks.map((item) => (
                     <MappedCard
                         item={item}
-                        key={item.id} />
+                        key={item.id}
+                    />
                 ))}
             </div>
 
 
             {/* 
-            <AddBookmark />
-            
-            <HambMenu />
-            {sidebar && <SidebarComp />}
-            <div className="flex flex-col gap-2.5 w-fit h-fit">
-                <SortButton />
-                {sortDropdown && <SortBy />}
-            </div>
             <DialogModal
                 title="Archive bookmark"
                 subtitle="Are you sure you want to archive this bookmark?" />

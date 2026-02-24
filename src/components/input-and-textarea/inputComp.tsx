@@ -21,7 +21,7 @@ const InputComp: React.FC<inputCompProps> = ({ label, type, id }) => {
   return (
     <div className="flex flex-col gap-1.5 text-preset-4">
       {id !== "search-bar" ? 
-      (<p className={`${activeTheme.paragraphTwo}`}>{label}</p>) : null}
+      (<p className={`text-left ${activeTheme.paragraphTwo}`}>{label}</p>) : null}
       
 
       {/* div da img/input + olho */}
@@ -45,7 +45,8 @@ const InputComp: React.FC<inputCompProps> = ({ label, type, id }) => {
             placeholder={label === 'Tags *' ? 'e.g. design, learning, tools' : 'Search'}
             className={`text-preset-4-medium ${activeTheme.paragraphTwo} placeholder-${activeTheme.paragraphOne} 
         focus:outline-none border-none 
-        bg-transparent [&::-internal-autofill-selected]:transparent`}
+        bg-transparent [&::-internal-autofill-selected]:transparent
+        w-[70%]`}
           />
         </div>
         {/* div da img + input */}
@@ -67,7 +68,7 @@ const InputComp: React.FC<inputCompProps> = ({ label, type, id }) => {
 
       </div>
       {/* div da img/input + olho */}
-      {id !== "search-bar" ? (<p className={`${activeTheme.paragraphTwo}`}>This is a hint text to help the user.</p>) : null}
+      {id !== "search-bar" ? (<p className={`text-left ${activeTheme.paragraphTwo}`}>This is a hint text to help the user.</p>) : null}
       
     </div>
   )
