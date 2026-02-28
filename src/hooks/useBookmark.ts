@@ -4,7 +4,7 @@ import type { DataTypes } from '../types/dataTypes'
 import themes from './../styles/styles'
 
 // modal de "sort by"
-type SortType = 'recently_added' | 'recently_visited' | 'most_visited'
+export type SortType = 'recently_added' | 'recently_visited' | 'most_visited'
 type HomeArchived = 'home' | 'archived'
 type themeChanger = typeof themes[number]
 
@@ -26,6 +26,8 @@ interface BookmarkStates {
     isLoggedIn: boolean,
     showPassword: boolean,
     showBookmarkEditor: boolean,
+    archiveItems: DataTypes[],
+
 
 
     setTagsFilters: (tagsFilters: string[]) => void,
@@ -43,6 +45,8 @@ interface BookmarkStates {
     setIsLoggedIn: () => void,
     setShowPassword: (visible: boolean) => void,
     setShowBookmarkEditor: () => void,
+    setArchiveItems: (id: string) => void,
+    restoreItem: (id: string) => void, 
 }
 
 const useBookmarks = create<BookmarkStates>((set) => ({
@@ -99,6 +103,11 @@ const useBookmarks = create<BookmarkStates>((set) => ({
     // abre o popup do "add bookmark"
     showBookmarkEditor: false,
 
+    // array dos items do json que foram arquivados
+    archiveItems: [] as DataTypes[],
+
+
+
     setTagsFilters: (tagsFilters) => set({ tagsFilters }),
     setActiveTheme: (activeTheme) => set({ activeTheme }),
     setSidebar: () => set((state) => ({ sidebar: !state.sidebar })),
@@ -115,12 +124,48 @@ const useBookmarks = create<BookmarkStates>((set) => ({
 
     setLimit: () => set({ limit: true }),
     setSortDropdown: () => set((state) => ({ sortDropdown: !state.sortDropdown })),
-    setSortType: (type) => set({ activeSort: type }),
     setHomeArchived: (type) => set({ contentType: type }),
     setAppearNotif: () => set((state) => ({ appearNotif: !state.appearNotif })),
     setIsLoggedIn: () => set((state) => ({ isLoggedIn: !state.isLoggedIn })),
     setShowPassword: () => set((state) => ({ showPassword: !state.showPassword })),
     setShowBookmarkEditor: () => set((state) => ({ showBookmarkEditor: !state.showBookmarkEditor })),
+
+    // organiza o array de bookmarks/faz o "sort"
+    setSortType: (type: SortType) => set((state) => {
+        const sortedArray = [...state.bookmarks].sort((a, b) => {
+            if (type === 'most_visited') return (b.visitCount || 0) - (a.visitCount || 0);
+            if (type === 'recently_added') return (new Date(b.createdAt).getTime() || 0) - (new Date(a.createdAt).getTime() || 0);
+            if (type === 'recently_visited') return (new Date(b.lastVisited).getTime() || 0) - (new Date(a.lastVisited).getTime() || 0);
+            return 0;
+        });
+        return {
+            bookmarks: sortedArray,
+            activeSort: type
+        };
+    }),
+
+    setArchiveItems: (id: string) => set((state) => {
+        const itemToArchive = state.bookmarks.find((item) => item.id === id);
+        if (!itemToArchive) return state;
+        const remainingBookmarks = state.bookmarks.filter((item) => item.id !== id);
+        const newArchivedBucket = [...state.archiveItems, itemToArchive];
+        return {
+            bookmarks: remainingBookmarks,
+            archiveItems: newArchivedBucket
+        };
+    }),
+
+    restoreItem: (id: string) => set((state) => {
+        const itemToRestore = state.archiveItems.find((item) => item.id === id);
+        if (!itemToRestore) return state;
+        const remainingArchive = state.archiveItems.filter((item) => item.id !== id);
+        const newBookmarks = [...state.bookmarks, itemToRestore];
+        return {
+            archiveItems: remainingArchive,
+            bookmarks: newBookmarks
+        }
+    })
+
 }))
 
 export default useBookmarks

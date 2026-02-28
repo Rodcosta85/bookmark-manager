@@ -16,8 +16,7 @@ const hambMenu: React.FC = () => {
             <div className={`w-full h-[1.5px] 
                     rounded-full 
                     border-none 
-                    ${activeTheme.hambBg}
-                    transition-transform duration-200 ease-in-out ${sidebar && 'transform rotate-45 translate-y-[8px]'}`}></div>
+                    ${activeTheme.hambBg}`}></div>
             <div className={`w-full h-[1.5px] 
                     rounded-full 
                     border-none 
@@ -26,8 +25,7 @@ const hambMenu: React.FC = () => {
             <div className={`w-full h-[1.5px] 
                     rounded-full 
                     border-none 
-                    ${activeTheme.hambBg}
-                    transition-transform duration-200 ease-in-out ${sidebar && 'transform -rotate-45 -translate-y-[8px]'}`}></div>
+                    ${activeTheme.hambBg}`}></div>
         </button>
         
     )

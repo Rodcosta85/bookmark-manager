@@ -1,10 +1,12 @@
+import { useEffect } from "react"
 import useBookmarks from "../hooks/useBookmark"
 import MappedCard from "../components/mappedCard"
 import SortBy from "../components/sortBy"
 import SortButton from "../components/Buttons/sortButton"
-import DialogModal from "../components/dialogModal"
-import NotificationPopup from "../components/notificationPopup"
+import DialogModal from "../components/events//dialogModal"
+import NotificationPopup from "../components/events/notificationPopup"
 import Header from './../components/layout/Header'
+
 
 const loggedIn = () => {
 
@@ -12,7 +14,18 @@ const loggedIn = () => {
         bookmarks,
         sortDropdown,
         activeTheme,
+        contentType,
+        archiveItems, 
+        appearNotif
     } = useBookmarks()
+
+    useEffect(() => {
+        console.log(archiveItems);
+    }, [archiveItems])
+    
+
+    const itemsToMap = contentType === 'home' ? bookmarks : archiveItems;
+
 
     return (
         <div className={`
@@ -29,20 +42,23 @@ const loggedIn = () => {
             overflow-y-scroll 
             ">
                 <div className="flex justify-between items-center">
-                    <h2 className={`text-preset-2 ${activeTheme.headerText}`}>All Bookmarks</h2>
+                    <h2 className={`text-preset-2 ${activeTheme.headerText}`}>
+                        {contentType === 'home' ? 'All Bookmarks' : 'Archived Bookmarks'}
+                    </h2>
                     <div className="flex flex-col items-end relative">
                         <SortButton />
                         {sortDropdown && <SortBy />}
                     </div>
                 </div>
-
+                
                 {/* está dando um erro com a key!!! */}
-                {bookmarks.map((item) => (
+                {itemsToMap.map((item) => (
                     <MappedCard
                         item={item}
                         key={item.id}
                     />
                 ))}
+                {appearNotif &&  <DialogModal title="Archive Bookmark" subtitle="Are you sure you want to archive this bookmark?" />}
             </div>
 
 

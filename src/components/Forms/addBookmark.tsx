@@ -1,7 +1,7 @@
 import useBookmarks from "../../hooks/useBookmark"
 import InputComp from "../input-and-textarea/inputComp"
 import TextareaComp from "../input-and-textarea/textareaComp"
-import GreenButton from "../Buttons/greenButton"
+import GreenButton from "../Buttons/coloredButton"
 import BorderButton from '../Buttons/borderButton'
 
 const AddBookmark = () => {

@@ -1,8 +1,10 @@
 import useBookmarks from "../hooks/useBookmark"
+import type { SortType } from "../hooks/useBookmark"
 
 const sortBy = () => {
 
     const { activeTheme, activeSort, setSortType } = useBookmarks()
+
 
     return (
         <div className={`
@@ -21,9 +23,9 @@ const sortBy = () => {
                 Recently Added
                 <img
                     src={activeTheme.iconCheck}
-                    alt="a check icon" 
+                    alt="a check icon"
                     className={activeSort === 'recently_added' ? 'opacity-100' : 'opacity-0 transition duration-200 ease-in-out'}
-                    />
+                />
             </button>
             <button
                 onClick={() => setSortType("recently_visited")}
@@ -34,12 +36,12 @@ const sortBy = () => {
                 Recently Visited
                 <img
                     src={activeTheme.iconCheck}
-                    alt="a check icon" 
+                    alt="a check icon"
                     className={activeSort === 'recently_visited' ? 'opacity-100' : 'opacity-0 transition duration-100 ease-in-out'}
-                    />
+                />
             </button>
             <button
-                onClick={() => setSortType("most_visited")}
+                onClick={() => setSortType('most_visited')}
                 className={`flex justify-between items-center
             w-full p-100
             text-preset-4 ${activeTheme.paragraphOne}
@@ -47,9 +49,9 @@ const sortBy = () => {
                 Most Visited
                 <img
                     src={activeTheme.iconCheck}
-                    alt="a check icon" 
+                    alt="a check icon"
                     className={activeSort === 'most_visited' ? 'opacity-100' : 'opacity-0 transition duration-100 ease-in-out'}
-                    />
+                />
             </button>
         </div>
     )

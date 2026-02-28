@@ -1,5 +1,6 @@
 import useBookmarks from "../hooks/useBookmark"
 import type { DataTypes } from "../types/dataTypes"
+import { formatBookmarkDates } from "../utils/utils"
 import Tag from "./tag"
 import DropdownMappedCard from "./dropdownMappedCard"
 
@@ -10,17 +11,20 @@ interface MappedCardProps {
 
 const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
 
-    const { activeTheme, cardDropdown, cardId, setCardDropdown } = useBookmarks()
+    const { activeTheme,
+        cardDropdown,
+        cardId,
+        contentType,
+        appearNotif,
+        restoreItem,
+        setCardDropdown,
+        setArchiveItems,
+        setAppearNotif } = useBookmarks()
 
     const isCardOpen = cardDropdown && cardId === item.id;
 
-    const jsonDates = [item.createdAt, item.lastVisited]
-    const newDates = jsonDates.map((d) => {
-        return new Date(d).toLocaleDateString('en-GB', {
-            day: '2-digit',
-            month: 'short'
-        });
-    })
+    const newDates = formatBookmarkDates(item.createdAt, item.lastVisited);
+
 
     return (
         <div
@@ -103,10 +107,24 @@ const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
                         <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>{newDates[1]}</p>
                     </div>
                 </div>
-                <button className="cursor-pointer">
-                    <img src={activeTheme.iconPin} alt="" />
+                <button
+                    onClick={() => {
+                        if (contentType === 'home') {
+                            setArchiveItems(item.id);
+                        } else {
+                            restoreItem(item.id);
+                            setAppearNotif()
+                        }
+                    }}
+                    className="cursor-pointer">
+                    <img
+                        src={activeTheme.iconPin}
+                        alt="a pin icon"
+                        className={`transition-all duration-150 ease-in-out 
+                        ${contentType === 'home' ? 'hover:translate-y-1' : 'hover:-translate-y-1'}
+                    `}
+                    />
                 </button>
-
             </div>
             {/* infos + pin */}
         </div>

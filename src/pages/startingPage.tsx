@@ -8,7 +8,7 @@ const startingPage = () => {
     return (
         <div className={`
         flex justify-center items-center
-        w-screen h-screen 
+        w-screen h-screen pl-250 pr-250
         font-manrope
         ${activeTheme.bg}
         `}>

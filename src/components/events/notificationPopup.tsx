@@ -1,4 +1,4 @@
-import useBookmarks from "../hooks/useBookmark"
+import useBookmarks from "./../../hooks/useBookmark"
 
 interface NotificationPopupProps {
     img: string,

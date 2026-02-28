@@ -1,15 +1,18 @@
-import useBookmarks from "../hooks/useBookmark"
-import GreenButton from "./Buttons/greenButton"
-import BorderButton from "./Buttons/borderButton"
+import useBookmarks from "./../../hooks/useBookmark"
+import ColoredButton from "../Buttons/coloredButton"
+import BorderButton from "../Buttons/borderButton"
 
 interface DialogModalProps {
     title: string,
     subtitle: string,
+    
 }
 
 const dialogModal: React.FC<DialogModalProps> = ({ title, subtitle }) => {
 
     const { activeTheme } = useBookmarks()
+
+    const buttonCondition = title.includes('Archive') ? 'Archive' : 'Unarchive'
 
     return (
         <div className={`flex flex-col gap-300
@@ -36,7 +39,7 @@ const dialogModal: React.FC<DialogModalProps> = ({ title, subtitle }) => {
             <div className="flex justify-end items-center gap-200
             w-full">
                 <BorderButton label="Cancel" />
-                <GreenButton label="Archive" />
+                <ColoredButton label={buttonCondition} type="button"/>
             </div>
         </div>
     )
