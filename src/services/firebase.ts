@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getAuth, GoogleAuthProvider } from "firebase/auth";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyAFzyDgEJ2QunnJKMbySfgR_zL88KSc-D0",
@@ -16,4 +17,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-export { db, auth }
+// Initialize the Google Provider
+const googleProvider = new GoogleAuthProvider();
+
+// Export the provider so we can use it in our login button
+export { db, auth, googleProvider };

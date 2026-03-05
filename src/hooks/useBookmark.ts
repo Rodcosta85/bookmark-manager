@@ -8,6 +8,13 @@ export type SortType = 'recently_added' | 'recently_visited' | 'most_visited'
 type HomeArchived = 'home' | 'archived'
 type themeChanger = typeof themes[number]
 
+interface UserProfile {
+  uid: string,
+  email: string | null,
+  displayName: string | null,
+  photo: string
+}
+
 interface BookmarkStates {
     tagsFilters: string[],
     activeTheme: themeChanger,
@@ -27,6 +34,8 @@ interface BookmarkStates {
     showPassword: boolean,
     showBookmarkEditor: boolean,
     archiveItems: DataTypes[],
+    user: UserProfile | null,
+
 
 
 
@@ -47,6 +56,7 @@ interface BookmarkStates {
     setShowBookmarkEditor: () => void,
     setArchiveItems: (id: string) => void,
     restoreItem: (id: string) => void, 
+    setUser: (user: UserProfile | null) => void;
 }
 
 const useBookmarks = create<BookmarkStates>((set) => ({
@@ -106,6 +116,10 @@ const useBookmarks = create<BookmarkStates>((set) => ({
     // array dos items do json que foram arquivados
     archiveItems: [] as DataTypes[],
 
+    // usuário atual como registrado pelo firebase
+    user: null,
+
+
 
 
     setTagsFilters: (tagsFilters) => set({ tagsFilters }),
@@ -164,7 +178,9 @@ const useBookmarks = create<BookmarkStates>((set) => ({
             archiveItems: remainingArchive,
             bookmarks: newBookmarks
         }
-    })
+    }),
+
+    setUser: (user) => set({ user}),
 
 }))
 

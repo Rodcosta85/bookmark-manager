@@ -1,4 +1,7 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom"
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../services/firebase';
 import useBookmarks from "../../hooks/useBookmark"
 import InputComp from "../input-and-textarea/inputComp"
 import type { BaseSyntheticEvent } from "react";
@@ -8,10 +11,27 @@ const InitialModal: React.FC = () => {
   const navigate = useNavigate();
 
   const { activeTheme, isLoggedIn, setIsLoggedIn } = useBookmarks()
+  const [userEmail, setUserEmail] = useState("")
+  const [userPassword, setUserPassword] = useState("")
+
 
   async function handleLogin(e: BaseSyntheticEvent) {
     e.preventDefault();
-    navigate("/home");
+
+    try {
+      // 2. Pass the hardcoded variables here
+      const userCredential = await signInWithEmailAndPassword(auth, userEmail, userPassword);
+
+      console.log("Success! Firebase logged in:", userCredential.user);
+
+      // 2. ONLY navigate to home if the login was successful
+      navigate("/home");
+
+    } catch (error: any) {
+      // 3. Catch wrong passwords or invalid emails
+      console.error("Login failed:", error.message);
+      alert("Invalid email or password!");
+    }
   }
 
   async function handleCreateAccount(e: BaseSyntheticEvent) {
@@ -43,24 +63,35 @@ const InitialModal: React.FC = () => {
           }
         </p>
       </div>
-      <form className="flex flex-col gap-4">
+      <form
+        onSubmit={isLoggedIn ? handleLogin : handleCreateAccount}
+        className="flex flex-col gap-4">
         {isLoggedIn ?
           <div className="flex flex-col gap-4">
-            <InputComp label="Email" type="email" id="" />
-            <InputComp label="Password" type="password" id=""/>
+            <InputComp
+              label="Email"
+              type="email"
+              id=""
+              onChange={(e) => setUserEmail(e.target.value)} />
+            <InputComp
+              label="Password"
+              type="password"
+              id=""
+              onChange={(e) => setUserPassword(e.target.value)} />
           </div>
           :
           <div className="flex flex-col gap-4">
-            <InputComp label="Full name *" type="text" id=""/>
-            <InputComp label="Email address *" type="email" id=""/>
-            <InputComp label="Password *" type="password" id=""/>
+            <InputComp label="Full name *" type="text" id="" />
+            <InputComp label="Email address *" type="email" id="" />
+            <InputComp label="Password *" type="password" id="" />
           </div>
         }
-        <button className="w-full pl-200 pr-200 pt-150 pb-150
+        <button
+          type="submit"
+          className="w-full pl-200 pr-200 pt-150 pb-150
         rounded-8
         text-center text-preset-3 text-white
-        bg-teal-700 cursor-pointer"
-          onClick={isLoggedIn ? handleLogin : handleCreateAccount}>
+        bg-teal-700 cursor-pointer">
           {isLoggedIn ? "Log in" : "Create account"}
         </button>
       </form>
