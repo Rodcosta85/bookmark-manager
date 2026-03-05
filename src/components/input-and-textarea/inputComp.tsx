@@ -1,14 +1,15 @@
+import type { InputHTMLAttributes } from "react"
 import useBookmarks from "../../hooks/useBookmark"
 import Eye from "./../../assets/eye.png"
 import ClosedEye from "./../../assets/hidden.png"
 
-interface inputCompProps {
+interface InputCompProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string,
   type?: 'text' | 'number' | 'email' | 'password',
   id: string
 }
 
-const InputComp: React.FC<inputCompProps> = ({ label, type, id }) => {
+const InputComp: React.FC<InputCompProps> = ({ label, type, id, ...props }) => {
 
   const { activeTheme, showPassword, setShowPassword } = useBookmarks()
 
@@ -20,9 +21,9 @@ const InputComp: React.FC<inputCompProps> = ({ label, type, id }) => {
 
   return (
     <div className="flex flex-col gap-1.5 text-preset-4">
-      {id !== "search-bar" ? 
-      (<p className={`text-left ${activeTheme.paragraphTwo}`}>{label}</p>) : null}
-      
+      {id !== "search-bar" ?
+        (<p className={`text-left ${activeTheme.paragraphTwo}`}>{label}</p>) : null}
+
 
       {/* div da img/input + olho */}
       <div className={`
@@ -39,6 +40,7 @@ const InputComp: React.FC<inputCompProps> = ({ label, type, id }) => {
             className='w-5 h-5'
           />
           <input
+            {...props}
             id={id}
             type={showPassword ? 'text' : type}
             name={type}
@@ -69,7 +71,7 @@ const InputComp: React.FC<inputCompProps> = ({ label, type, id }) => {
       </div>
       {/* div da img/input + olho */}
       {id !== "search-bar" ? (<p className={`text-left ${activeTheme.paragraphTwo}`}>This is a hint text to help the user.</p>) : null}
-      
+
     </div>
   )
 }

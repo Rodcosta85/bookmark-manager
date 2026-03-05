@@ -6,20 +6,18 @@ import DropdownMappedCard from "./dropdownMappedCard"
 
 interface MappedCardProps {
     item: DataTypes,
-    key: string
+    key: string;
+    handleSelectItem: (id: string) => void;
 }
 
-const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
+const MappedCard: React.FC<MappedCardProps> = ({ item, key, handleSelectItem }) => {
 
     const { activeTheme,
         cardDropdown,
         cardId,
         contentType,
-        appearNotif,
-        restoreItem,
-        setCardDropdown,
-        setArchiveItems,
-        setAppearNotif } = useBookmarks()
+        setCardDropdown
+     } = useBookmarks()
 
     const isCardOpen = cardDropdown && cardId === item.id;
 
@@ -108,14 +106,7 @@ const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
                     </div>
                 </div>
                 <button
-                    onClick={() => {
-                        if (contentType === 'home') {
-                            setArchiveItems(item.id);
-                        } else {
-                            restoreItem(item.id);
-                            setAppearNotif()
-                        }
-                    }}
+                    onClick={() => handleSelectItem(item.id)}
                     className="cursor-pointer">
                     <img
                         src={activeTheme.iconPin}

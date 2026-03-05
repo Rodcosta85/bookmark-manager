@@ -5,17 +5,18 @@ import BorderButton from "../Buttons/borderButton"
 interface DialogModalProps {
     title: string,
     subtitle: string,
-    
+    onConfirm: () => void;
+    onCancel: () => void;
 }
 
-const dialogModal: React.FC<DialogModalProps> = ({ title, subtitle }) => {
+const DialogModal: React.FC<DialogModalProps> = ({ title, subtitle, onConfirm, onCancel }) => {
 
     const { activeTheme } = useBookmarks()
 
     const buttonCondition = title.includes('Archive') ? 'Archive' : 'Unarchive'
 
     return (
-        <div className={`flex flex-col gap-300
+        <div className={`absolute flex flex-col gap-300
         w-85 p-200
         rounded-12
         ${activeTheme.cardBg}`}>
@@ -38,11 +39,11 @@ const dialogModal: React.FC<DialogModalProps> = ({ title, subtitle }) => {
 
             <div className="flex justify-end items-center gap-200
             w-full">
-                <BorderButton label="Cancel" />
-                <ColoredButton label={buttonCondition} type="button"/>
+                <BorderButton label="Cancel" onClick={onCancel} />
+                <ColoredButton label={buttonCondition} type="button" onClick={onConfirm} />
             </div>
         </div>
     )
 }
 
-export default dialogModal
+export default DialogModal
