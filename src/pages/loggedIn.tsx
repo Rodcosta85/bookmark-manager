@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react"
+import { useEffect } from "react"
 import useBookmarks from "../hooks/useBookmark"
 import MappedCard from "../components/mappedCard"
 import SortBy from "../components/sortBy"
 import SortButton from "../components/Buttons/sortButton"
 import DialogModal from "../components/events//dialogModal"
-// import NotificationPopup from "../components/events/notificationPopup"
 import Header from './../components/layout/Header'
 
 
@@ -16,39 +15,16 @@ const loggedIn = () => {
         activeTheme,
         contentType,
         archiveItems,
-        restoreItem,
-        setArchiveItems,
+        showModal,
+        isArchiving,
     } = useBookmarks()
 
     useEffect(() => {
         console.log(archiveItems);
     }, [archiveItems])
 
-    const [showModal, setShowModal] = useState(false);
-    const [itemId, setItemId] = useState<string>();
-    const [isArchiving, setIsArchiving] = useState(false);
-
 
     const itemsToMap = contentType === 'home' ? bookmarks : archiveItems;
-
-    function handleSelectItem(id: string) {
-        const isArchived = archiveItems.some(a => a.id === id);
-        setIsArchiving(!isArchived);
-        setItemId(id);
-        setShowModal(true);
-    }
-
-    function handleConfirm() {
-        if (itemId) {
-            if (contentType === 'home') {
-                setArchiveItems(itemId);
-            } else {
-                restoreItem(itemId);
-                // setAppearNotif()
-            }
-            setShowModal(false);
-        }
-    }
 
 
     return (
@@ -80,7 +56,6 @@ const loggedIn = () => {
                     <MappedCard
                         item={item}
                         key={item.id}
-                        handleSelectItem={handleSelectItem}
                     />
                 ))}
             </div>
@@ -89,8 +64,6 @@ const loggedIn = () => {
                 <DialogModal
                     title={`${isArchiving ? "Archive" : "Unarchive"} bookmark`}
                     subtitle={`Are you sure you want to ${isArchiving ? "archive" : "unarchive"} this bookmark?`}
-                    onConfirm={handleConfirm}
-                    onCancel={() => setShowModal(false)}
                 />
             )}
 

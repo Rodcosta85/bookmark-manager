@@ -1,4 +1,5 @@
 import useBookmarks from "../hooks/useBookmark"
+import { useActions } from "../hooks/useActions"
 import type { DataTypes } from "../types/dataTypes"
 import { formatBookmarkDates } from "../utils/utils"
 import Tag from "./tag"
@@ -7,17 +8,19 @@ import DropdownMappedCard from "./dropdownMappedCard"
 interface MappedCardProps {
     item: DataTypes,
     key: string;
-    handleSelectItem: (id: string) => void;
 }
 
-const MappedCard: React.FC<MappedCardProps> = ({ item, key, handleSelectItem }) => {
+const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
 
     const { activeTheme,
         cardDropdown,
         cardId,
         contentType,
-        setCardDropdown
-     } = useBookmarks()
+        setCardDropdown,
+    } = useBookmarks()
+
+    const { handleSelectItem } = useActions()
+    
 
     const isCardOpen = cardDropdown && cardId === item.id;
 
@@ -92,14 +95,10 @@ const MappedCard: React.FC<MappedCardProps> = ({ item, key, handleSelectItem }) 
                         <img src={activeTheme.iconEye} alt="" />
                         <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>{item.visitCount}</p>
                     </div>
-
-                    {/* precisa de tratamento */}
                     <div className="flex items-center gap-075 w-fit">
                         <img src={activeTheme.iconClock} alt="" />
                         <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>{newDates[0]}</p>
                     </div>
-
-                    {/* precisa de tratamento */}
                     <div className="flex items-center gap-075 w-fit">
                         <img src={activeTheme.iconCalendar} alt="" />
                         <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>{newDates[1]}</p>

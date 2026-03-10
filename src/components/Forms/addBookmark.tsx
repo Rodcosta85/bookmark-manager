@@ -6,7 +6,7 @@ import BorderButton from '../Buttons/borderButton'
 
 const AddBookmark = () => {
 
-    const { activeTheme } = useBookmarks()
+    const { activeTheme, setArchiveItems } = useBookmarks()
 
     return (
         <div className="fixed top-0 left-0 z-99 

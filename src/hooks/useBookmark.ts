@@ -9,10 +9,10 @@ type HomeArchived = 'home' | 'archived'
 type themeChanger = typeof themes[number]
 
 interface UserProfile {
-  uid: string,
-  email: string | null,
-  displayName: string | null,
-  photo: string
+    uid: string,
+    email: string | null,
+    displayName: string | null,
+    photo: string
 }
 
 interface BookmarkStates {
@@ -35,6 +35,9 @@ interface BookmarkStates {
     showBookmarkEditor: boolean,
     archiveItems: DataTypes[],
     user: UserProfile | null,
+    showModal: boolean,
+    itemId: string | null,
+    isArchiving: boolean,
 
 
 
@@ -55,11 +58,15 @@ interface BookmarkStates {
     setShowPassword: (visible: boolean) => void,
     setShowBookmarkEditor: () => void,
     setArchiveItems: (id: string) => void,
-    restoreItem: (id: string) => void, 
+    restoreItem: (id: string) => void,
     setUser: (user: UserProfile | null) => void;
+    setShowModal: (showModal: boolean) => void,
+    setItemId: (id: string) => void,
+    setIsArchiving: (isArchiving: boolean) => void,
+    handleConfirm: () => void
 }
 
-const useBookmarks = create<BookmarkStates>((set) => ({
+const useBookmarks = create<BookmarkStates>((set, get) => ({
     tagsFilters: [],
 
     // data.json  
@@ -118,6 +125,14 @@ const useBookmarks = create<BookmarkStates>((set) => ({
 
     // usuário atual como registrado pelo firebase
     user: null,
+
+    // mostra ou esconde ou modal
+    showModal: false,
+
+    // vai usar a id do objeto do json para arquivar ou voltar com ele
+    itemId: "",
+
+    isArchiving: false,
 
 
 
@@ -180,8 +195,24 @@ const useBookmarks = create<BookmarkStates>((set) => ({
         }
     }),
 
-    setUser: (user) => set({ user}),
+    setUser: (user) => set({ user }),
+    setShowModal: (showModal) => set({ showModal: showModal }),
+    setItemId: (id) => set({ itemId: id }),
+    setIsArchiving: (isArchiving) => set({ isArchiving: isArchiving }),
+    handleConfirm: () => {
+        const { itemId, isArchiving, setArchiveItems, restoreItem } = get();
 
+        if (itemId) {
+            if (isArchiving) {
+                setArchiveItems(itemId);
+            } else {
+                restoreItem(itemId);
+            }
+            set({ showModal: false, itemId: null });
+        } else {
+            console.error("No itemId found in store during handleConfirm!");
+        }
+    },
 }))
 
 export default useBookmarks

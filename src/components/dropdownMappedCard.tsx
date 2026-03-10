@@ -8,20 +8,31 @@ interface dropdownCardProps {
 
 const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
 
-    const { activeTheme } = useBookmarks()
+    const { activeTheme, itemId, contentType, bookmarks, archiveItems } = useBookmarks()
+
     const [copiedId, setCopiedId] = useState(null);
 
     const handleCopy = async (url: string, id: any) => {
-    try {
-      await navigator.clipboard.writeText(url);
-      setCopiedId(id); // Set the ID of the item just clicked
-      
-      // Reset the feedback after 2 seconds
-      setTimeout(() => setCopiedId(null), 2000);
-    } catch (err) {
-      console.error("Failed to copy!", err);
-    }
-  };
+        try {
+            await navigator.clipboard.writeText(url);
+            setCopiedId(id); // Set the ID of the item just clicked
+
+            // Reset the feedback after 2 seconds
+            setTimeout(() => setCopiedId(null), 2000);
+        } catch (err) {
+            console.error("Failed to copy!", err);
+        }
+    };
+
+    console.log("--- DEBUG START ---");
+    console.log("Target itemId:", itemId, "Type:", typeof itemId);
+
+    archiveItems.forEach((obj, index) => {
+        console.log(`Index [${index}] ID in Archive:`, obj.id, "Type:", typeof obj.id);
+        console.log("Strict Match (===):", obj.id === itemId);
+        console.log("String Match:", String(obj.id) === String(itemId));
+    });
+    console.log("--- DEBUG END ---");
 
     return (
         <div className={`absolute top-500 z-99
@@ -42,9 +53,9 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
                 </button>
             </a>
 
-            <button 
-            onClick={() => handleCopy(item.url, item.id)}
-            className={`flex justify-start items-center gap-125 
+            <button
+                onClick={() => handleCopy(item.url, item.id)}
+                className={`flex justify-start items-center gap-125 
             p-100
             rounded-8
             border-2 border-transparent hover:border-teal-700
@@ -54,16 +65,18 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
                 {copiedId === item.id ? 'Copied 🎉' : 'Copy URL'}
             </button>
 
+
             {/* se já estiver arquivado, pin nao aparece mais */}
             <button className={`flex justify-start items-center gap-125 
-            p-100
-            rounded-8
-            border-2 border-transparent hover:border-teal-700
-            text-preset-4 ${activeTheme.paragraphOne}
-            cursor-pointer`}>
-                <img src={activeTheme.iconPin} alt="" />
-                Pin
+                p-100
+                rounded-8
+                border-2 border-transparent hover:border-teal-700
+                text-preset-4 ${activeTheme.paragraphOne}
+                cursor-pointer`}>
+                    <img src={activeTheme.iconPin} alt="" />
+                    Pin
             </button>
+
 
             {/* se já estiver arquivado, edit nao aparece mais */}
             <button className={`flex justify-start items-center gap-125 

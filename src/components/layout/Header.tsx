@@ -71,7 +71,7 @@ const Header = () => {
             <div className="flex flex-col items-end w-fit relative">
                 <button onClick={setAppearprofDrop}>
                     <img
-                        src={user?.photo}
+                        src={Avatar}
                         alt=""
                         className="rounded-full" />
                 </button>
