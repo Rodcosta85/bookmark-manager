@@ -1,5 +1,6 @@
 import { useState } from "react"
 import useBookmarks from "../hooks/useBookmark"
+import { useActions } from "../hooks/useActions"
 import type { DataTypes } from "../types/dataTypes"
 
 interface dropdownCardProps {
@@ -8,7 +9,8 @@ interface dropdownCardProps {
 
 const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
 
-    const { activeTheme, itemId, contentType, bookmarks, archiveItems } = useBookmarks()
+    const { activeTheme, itemId, archiveItems } = useBookmarks()
+    const { handleSelectItem } = useActions()
 
     const [copiedId, setCopiedId] = useState(null);
 
@@ -73,8 +75,8 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
                 border-2 border-transparent hover:border-teal-700
                 text-preset-4 ${activeTheme.paragraphOne}
                 cursor-pointer`}>
-                    <img src={activeTheme.iconPin} alt="" />
-                    Pin
+                <img src={activeTheme.iconPin} alt="" />
+                Pin
             </button>
 
 
@@ -90,13 +92,15 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
             </button>
 
             {/* se já estiver arquivado, o texto muda para "unarchive e o icone tbm" */}
-            <button className={`flex justify-start items-center gap-125 
-            p-100
-            rounded-8
-            border-2 border-transparent hover:border-teal-700
-            text-preset-4 ${activeTheme.paragraphOne}
-            cursor-pointer`}>
-                <img src={activeTheme.iconArchive} alt="" />
+            <button
+                onClick={() => handleSelectItem((item.id))}
+                className={`flex justify-start items-center gap-125 
+                p-100
+                rounded-8
+                border-2 border-transparent hover:border-teal-700
+                text-preset-4 ${activeTheme.paragraphOne}
+                cursor-pointer`}>
+                <img src={activeTheme.iconArchive} alt="a folder cabinet icon" />
                 Archive
             </button>
 

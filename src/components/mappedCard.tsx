@@ -30,13 +30,12 @@ const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
     return (
         <div
             key={key}
-            className={`flex flex-col
-            h-fit
+            className={`flex flex-col justify-between
+            h-full
             rounded-12
             ${activeTheme.cardBg}`}>
             <div className={`flex flex-col gap-200 
-            p-4
-            border-b ${activeTheme.cardBorder}`}>
+            p-4`}>
                 {/* imagem, titulos e tres pontos */}
                 <div className={`flex justify-between gap-150
                 pb-4
@@ -87,8 +86,9 @@ const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
 
 
             {/* infos + pin */}
-            <div className="flex justify-between
-            pl-200 pr-200 pt-150 pb-150">
+            <div className={`flex justify-between
+            pl-200 pr-200 pt-150 pb-150
+            border-t ${activeTheme.cardBorder}`}>
                 <div className="flex gap-200
                 w-fit">
                     <div className="flex items-center gap-075 w-fit">

@@ -50,7 +50,7 @@ const ProfileDropdown = () => {
 
     return (
         <div className={`
-        absolute top-600 z-99  
+        absolute top-15 lg:right-[10%] z-99  
         flex flex-col justify-between
         w-62 h-42.75
         rounded-8

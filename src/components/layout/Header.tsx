@@ -18,6 +18,7 @@ const Header = () => {
         activeTheme,
         appearprofDrop,
         showBookmarkEditor,
+        isArchiving,
         user,
         setShowBookmarkEditor,
         setAppearprofDrop,
@@ -55,28 +56,38 @@ const Header = () => {
             ${activeTheme.cardBg}
             border-b ${activeTheme.cardBorder}
             `}>
-            <HambMenu />
-            <InputComp label="" type="text" id="search-bar" />
-            <button
-                onClick={setShowBookmarkEditor}
-                className="
-                flex justify-center items-center
-                w-10 h-10 p-125
+            <div className="flex justify-between items-center gap-125">
+                <HambMenu />
+                <InputComp label="" type="text" id="search-bar" />
+            </div>
+
+            <div className="flex justify-between items-center gap-125">
+                <button
+                    onClick={setShowBookmarkEditor}
+                    className="
+                flex justify-center items-center gap-050
+                w-10 sm:w-fit md:w-fit lg:w-fit h-10 p-125
                 rounded-8
                 bg-teal-700
                 ">
-                <img src={IconPlus} alt="a plus icon" className="w-5 h-5" />
-                {showBookmarkEditor && <AddBookmark />}
-            </button>
-            <div className="flex flex-col items-end w-fit relative">
-                <button onClick={setAppearprofDrop}>
-                    <img
-                        src={Avatar}
-                        alt=""
-                        className="rounded-full" />
+                    <img src={IconPlus} alt="a plus icon" className="w-5 h-5" />
+                    {showBookmarkEditor && 
+                        <AddBookmark 
+                        title={`${isArchiving ? "Archive" : "Unarchive"} bookmark`}
+                        />}
+                    <p className="hidden sm:block md:block lg:block text-white">Add Bookmark</p>
                 </button>
-                {appearprofDrop && <ProfileDropdown />}
+                <div className="flex flex-col items-end w-fit relative">
+                    <button onClick={setAppearprofDrop}>
+                        <img
+                            src={Avatar}
+                            alt=""
+                            className="rounded-full" />
+                    </button>
+                    {appearprofDrop && <ProfileDropdown />}
+                </div>
             </div>
+
             {sidebar && <SidebarComp />}
         </header>
     )

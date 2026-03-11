@@ -8,8 +8,9 @@ const hambMenu: React.FC = () => {
         <button
             onClick={setSidebar}
             type="button"
-            className={`flex flex-col justify-between
-            w-10 h-10 p-125
+            className={`lg:hidden
+            flex flex-col justify-between
+            w-10 h-10 p-125 
             rounded-8
             border ${activeTheme.cardBorder}
             cursor-pointer`}>
