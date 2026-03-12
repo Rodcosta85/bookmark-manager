@@ -46,8 +46,6 @@ const ProfileDropdown = () => {
         return () => unsubscribe();
     }, [setUser]);
 
-    console.log(user);
-
     return (
         <div className={`
         absolute top-15 lg:right-[10%] z-99  

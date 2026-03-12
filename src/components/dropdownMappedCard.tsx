@@ -10,7 +10,7 @@ interface dropdownCardProps {
 const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
 
     const { activeTheme, itemId, archiveItems } = useBookmarks()
-    const { handleSelectItem } = useActions()
+    const { handleSelectItem, handleDeleteItem } = useActions()
 
     const [copiedId, setCopiedId] = useState(null);
 
@@ -25,16 +25,6 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
             console.error("Failed to copy!", err);
         }
     };
-
-    console.log("--- DEBUG START ---");
-    console.log("Target itemId:", itemId, "Type:", typeof itemId);
-
-    archiveItems.forEach((obj, index) => {
-        console.log(`Index [${index}] ID in Archive:`, obj.id, "Type:", typeof obj.id);
-        console.log("Strict Match (===):", obj.id === itemId);
-        console.log("String Match:", String(obj.id) === String(itemId));
-    });
-    console.log("--- DEBUG END ---");
 
     return (
         <div className={`absolute top-500 z-99
@@ -105,15 +95,17 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
             </button>
 
             {/* se já estiver arquivado, a opção de deletar aparece" */}
-            {/* <button classNme="{`flex justify-start items-center gap-125 
+            <button 
+            onClick={() => handleDeleteItem(item.id)}
+            className={`flex justify-start items-center gap-125 
             p-100
             rounded-8
             border-2 border-transparent hover:border-teal-700
-            text-preset-4 ${activeTheme.paragraphOne}
+            text-preset-4 ${activeTheme.paragraphOne} text-left
             cursor-pointer`}>
-                <img src={`${currentTheme.iconArchive}`} alt="" />
+                <img src={`${activeTheme.iconArchive}`} alt="" />
                 Delete Permanently
-            </button> */}
+            </button>
         </div>
     )
 }

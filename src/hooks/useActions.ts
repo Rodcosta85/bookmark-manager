@@ -5,6 +5,7 @@ export const useActions = () => {
         archiveItems,
         setShowModal,
         setIsArchiving,
+        setIsDeleting,
         setItemId
     } = useBookmarks();
 
@@ -16,6 +17,13 @@ export const useActions = () => {
         setShowModal(true);
     }
 
+    function handleDeleteItem(id: string) {
+    const deletedItems = archiveItems.filter(item => item.id !== id);
+    console.log(deletedItems);
+    setItemId(id);
+    setIsDeleting(true);
+}
+
     // Return the functions so your components can use them
-    return { handleSelectItem };
+    return { handleSelectItem, handleDeleteItem };
 }

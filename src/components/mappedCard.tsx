@@ -73,7 +73,7 @@ const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
                     </div>
 
                 </div>
-                {/* imagem, titulos e tres pontos */}
+
                 <p className={`text-preset-4-medium ${activeTheme.paragraphOne}`}>
                     {item.description}
                 </p>

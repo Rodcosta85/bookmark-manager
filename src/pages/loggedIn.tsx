@@ -25,6 +25,7 @@ const loggedIn = () => {
     }, [archiveItems])
 
 
+
     const itemsToMap = contentType === 'home' ? bookmarks : archiveItems;
 
 
@@ -54,15 +55,22 @@ const loggedIn = () => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-400 sm:gap-200 md:gap-400">
-                        {/* está dando um erro com a key!!! */}
-                        {itemsToMap.map((item) => (
-                            <MappedCard
-                                item={item}
-                                key={item.id}
-                            />
-                        ))}
-                    </div>
+                    {itemsToMap.length === 0 ? (
+                        <div className="flex justify-center items-center w-full h-screen">
+                            <p className={`text-preset-3 ${activeTheme.paragraphTwo}`}>
+                                Please archive an item to see it displayed here ⬇️
+                            </p>
+                        </div>
+                    ) : (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-400 sm:gap-200 md:gap-400">
+                            {itemsToMap.map((item) => (
+                                <MappedCard
+                                    item={item}
+                                    key={item.id}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
 
                 {showModal && (

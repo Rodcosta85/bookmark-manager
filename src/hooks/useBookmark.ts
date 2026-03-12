@@ -38,6 +38,7 @@ interface BookmarkStates {
     showModal: boolean,
     itemId: string | null,
     isArchiving: boolean,
+    isDeleting: boolean,
 
 
 
@@ -63,7 +64,9 @@ interface BookmarkStates {
     setShowModal: (showModal: boolean) => void,
     setItemId: (id: string) => void,
     setIsArchiving: (isArchiving: boolean) => void,
-    handleConfirm: () => void
+    handleConfirm: () => void,
+    setIsDeleting: (isDeleting: boolean) => void
+    
 }
 
 const useBookmarks = create<BookmarkStates>((set, get) => ({
@@ -132,8 +135,11 @@ const useBookmarks = create<BookmarkStates>((set, get) => ({
     // vai usar a id do objeto do json para arquivar ou voltar com ele
     itemId: "",
 
+    // controle do arquivamento de items
     isArchiving: false,
 
+    // controle da eliminição de items
+    isDeleting: false,
 
 
 
@@ -213,6 +219,7 @@ const useBookmarks = create<BookmarkStates>((set, get) => ({
             console.error("No itemId found in store during handleConfirm!");
         }
     },
+    setIsDeleting: (isDeleting) => set({ isDeleting: isDeleting})
 }))
 
 export default useBookmarks
