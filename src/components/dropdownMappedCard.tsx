@@ -9,8 +9,10 @@ interface dropdownCardProps {
 
 const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
 
-    const { activeTheme, itemId, archiveItems } = useBookmarks()
+    const { activeTheme, archiveItems } = useBookmarks()
     const { handleSelectItem, handleDeleteItem } = useActions()
+
+    const isArchived = archiveItems.some(a => a.id === item.id);
 
     const [copiedId, setCopiedId] = useState(null);
 
@@ -57,7 +59,6 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
                 {copiedId === item.id ? 'Copied 🎉' : 'Copy URL'}
             </button>
 
-
             {/* se já estiver arquivado, pin nao aparece mais */}
             <button className={`flex justify-start items-center gap-125 
                 p-100
@@ -68,7 +69,6 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
                 <img src={activeTheme.iconPin} alt="" />
                 Pin
             </button>
-
 
             {/* se já estiver arquivado, edit nao aparece mais */}
             <button className={`flex justify-start items-center gap-125 
@@ -91,13 +91,13 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
                 text-preset-4 ${activeTheme.paragraphOne}
                 cursor-pointer`}>
                 <img src={activeTheme.iconArchive} alt="a folder cabinet icon" />
-                Archive
+                {isArchived ? "Unarchive" : "Archive"}
             </button>
 
             {/* se já estiver arquivado, a opção de deletar aparece" */}
-            <button 
-            onClick={() => handleDeleteItem(item.id)}
-            className={`flex justify-start items-center gap-125 
+            {isArchived && <button
+                onClick={() => handleDeleteItem(item.id)}
+                className={`flex justify-start items-center gap-125 
             p-100
             rounded-8
             border-2 border-transparent hover:border-teal-700
@@ -105,7 +105,7 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
             cursor-pointer`}>
                 <img src={`${activeTheme.iconArchive}`} alt="" />
                 Delete Permanently
-            </button>
+            </button>}
         </div>
     )
 }

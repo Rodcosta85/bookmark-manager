@@ -40,9 +40,6 @@ interface BookmarkStates {
     isArchiving: boolean,
     isDeleting: boolean,
 
-
-
-
     setTagsFilters: (tagsFilters: string[]) => void,
     setActiveTheme: (theme: themeChanger) => void,
     setSidebar: () => void,
@@ -51,7 +48,7 @@ interface BookmarkStates {
     setTextareaVal: (textareaVal: string) => void,
     setCardDropdown: (id: string) => void,
     setLimit: (limit: boolean) => void,
-    setSortDropdown: () => void,
+    setSortDropdown: (value: boolean) => void,
     setSortType: (type: SortType) => void,
     setHomeArchived: (type: HomeArchived) => void,
     setAppearNotif: () => void,
@@ -59,6 +56,7 @@ interface BookmarkStates {
     setShowPassword: (visible: boolean) => void,
     setShowBookmarkEditor: () => void,
     setArchiveItems: (id: string) => void,
+    setBookmarks: (id: string) => void,
     restoreItem: (id: string) => void,
     setUser: (user: UserProfile | null) => void;
     setShowModal: (showModal: boolean) => void,
@@ -66,7 +64,6 @@ interface BookmarkStates {
     setIsArchiving: (isArchiving: boolean) => void,
     handleConfirm: () => void,
     setIsDeleting: (isDeleting: boolean) => void
-    
 }
 
 const useBookmarks = create<BookmarkStates>((set, get) => ({
@@ -141,8 +138,6 @@ const useBookmarks = create<BookmarkStates>((set, get) => ({
     // controle da eliminição de items
     isDeleting: false,
 
-
-
     setTagsFilters: (tagsFilters) => set({ tagsFilters }),
     setActiveTheme: (activeTheme) => set({ activeTheme }),
     setSidebar: () => set((state) => ({ sidebar: !state.sidebar })),
@@ -158,7 +153,7 @@ const useBookmarks = create<BookmarkStates>((set, get) => ({
     }),
 
     setLimit: () => set({ limit: true }),
-    setSortDropdown: () => set((state) => ({ sortDropdown: !state.sortDropdown })),
+    setSortDropdown: (newValue: boolean) => set(() => ({ sortDropdown: newValue })),
     setHomeArchived: (type) => set({ contentType: type }),
     setAppearNotif: () => set((state) => ({ appearNotif: !state.appearNotif })),
     setIsLoggedIn: () => set((state) => ({ isLoggedIn: !state.isLoggedIn })),
@@ -187,6 +182,15 @@ const useBookmarks = create<BookmarkStates>((set, get) => ({
         return {
             bookmarks: remainingBookmarks,
             archiveItems: newArchivedBucket
+        };
+    }),
+
+    setBookmarks: (id: string) => set((state) => {
+        const remainingBookmarks = state.bookmarks.filter((item) => item.id !== id);
+        const remainingArchived = state.archiveItems.filter((item) => item.id !== id);
+        return {
+            bookmarks: remainingBookmarks,
+            archiveItems: remainingArchived,
         };
     }),
 
@@ -219,7 +223,7 @@ const useBookmarks = create<BookmarkStates>((set, get) => ({
             console.error("No itemId found in store during handleConfirm!");
         }
     },
-    setIsDeleting: (isDeleting) => set({ isDeleting: isDeleting})
+    setIsDeleting: (isDeleting) => set({ isDeleting: isDeleting })
 }))
 
 export default useBookmarks

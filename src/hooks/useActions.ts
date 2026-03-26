@@ -5,24 +5,22 @@ export const useActions = () => {
         archiveItems,
         setShowModal,
         setIsArchiving,
-        setIsDeleting,
-        setItemId
+        setItemId,
+        setCardDropdown,
+        setBookmarks,
     } = useBookmarks();
-
 
     function handleSelectItem(id: string) {
         const isArchived = archiveItems.some(a => String(a.id) === String(id));
         setIsArchiving(!isArchived);
         setItemId(id);
         setShowModal(true);
+        setCardDropdown(id);
     }
 
     function handleDeleteItem(id: string) {
-    const deletedItems = archiveItems.filter(item => item.id !== id);
-    console.log(deletedItems);
-    setItemId(id);
-    setIsDeleting(true);
-}
+        setBookmarks(id);
+    }
 
     // Return the functions so your components can use them
     return { handleSelectItem, handleDeleteItem };

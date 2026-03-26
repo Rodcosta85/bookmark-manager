@@ -7,7 +7,6 @@ import DialogModal from "../components/events//dialogModal"
 import Header from './../components/layout/Header'
 import DesktopSidebar from "../components/desktopSidebar"
 
-
 const loggedIn = () => {
 
     const {
@@ -18,16 +17,16 @@ const loggedIn = () => {
         archiveItems,
         showModal,
         isArchiving,
+        setSortDropdown,
     } = useBookmarks()
-
-    useEffect(() => {
-        console.log(archiveItems);
-    }, [archiveItems])
-
-
 
     const itemsToMap = contentType === 'home' ? bookmarks : archiveItems;
 
+    useEffect(() => {
+        document.addEventListener("click", () => {
+            setSortDropdown(false);
+        });
+    }, []);
 
     return (
         <div className="flex">
@@ -65,8 +64,8 @@ const loggedIn = () => {
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-400 sm:gap-200 md:gap-400">
                             {itemsToMap.map((item) => (
                                 <MappedCard
-                                    item={item}
                                     key={item.id}
+                                    item={item}
                                 />
                             ))}
                         </div>

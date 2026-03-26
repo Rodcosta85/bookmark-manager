@@ -7,10 +7,9 @@ import DropdownMappedCard from "./dropdownMappedCard"
 
 interface MappedCardProps {
     item: DataTypes,
-    key: string;
 }
 
-const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
+const MappedCard: React.FC<MappedCardProps> = ({ item }) => {
 
     const { activeTheme,
         cardDropdown,
@@ -20,7 +19,7 @@ const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
     } = useBookmarks()
 
     const { handleSelectItem } = useActions()
-    
+
 
     const isCardOpen = cardDropdown && cardId === item.id;
 
@@ -29,7 +28,6 @@ const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
 
     return (
         <div
-            key={key}
             className={`flex flex-col justify-between
             h-full
             rounded-12
@@ -65,11 +63,7 @@ const MappedCard: React.FC<MappedCardProps> = ({ item, key }) => {
                         >
                             <img src={activeTheme.iconThreeDots} alt="vertical three dots" />
                         </button>
-                        {isCardOpen ?
-                            <DropdownMappedCard item={item} />
-                            :
-                            null
-                        }
+                        {isCardOpen && <DropdownMappedCard item={item} />}
                     </div>
 
                 </div>
