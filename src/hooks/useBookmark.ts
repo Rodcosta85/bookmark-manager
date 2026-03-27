@@ -16,12 +16,15 @@ interface UserProfile {
 }
 
 interface BookmarkStates {
+    bookmarks: DataTypes[],
+    archiveItems: DataTypes[],
+    pinnedItems: DataTypes[],
+
+
     tagsFilters: string[],
     activeTheme: themeChanger,
-    bookmarks: DataTypes[],
     sidebar: boolean,
     appearprofDrop: boolean,
-    searchBar: string,
     textareaVal: string,
     cardId: string | null,
     cardDropdown: boolean,
@@ -33,18 +36,30 @@ interface BookmarkStates {
     isLoggedIn: boolean,
     showPassword: boolean,
     showBookmarkEditor: boolean,
-    archiveItems: DataTypes[],
     user: UserProfile | null,
     showModal: boolean,
+    showDeleteModal: boolean,
     itemId: string | null,
     isArchiving: boolean,
     isDeleting: boolean,
+
+    // variáveis dos inputs
+    searchBar: string,
+    emailLogin: string,
+    emailCreateAcc: string,
+    passwordLogin: string,
+    passwordCreateAcc: string,
+    fullName: string,
+
+    // variáveis de validação
+    emailError: boolean
+    passwordError: boolean,
+    isEmpty: boolean,
 
     setTagsFilters: (tagsFilters: string[]) => void,
     setActiveTheme: (theme: themeChanger) => void,
     setSidebar: () => void,
     setAppearprofDrop: () => void,
-    setSearchBar: (searchBar: string) => void,
     setTextareaVal: (textareaVal: string) => void,
     setCardDropdown: (id: string) => void,
     setLimit: (limit: boolean) => void,
@@ -56,14 +71,29 @@ interface BookmarkStates {
     setShowPassword: (visible: boolean) => void,
     setShowBookmarkEditor: () => void,
     setArchiveItems: (id: string) => void,
+    setPinnedItem: (id: string) => void,
     setBookmarks: (id: string) => void,
     restoreItem: (id: string) => void,
     setUser: (user: UserProfile | null) => void;
     setShowModal: (showModal: boolean) => void,
+    setShowDeleteModal: (showDeleteModal: boolean) => void,
     setItemId: (id: string) => void,
     setIsArchiving: (isArchiving: boolean) => void,
     handleConfirm: () => void,
-    setIsDeleting: (isDeleting: boolean) => void
+    setIsDeleting: (isDeleting: boolean) => void,
+
+    // funções dos inputs
+    setSearchBar: (searchBar: string) => void,
+    setEmailLogin: (emailLogin: string) => void,
+    setEmailCreateAcc: (emailCreateAcc: string) => void,
+    setPasswordLogin: (passwordLogin: string) => void,
+    setPasswordCreateAcc: (passwordCreateAcc: string) => void,
+    setFullName: (fullNamme: string) => void
+
+    // funções de erro
+    setEmailError: (emailError: boolean) => void,
+    setPasswordError: (passwordError: boolean) => void
+    setIsEmpty: (isEmpty: boolean) => void
 }
 
 const useBookmarks = create<BookmarkStates>((set, get) => ({
@@ -80,9 +110,6 @@ const useBookmarks = create<BookmarkStates>((set, get) => ({
 
     // dropdown do perfil que faz aparecer o profileDropdown
     appearprofDrop: false,
-
-    // barra de procura do header
-    searchBar: '',
 
     // textarea
     textareaVal: '',
@@ -123,11 +150,17 @@ const useBookmarks = create<BookmarkStates>((set, get) => ({
     // array dos items do json que foram arquivados
     archiveItems: [] as DataTypes[],
 
+    // array dos items que foram "prendidos" + o resto
+    pinnedItems: [] as DataTypes[],
+
     // usuário atual como registrado pelo firebase
     user: null,
 
-    // mostra ou esconde ou modal
+    // mostra ou esconde ou modal de arquivar ou restaurar
     showModal: false,
+
+    // mostra ou esconde o modal de deletar
+    showDeleteModal: false,
 
     // vai usar a id do objeto do json para arquivar ou voltar com ele
     itemId: "",
@@ -138,11 +171,39 @@ const useBookmarks = create<BookmarkStates>((set, get) => ({
     // controle da eliminição de items
     isDeleting: false,
 
+   // barra de procura do header
+    searchBar: '', 
+
+    // input do email de login
+    emailLogin: '',
+
+    // input do email do create account
+    emailCreateAcc: '',
+
+    // senha do login
+    passwordLogin: '',
+
+    // senha do create account
+    passwordCreateAcc: '',
+
+    // input do nome completo/full name
+    fullName: '',
+
+    // erro do email
+    emailError: false,
+
+    // erro da password
+    passwordError: false,
+
+    // erro do campo de texto em geral
+    isEmpty: false,
+
     setTagsFilters: (tagsFilters) => set({ tagsFilters }),
     setActiveTheme: (activeTheme) => set({ activeTheme }),
     setSidebar: () => set((state) => ({ sidebar: !state.sidebar })),
     setAppearprofDrop: () => set((state) => ({ appearprofDrop: !state.appearprofDrop })),
-    setSearchBar: (newValue: string) => set({ searchBar: newValue }),
+    
+    
     setTextareaVal: (newValue: string) => set({ textareaVal: newValue }),
 
     setCardDropdown: (id) => set((state) => {
@@ -205,8 +266,17 @@ const useBookmarks = create<BookmarkStates>((set, get) => ({
         }
     }),
 
+    setPinnedItem: (id: string) => set((state) => {
+        const itemToPin = state.bookmarks.find((item) => item.id === id);
+        if (!itemToPin) return state;
+        const remainingBookmarks = state.bookmarks.filter((item) => item.id !== id);
+        const pinnedAndBookmarks = [itemToPin, ...remainingBookmarks]
+        return {bookmarks: pinnedAndBookmarks}
+    }),
+
     setUser: (user) => set({ user }),
     setShowModal: (showModal) => set({ showModal: showModal }),
+    setShowDeleteModal: (showDeleteModal) => set({ showDeleteModal: showDeleteModal }),
     setItemId: (id) => set({ itemId: id }),
     setIsArchiving: (isArchiving) => set({ isArchiving: isArchiving }),
     handleConfirm: () => {
@@ -223,7 +293,18 @@ const useBookmarks = create<BookmarkStates>((set, get) => ({
             console.error("No itemId found in store during handleConfirm!");
         }
     },
-    setIsDeleting: (isDeleting) => set({ isDeleting: isDeleting })
+    setIsDeleting: (isDeleting) => set({ isDeleting: isDeleting }),
+
+
+    setSearchBar: (newValue: string) => set({ searchBar: newValue }),
+    setEmailLogin: (newValue: string) => set({ emailLogin: newValue }),
+    setEmailCreateAcc: (newValue: string) => set({ emailCreateAcc: newValue }),
+    setPasswordLogin: (newValue: string) => set({ passwordLogin: newValue }),
+    setPasswordCreateAcc: (newValue: string) => set({ passwordCreateAcc: newValue }),
+    setFullName: (newValue: string) => set({ fullName: newValue }),
+    setEmailError: () => set((state) => ({ emailError: !state.emailError })),
+    setPasswordError: () => set((state) => ({ passwordError: !state.passwordError })),
+    setIsEmpty: () => set((state) => ({ isEmpty: !state.isEmpty })),
 }))
 
 export default useBookmarks

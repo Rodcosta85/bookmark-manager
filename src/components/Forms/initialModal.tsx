@@ -1,8 +1,8 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom"
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../services/firebase';
 import useBookmarks from "../../hooks/useBookmark"
+import { useActions } from "../../hooks/useActions";
 import InputComp from "../input-and-textarea/inputComp"
 import type { BaseSyntheticEvent } from "react";
 
@@ -10,17 +10,28 @@ const InitialModal: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const { activeTheme, isLoggedIn, setIsLoggedIn } = useBookmarks()
-  const [userEmail, setUserEmail] = useState("")
-  const [userPassword, setUserPassword] = useState("")
+  const { 
+    activeTheme, 
+    isLoggedIn, 
+    emailLogin, 
+    passwordLogin,
+    emailCreateAcc,
+    passwordCreateAcc,
+    emailError, 
+    passwordError, 
+    fullName,
+    isEmpty,
+    setIsLoggedIn, 
+  } = useBookmarks()
 
+  const { handleEmailChange, handlePasswordChange, handleTextsChange } = useActions()
 
   async function handleLogin(e: BaseSyntheticEvent) {
     e.preventDefault();
 
     try {
       // 2. Pass the hardcoded variables here
-      const userCredential = await signInWithEmailAndPassword(auth, userEmail, userPassword);
+      const userCredential = await signInWithEmailAndPassword(auth, emailLogin, passwordLogin);
 
       console.log("Success! Firebase logged in:", userCredential.user);
 
@@ -38,6 +49,8 @@ const InitialModal: React.FC = () => {
     e.preventDefault();
     navigate("/home");
   }
+
+  const isFormValid = !emailError || !passwordError || !emailLogin || !passwordLogin;
 
   return (
     <div className={`
@@ -72,26 +85,55 @@ const InitialModal: React.FC = () => {
               label="Email"
               type="email"
               id=""
-              onChange={(e) => setUserEmail(e.target.value)} />
+              value={emailLogin}
+              isValid={emailError}
+              errorText="Enter a valid email address."
+              onChange={(e) => handleEmailChange(e.target.value)} />
             <InputComp
               label="Password"
               type="password"
               id=""
-              onChange={(e) => setUserPassword(e.target.value)} />
+              value={passwordLogin}
+              isValid={passwordError}
+              errorText="Must be at least 8 characters long."
+              onChange={(e) => handlePasswordChange(e.target.value)} />
           </div>
           :
           <div className="flex flex-col gap-4">
-            <InputComp label="Full name *" type="text" id="" />
-            <InputComp label="Email address *" type="email" id="" />
-            <InputComp label="Password *" type="password" id="" />
+            <InputComp
+              label="Email"
+              type="email"
+              id=""
+              value={fullName}
+              isValid={isEmpty}
+              errorText="This field cannot be empty."
+              onChange={(e) => handleTextsChange(e.target.value)} />
+            <InputComp
+              label="Email"
+              type="email"
+              id=""
+              value={emailCreateAcc}
+              isValid={emailError}
+              errorText="Enter a valid email address."
+              onChange={(e) => handleEmailChange(e.target.value)} />
+            <InputComp
+              label="Password"
+              type="password"
+              id=""
+              value={passwordCreateAcc}
+              isValid={passwordError}
+              errorText="Must be at least 8 characters long."
+              onChange={(e) => handlePasswordChange(e.target.value)} />
           </div>
         }
         <button
           type="submit"
-          className="w-full pl-200 pr-200 pt-150 pb-150
+          disabled={isFormValid}
+          className={`w-full pl-200 pr-200 pt-150 pb-150
         rounded-8
         text-center text-preset-3 text-white
-        bg-teal-700 cursor-pointer">
+        ${isFormValid ? 'bg-teal-700 opacity-30 cursor-not-allowed' : 'bg-teal-700 cursor-pointer'}
+        `}>
           {isLoggedIn ? "Log in" : "Create account"}
         </button>
       </form>

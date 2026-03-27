@@ -7,11 +7,18 @@ interface InputCompProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string,
   type?: 'text' | 'number' | 'email' | 'password',
   id: string
+  value: string,
+  isValid: boolean,
+  errorText: string
 }
 
-const InputComp: React.FC<InputCompProps> = ({ label, type, id, ...props }) => {
+const InputComp: React.FC<InputCompProps> = ({ label, type, id, value, isValid, errorText, ...props }) => {
 
-  const { activeTheme, showPassword, setShowPassword } = useBookmarks()
+  const {
+    activeTheme,
+    showPassword,
+    setShowPassword,
+  } = useBookmarks()
 
   const handleEye = (e: React.MouseEvent) => {
     e.preventDefault()
@@ -20,7 +27,7 @@ const InputComp: React.FC<InputCompProps> = ({ label, type, id, ...props }) => {
 
 
   return (
-    <div className="flex flex-col gap-1.5 text-preset-4">
+    <div className="relative flex flex-col gap-1.5 text-preset-4 mb-6">
       {id !== "search-bar" ?
         (<p className={`text-left ${activeTheme.paragraphTwo}`}>{label}</p>) : null}
 
@@ -29,11 +36,11 @@ const InputComp: React.FC<InputCompProps> = ({ label, type, id, ...props }) => {
       <div className={`
       flex justify-between items-center
       px-150 py-125 rounded-8 
-      border ${activeTheme.inputBorder}
+      border ${isValid || !value ? activeTheme.inputBorder : 'border-new-red-800'}
       `}>
 
         {/* div da img + input */}
-        <div className="flex justify-start items-center gap-100">
+        <div className="flex justify-start items-center gap-100 w-full">
           <img
             src={activeTheme.iconSearch}
             alt="a magnifying glass"
@@ -44,6 +51,7 @@ const InputComp: React.FC<InputCompProps> = ({ label, type, id, ...props }) => {
             id={id}
             type={showPassword ? 'text' : type}
             name={type}
+            value={value}
             placeholder={label === 'Tags *' ? 'e.g. design, learning, tools' : 'Search'}
             className={`text-preset-4-medium ${activeTheme.paragraphTwo} placeholder-${activeTheme.paragraphOne} 
         focus:outline-none border-none 
@@ -70,7 +78,24 @@ const InputComp: React.FC<InputCompProps> = ({ label, type, id, ...props }) => {
 
       </div>
       {/* div da img/input + olho */}
-      {id !== "search-bar" ? (<p className={`text-left ${activeTheme.paragraphTwo}`}>This is a hint text to help the user.</p>) : null}
+
+
+      {
+        id !== "search-bar" ?
+          (
+            <p className={`
+              absolute -bottom-6
+              text-preset-4-medium text-left text-new-red-800
+              transition-all 0.2s ease-in-out
+              ${isValid || !value ? 'opacity-0' : 'opacity-100'}
+            `}>
+              {errorText}
+            </p>
+          )
+          :
+          null
+      }
+
 
     </div>
   )

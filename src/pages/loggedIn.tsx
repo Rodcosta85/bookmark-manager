@@ -4,6 +4,7 @@ import MappedCard from "../components/mappedCard"
 import SortBy from "../components/sortBy"
 import SortButton from "../components/Buttons/sortButton"
 import DialogModal from "../components/events//dialogModal"
+import DeleteDialogModal from "../components/events/deleteDialogModal"
 import Header from './../components/layout/Header'
 import DesktopSidebar from "../components/desktopSidebar"
 
@@ -16,6 +17,7 @@ const loggedIn = () => {
         contentType,
         archiveItems,
         showModal,
+        showDeleteModal,
         isArchiving,
         setSortDropdown,
     } = useBookmarks()
@@ -62,10 +64,11 @@ const loggedIn = () => {
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-400 sm:gap-200 md:gap-400">
-                            {itemsToMap.map((item) => (
+                            {itemsToMap.map((item, index) => (
                                 <MappedCard
                                     key={item.id}
                                     item={item}
+                                    index={index}
                                 />
                             ))}
                         </div>
@@ -78,6 +81,10 @@ const loggedIn = () => {
                         subtitle={`Are you sure you want to ${isArchiving ? "archive" : "unarchive"} this bookmark?`}
                     />
                 )}
+
+
+                {showDeleteModal && <DeleteDialogModal/>}
+
 
                 {/* <NotificationPopup
                 img={activeTheme.iconCheck}

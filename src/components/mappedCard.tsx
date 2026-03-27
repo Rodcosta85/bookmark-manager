@@ -7,9 +7,10 @@ import DropdownMappedCard from "./dropdownMappedCard"
 
 interface MappedCardProps {
     item: DataTypes,
+    index: number
 }
 
-const MappedCard: React.FC<MappedCardProps> = ({ item }) => {
+const MappedCard: React.FC<MappedCardProps> = ({ item, index }) => {
 
     const { activeTheme,
         cardDropdown,
@@ -18,7 +19,7 @@ const MappedCard: React.FC<MappedCardProps> = ({ item }) => {
         setCardDropdown,
     } = useBookmarks()
 
-    const { handleSelectItem } = useActions()
+    const { handleSelectItem, handlePinnedItem } = useActions()
 
 
     const isCardOpen = cardDropdown && cardId === item.id;
@@ -31,7 +32,8 @@ const MappedCard: React.FC<MappedCardProps> = ({ item }) => {
             className={`flex flex-col justify-between
             h-full
             rounded-12
-            ${activeTheme.cardBg}`}>
+            border-2 ${index === 0 ? 'border-yellow-400' : 'border-transparent'}  
+            ${index === 0 ? 'bg-yellow-100 opacity-80' :  activeTheme.cardBg}`}>
             <div className={`flex flex-col gap-200 
             p-4`}>
                 {/* imagem, titulos e tres pontos */}
@@ -99,7 +101,7 @@ const MappedCard: React.FC<MappedCardProps> = ({ item }) => {
                     </div>
                 </div>
                 <button
-                    onClick={() => handleSelectItem(item.id)}
+                    onClick={() => handlePinnedItem(item.id)}
                     className="cursor-pointer">
                     <img
                         src={activeTheme.iconPin}
