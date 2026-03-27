@@ -10,18 +10,18 @@ const InitialModal: React.FC = () => {
 
   const navigate = useNavigate();
 
-  const { 
-    activeTheme, 
-    isLoggedIn, 
-    emailLogin, 
+  const {
+    activeTheme,
+    isLoggedIn,
+    emailLogin,
     passwordLogin,
     emailCreateAcc,
     passwordCreateAcc,
-    emailError, 
-    passwordError, 
+    emailError,
+    passwordError,
     fullName,
     isEmpty,
-    setIsLoggedIn, 
+    setIsLoggedIn,
   } = useBookmarks()
 
   const { handleEmailChange, handlePasswordChange, handleTextsChange } = useActions()

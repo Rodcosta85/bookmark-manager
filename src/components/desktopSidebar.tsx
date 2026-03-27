@@ -1,10 +1,10 @@
+import { useMemo } from "react";
 import useBookmarks from "../hooks/useBookmark"
 
 const desktopSidebar = () => {
 
     const {
         tagsFilters,
-        sidebar,
         contentType,
         activeTheme,
         bookmarks,
@@ -13,7 +13,9 @@ const desktopSidebar = () => {
         setTagsFilters,
     } = useBookmarks()
 
-    const allTags = bookmarks.flatMap(item => item.tags);
+    const allTags = useMemo(() => {
+        return bookmarks.flatMap(item => item.tags);
+    }, []);
 
     const elementCount = allTags.reduce((acc: Record<string, number>, tag) => {
         acc[tag] = (acc[tag] || 0) + 1;
@@ -29,10 +31,6 @@ const desktopSidebar = () => {
         }
         setTagsFilters([...tagsFilters, tag]);
     }
-
-
-
-
 
     return (
         <div className={`hidden lg:flex flex-col gap-300

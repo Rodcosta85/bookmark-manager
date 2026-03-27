@@ -171,8 +171,8 @@ const useBookmarks = create<BookmarkStates>((set, get) => ({
     // controle da eliminição de items
     isDeleting: false,
 
-   // barra de procura do header
-    searchBar: '', 
+    // barra de procura do header
+    searchBar: '',
 
     // input do email de login
     emailLogin: '',
@@ -198,12 +198,25 @@ const useBookmarks = create<BookmarkStates>((set, get) => ({
     // erro do campo de texto em geral
     isEmpty: false,
 
-    setTagsFilters: (tagsFilters) => set({ tagsFilters }),
+    // setTagsFilters: (tagsFilters) => set({ tagsFilters }),
+    setTagsFilters: (tagsFilters: string[]) => set(() => {
+        if (tagsFilters.length === 0) {
+            return {
+                bookmarks: data as DataTypes[],
+                tagsFilters: [],
+            }
+        }
+        const remainingBookmarks = (data as DataTypes[]).filter((item) => tagsFilters.some(tag => item.tags.includes(tag)));
+        return {
+            bookmarks: remainingBookmarks,
+            tagsFilters,
+        };
+    }),
     setActiveTheme: (activeTheme) => set({ activeTheme }),
     setSidebar: () => set((state) => ({ sidebar: !state.sidebar })),
     setAppearprofDrop: () => set((state) => ({ appearprofDrop: !state.appearprofDrop })),
-    
-    
+
+
     setTextareaVal: (newValue: string) => set({ textareaVal: newValue }),
 
     setCardDropdown: (id) => set((state) => {
@@ -269,9 +282,14 @@ const useBookmarks = create<BookmarkStates>((set, get) => ({
     setPinnedItem: (id: string) => set((state) => {
         const itemToPin = state.bookmarks.find((item) => item.id === id);
         if (!itemToPin) return state;
+        const isAlreadyPinned = itemToPin.pinned;
         const remainingBookmarks = state.bookmarks.filter((item) => item.id !== id);
-        const pinnedAndBookmarks = [itemToPin, ...remainingBookmarks]
-        return {bookmarks: pinnedAndBookmarks}
+        if (isAlreadyPinned) {
+            const pinnedAndBookmarks = [...remainingBookmarks, { ...itemToPin, pinned: false }];
+            return { bookmarks: pinnedAndBookmarks }
+        }
+        const pinnedAndBookmarks = [{ ...itemToPin, pinned: true }, ...remainingBookmarks]
+        return { bookmarks: pinnedAndBookmarks }
     }),
 
     setUser: (user) => set({ user }),

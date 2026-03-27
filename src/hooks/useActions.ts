@@ -7,15 +7,12 @@ const REGEX = {
 
 export const useActions = () => {
     const {
-        bookmarks,
         archiveItems,
-        pinnedItems,
         setShowModal,
         setShowDeleteModal,
         setIsArchiving,
         setItemId,
         setCardDropdown,
-        setBookmarks,
         setPinnedItem,
         setEmailLogin,
         setEmailCreateAcc,
@@ -37,21 +34,15 @@ export const useActions = () => {
     }
 
     function handleDeleteItem(id: string) {
-        setBookmarks(id);
         setShowDeleteModal(true);
         setCardDropdown(id);
+        setItemId(id);
     }
 
     function handlePinnedItem(id: string) {
-    // 1. Check if it's already at the top (optional optimization)
-    const isAlreadyFirst = bookmarks[0]?.id === id;
-    if (!isAlreadyFirst) {
-        // 2. Call the store action we defined earlier to rearrange the array
         setPinnedItem(id);
+        setItemId(id);
     }
-    // 3. (Optional) If you need to track which ID was last pinned for UI effects
-    setItemId(id); 
-}
 
     function handleEmailChange(value: string) {
         setEmailLogin(value)
@@ -67,19 +58,18 @@ export const useActions = () => {
         setPasswordError(isValid);
     }
 
-    function handleTextsChange(value:string) {
+    function handleTextsChange(value: string) {
         setFullName(value)
         setSearchBar(value)
         setIsEmpty(value.trim() === '')
     }
 
-    // Return the functions so your components can use them
-    return { 
-        handleSelectItem, 
-        handleDeleteItem, 
+    return {
+        handleSelectItem,
+        handleDeleteItem,
         handlePinnedItem,
-        handleEmailChange, 
+        handleEmailChange,
         handlePasswordChange,
-        handleTextsChange 
+        handleTextsChange
     };
 }

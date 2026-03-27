@@ -10,7 +10,7 @@ interface MappedCardProps {
     index: number
 }
 
-const MappedCard: React.FC<MappedCardProps> = ({ item, index }) => {
+const MappedCard: React.FC<MappedCardProps> = ({ item }) => {
 
     const { activeTheme,
         cardDropdown,
@@ -19,8 +19,7 @@ const MappedCard: React.FC<MappedCardProps> = ({ item, index }) => {
         setCardDropdown,
     } = useBookmarks()
 
-    const { handleSelectItem, handlePinnedItem } = useActions()
-
+    const { handlePinnedItem } = useActions()
 
     const isCardOpen = cardDropdown && cardId === item.id;
 
@@ -32,8 +31,8 @@ const MappedCard: React.FC<MappedCardProps> = ({ item, index }) => {
             className={`flex flex-col justify-between
             h-full
             rounded-12
-            border-2 ${index === 0 ? 'border-yellow-400' : 'border-transparent'}  
-            ${index === 0 ? 'bg-yellow-100 opacity-80' :  activeTheme.cardBg}`}>
+            border-2 ${item.pinned ? 'border-yellow-400' : 'border-transparent'}
+            ${item.pinned ? 'bg-yellow-100 opacity-80' : activeTheme.cardBg}`}>
             <div className={`flex flex-col gap-200 
             p-4`}>
                 {/* imagem, titulos e tres pontos */}

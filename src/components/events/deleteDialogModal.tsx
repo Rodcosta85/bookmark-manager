@@ -2,7 +2,7 @@ import useBookmarks from "../../hooks/useBookmark"
 
 const DeleteDialogModal = () => {
 
-    const { activeTheme, setShowDeleteModal, handleConfirm } = useBookmarks()
+    const { activeTheme, setShowDeleteModal, setBookmarks, itemId } = useBookmarks()
 
     return (
         <div className="fixed top-0 left-0 z-99 
@@ -26,7 +26,7 @@ const DeleteDialogModal = () => {
                     {/* title e subtitle */}
 
                     <button className="w-5 h-5 cursor-pointer">
-                        <img src={activeTheme.iconClose} alt="an X button" />
+                        <img src={activeTheme.iconClose} alt="an X button" onClick={() => setShowDeleteModal(false)} />
                     </button>
                 </div>
                 {/* titulos e botao de fechar */}
@@ -44,7 +44,10 @@ const DeleteDialogModal = () => {
                         Cancel
                     </button>
                     <button
-                        onClick={handleConfirm}
+                        onClick={() => {
+                            setBookmarks(itemId as string);
+                            setShowDeleteModal(false);
+                        }}
                         type="button"
                         className="w-fit pt-3 pb-3 pl-4 pr-4 
                     rounded-8 
