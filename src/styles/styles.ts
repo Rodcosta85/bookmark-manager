@@ -17,7 +17,9 @@ import darkCloseIcon from './../assets/icon-close-dark.svg'
 import lightThreeDots from './../assets/icon-three-dots-light.svg'
 import darkThreeDots from './../assets/icon-three-dots-dark.svg'
 import lightPinIcon from './../assets/icon-pin.svg'
+import lightFILLEDPin from './../assets/icon-pin-FILLED.svg'
 import darkPinIcon from './../assets/icon-pin-dark.svg'
+import darkFILLEDPin from './../assets/icon-pin-dark-FILLED.svg'
 import lightEyeIcon from './../assets/icon-eye.svg'
 import darkEyeIcon from './../assets/icon-eye-dark.svg'
 import lightClock from './../assets/icon-clock.svg'
@@ -53,6 +55,8 @@ const themes: ThemeTypes[] = [
         secondaryBg: 'bg-white', 
         terciaryBg: 'bg-light-neutral-300',
         quaternaryBg: 'bg-light-neutral-500',
+        pinnedBg: 'bg-yellow-50',
+        pinnedBorder: 'border-yellow-400',
         tagBg: 'bg-light-neutral-100',
         cardBg: 'bg-white',
         hambBg: 'bg-light-neutral-900',
@@ -78,6 +82,7 @@ const themes: ThemeTypes[] = [
         iconClock: lightClock,
         iconCalendar: lightCalendarIcon,
         iconPin: lightPinIcon,
+        iconPinFilled: lightFILLEDPin,
         iconArchive: lightArchive,
         iconHome: lightHome,
         iconVisit: lightVisit,
@@ -94,6 +99,8 @@ const themes: ThemeTypes[] = [
         secondaryBg: 'bg-dark-neutral-600',
         terciaryBg: 'bg-dark-neutral-500',
         quaternaryBg: '',
+        pinnedBg: 'bg-yellow-950',
+        pinnedBorder: 'border-yellow-500',
         tagBg: 'bg-dark-neutral-600',
         cardBg: 'bg-dark-neutral-800',
         hambBg: 'bg-white',
@@ -119,6 +126,7 @@ const themes: ThemeTypes[] = [
         iconClock: darkClock,
         iconCalendar: darkCalendarIcon,
         iconPin: darkPinIcon,
+        iconPinFilled: darkFILLEDPin,
         iconArchive: darkArchive,
         iconHome: darkHome,
         iconVisit: darkVisit,

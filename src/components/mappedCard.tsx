@@ -31,10 +31,9 @@ const MappedCard: React.FC<MappedCardProps> = ({ item }) => {
             className={`flex flex-col justify-between
             h-full
             rounded-12
-            border-2 ${item.pinned ? 'border-yellow-400' : 'border-transparent'}
-            ${item.pinned ? 'bg-yellow-100 opacity-80' : activeTheme.cardBg}`}>
-            <div className={`flex flex-col gap-200 
-            p-4`}>
+            border-2 ${item.pinned ? activeTheme.pinnedBorder : 'border-transparent'}
+            ${activeTheme.cardBg}`}>
+            <div className={`flex flex-col gap-200 p-4`}>
                 {/* imagem, titulos e tres pontos */}
                 <div className={`flex justify-between gap-150
                 pb-4
@@ -103,7 +102,7 @@ const MappedCard: React.FC<MappedCardProps> = ({ item }) => {
                     onClick={() => handlePinnedItem(item.id)}
                     className="cursor-pointer">
                     <img
-                        src={activeTheme.iconPin}
+                        src={item.pinned ? activeTheme.iconPinFilled : activeTheme.iconPin}
                         alt="a pin icon"
                         className={`transition-all duration-150 ease-in-out 
                         ${contentType === 'home' ? 'hover:translate-y-1' : 'hover:-translate-y-1'}

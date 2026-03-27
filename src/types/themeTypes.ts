@@ -4,6 +4,8 @@ export interface ThemeTypes {
     secondaryBg: string,
     terciaryBg: string,
     quaternaryBg: string,
+    pinnedBg: string,
+    pinnedBorder: string,
     cardBg: string,
     tagBg: string,
     hambBg: string,
@@ -28,7 +30,8 @@ export interface ThemeTypes {
     iconEye: string,
     iconClock: string,
     iconCalendar: string,
-    iconPin: string
+    iconPin: string,
+    iconPinFilled: string,
     iconArchive: string,
     iconHome: string
     iconVisit: string,

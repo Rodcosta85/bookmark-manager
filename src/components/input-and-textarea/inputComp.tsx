@@ -27,7 +27,7 @@ const InputComp: React.FC<InputCompProps> = ({ label, type, id, value, isValid, 
 
 
   return (
-    <div className="relative flex flex-col gap-1.5 text-preset-4 mb-6">
+    <div className={`relative flex flex-col gap-1.5 text-preset-4 ${id !== "search-bar" ? "mb-6" : "mb-0"}`}>
       {id !== "search-bar" ?
         (<p className={`text-left ${activeTheme.paragraphTwo}`}>{label}</p>) : null}
 
