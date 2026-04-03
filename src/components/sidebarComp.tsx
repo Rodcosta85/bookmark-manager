@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import useBookmarks from "../hooks/useBookmark"
 
 const SidebarComp: React.FC = () => {
@@ -13,7 +14,9 @@ const SidebarComp: React.FC = () => {
         setTagsFilters,
     } = useBookmarks()
 
-    const allTags = bookmarks.flatMap(item => item.tags);
+    const allTags = useMemo(() => {
+            return bookmarks.flatMap(item => item.tags);
+        }, []);
 
     const elementCount = allTags.reduce((acc: Record<string, number>, tag) => {
         acc[tag] = (acc[tag] || 0) + 1;

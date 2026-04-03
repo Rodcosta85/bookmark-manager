@@ -104,7 +104,7 @@ const MappedCard: React.FC<MappedCardProps> = ({ item }) => {
                     <img
                         src={item.pinned ? activeTheme.iconPinFilled : activeTheme.iconPin}
                         alt="a pin icon"
-                        className={`transition-all duration-150 ease-in-out 
+                        className={`transition-all duration-150 ease-in-out w-4 h-4 
                         ${contentType === 'home' ? 'hover:translate-y-1' : 'hover:-translate-y-1'}
                     `}
                     />

@@ -4,12 +4,12 @@ import Eye from "./../../assets/eye.png"
 import ClosedEye from "./../../assets/hidden.png"
 
 interface InputCompProps extends InputHTMLAttributes<HTMLInputElement> {
-  label: string,
-  type?: 'text' | 'number' | 'email' | 'password',
+  label?: string,
+  type?: 'text' | 'number' | 'email' | 'password' | 'url' | 'file',
   id: string
-  value: string,
-  isValid: boolean,
-  errorText: string
+  value?: string,
+  isValid?: boolean,
+  errorText?: string
 }
 
 const InputComp: React.FC<InputCompProps> = ({ label, type, id, value, isValid, errorText, ...props }) => {
@@ -52,7 +52,7 @@ const InputComp: React.FC<InputCompProps> = ({ label, type, id, value, isValid, 
             type={showPassword ? 'text' : type}
             name={type}
             value={value}
-            placeholder={label === 'Tags *' ? 'e.g. design, learning, tools' : 'Search'}
+            // placeholder={label === 'Tags *' ? 'e.g. design, learning, tools' : ""}
             className={`text-preset-4-medium ${activeTheme.paragraphTwo} placeholder-${activeTheme.paragraphOne} 
         focus:outline-none border-none 
         bg-transparent [&::-internal-autofill-selected]:transparent

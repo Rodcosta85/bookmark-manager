@@ -20,6 +20,7 @@ export interface ThemeTypes {
     buttonBorder: string,
     errorBg: string,
     errorBorder: string,
+    filteredText: string,
     sun: string,
     moon: string,
     iconTheme: string

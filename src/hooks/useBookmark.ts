@@ -43,13 +43,20 @@ interface BookmarkStates {
     isArchiving: boolean,
     isDeleting: boolean,
 
-    // variáveis dos inputs
+    // variáveis dos inputs e textarea
     searchBar: string,
     emailLogin: string,
     emailCreateAcc: string,
     passwordLogin: string,
     passwordCreateAcc: string,
     fullName: string,
+    textField: string,
+
+    // form de adicionar bookmark
+    // addTitle: string,
+    // addDescription: string,
+    // addURL: string,
+    // addTags: string
 
     // variáveis de validação
     emailError: boolean
@@ -82,13 +89,14 @@ interface BookmarkStates {
     handleConfirm: () => void,
     setIsDeleting: (isDeleting: boolean) => void,
 
-    // funções dos inputs
+    // funções dos inputs e textarea
     setSearchBar: (searchBar: string) => void,
     setEmailLogin: (emailLogin: string) => void,
     setEmailCreateAcc: (emailCreateAcc: string) => void,
     setPasswordLogin: (passwordLogin: string) => void,
     setPasswordCreateAcc: (passwordCreateAcc: string) => void,
-    setFullName: (fullNamme: string) => void
+    setFullName: (fullNamme: string) => void,
+    setTextField: (textField: string) => void,
 
     // funções de erro
     setEmailError: (emailError: boolean) => void,
@@ -188,6 +196,9 @@ const useBookmarks = create<BookmarkStates>((set, get) => ({
 
     // input do nome completo/full name
     fullName: '',
+
+    // textarea de dentro dos forms
+    textField: '',
 
     // erro do email
     emailError: false,
@@ -320,6 +331,7 @@ const useBookmarks = create<BookmarkStates>((set, get) => ({
     setPasswordLogin: (newValue: string) => set({ passwordLogin: newValue }),
     setPasswordCreateAcc: (newValue: string) => set({ passwordCreateAcc: newValue }),
     setFullName: (newValue: string) => set({ fullName: newValue }),
+    setTextField: (newValue: string) => set({ textField: newValue }),
     setEmailError: () => set((state) => ({ emailError: !state.emailError })),
     setPasswordError: () => set((state) => ({ passwordError: !state.passwordError })),
     setIsEmpty: () => set((state) => ({ isEmpty: !state.isEmpty })),

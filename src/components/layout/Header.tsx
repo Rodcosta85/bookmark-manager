@@ -10,16 +10,23 @@ import InputComp from "../../components/input-and-textarea/inputComp"
 import IconPlus from "./../../assets/icon-plus.svg"
 import Avatar from "./../../assets/Avatar.png"
 import AddBookmark from "../Forms/addBookmark"
+import { useActions } from "../../hooks/useActions";
 
 
 const Header = () => {
+
+    const { handleTextsChange } = useActions()
 
     const { sidebar,
         activeTheme,
         appearprofDrop,
         showBookmarkEditor,
         isArchiving,
-        user,
+        contentType,
+        archiveItems,
+        bookmarks,
+        searchBar,
+        isEmpty,
         setShowBookmarkEditor,
         setAppearprofDrop,
         setUser } = useBookmarks()
@@ -58,7 +65,14 @@ const Header = () => {
             `}>
             <div className="flex justify-between items-center gap-125">
                 <HambMenu />
-                <InputComp label="" type="text" id="search-bar" />
+                <InputComp
+                        type="text"
+                        id="search-bar"
+                        placeholder="Search by title..."
+                        value={searchBar}
+                        isValid={isEmpty}
+                        onChange={(e) => handleTextsChange(e.target.value)}
+                    />
             </div>
 
             <div className="flex justify-between items-center gap-125">
@@ -71,9 +85,9 @@ const Header = () => {
                 bg-teal-700
                 ">
                     <img src={IconPlus} alt="a plus icon" className="w-5 h-5" />
-                    {showBookmarkEditor && 
-                        <AddBookmark 
-                        title={`${isArchiving ? "Archive" : "Unarchive"} bookmark`}
+                    {showBookmarkEditor &&
+                        <AddBookmark
+                            title={`${isArchiving ? "Archive" : "Unarchive"} bookmark`}
                         />}
                     <p className="hidden sm:block md:block lg:block text-white">Add Bookmark</p>
                 </button>

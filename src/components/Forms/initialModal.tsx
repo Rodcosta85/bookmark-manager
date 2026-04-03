@@ -101,8 +101,8 @@ const InitialModal: React.FC = () => {
           :
           <div className="flex flex-col gap-4">
             <InputComp
-              label="Email"
-              type="email"
+              label="Full Name"
+              type="text"
               id=""
               value={fullName}
               isValid={isEmpty}

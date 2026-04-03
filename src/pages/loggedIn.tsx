@@ -19,10 +19,17 @@ const loggedIn = () => {
         showModal,
         showDeleteModal,
         isArchiving,
+        searchBar,
         setSortDropdown,
     } = useBookmarks()
 
     const itemsToMap = contentType === 'home' ? bookmarks : archiveItems;
+
+    const filteredArrList = searchBar === ""
+        ? itemsToMap                                      // If empty, show everything
+        : itemsToMap.filter((list) =>                     // Otherwise, filter
+            list.title.toLowerCase().startsWith(searchBar.toLowerCase())
+        );
 
     useEffect(() => {
         document.addEventListener("click", () => {
@@ -48,7 +55,19 @@ const loggedIn = () => {
             ">
                     <div className="flex justify-between items-center">
                         <h2 className={`text-preset-2 ${activeTheme.headerText}`}>
-                            {contentType === 'home' ? 'All Bookmarks' : 'Archived Bookmarks'}
+                            {contentType === 'home' ? (
+                                searchBar === "" ? (
+                                    "All Bookmarks"
+                                ) : (
+                                    <>Results for: <span className={`${activeTheme.filteredText}`}>"{searchBar}"</span></>
+                                )
+                            ) : (
+                                searchBar === "" ? (
+                                    "Archived Bookmarks"
+                                ) : (
+                                    <>Results for: <span className={`${activeTheme.filteredText}`}>"{searchBar}"</span></>
+                                )
+                            )}
                         </h2>
                         <div className="flex flex-col items-end relative">
                             <SortButton />
@@ -64,7 +83,7 @@ const loggedIn = () => {
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 xl:grid-cols-3 gap-400 sm:gap-200 md:gap-400">
-                            {itemsToMap.map((item, index) => (
+                            {filteredArrList.map((item, index) => (
                                 <MappedCard
                                     key={item.id}
                                     item={item}
@@ -83,7 +102,7 @@ const loggedIn = () => {
                 )}
 
 
-                {showDeleteModal && <DeleteDialogModal/>}
+                {showDeleteModal && <DeleteDialogModal />}
 
 
                 {/* <NotificationPopup

@@ -1,16 +1,12 @@
+import { useActions } from "../../hooks/useActions"
 import useBookmarks from "../../hooks/useBookmark"
 import InputComp from "../input-and-textarea/inputComp"
 import TextareaComp from "../input-and-textarea/textareaComp"
 
-interface AddBookProps {
-    title: string,
-}
+const AddBookmark: React.FC = ({  }) => {
 
-const AddBookmark: React.FC<AddBookProps> = ({ title }) => {
-
-    const { activeTheme, setShowModal, handleConfirm } = useBookmarks()
-
-    const buttonCondition = title.includes('Archive') ? 'Archive' : 'Unarchive'
+    const { handleTextsChange } = useActions()
+    const { activeTheme, textField, isEmpty, setShowModal, handleConfirm } = useBookmarks()
 
     return (
         <div className="fixed top-0 left-0 z-99 
@@ -44,10 +40,41 @@ const AddBookmark: React.FC<AddBookProps> = ({ title }) => {
                     action=""
                     className="flex flex-col gap-250"
                 >
-                    <InputComp label="Title *" id="" />
-                    <TextareaComp label="Description *" />
-                    <InputComp label="Website URLs *" id="" />
-                    <InputComp label="Tags *" id="" />
+                    <InputComp
+                        label="Title *"
+                        type="text"
+                        id=""
+                        value={textField}
+                        isValid={isEmpty}
+                        errorText="This field cannot be empty."
+                        onChange={(e) => handleTextsChange(e.target.value)}
+                    />
+                    <TextareaComp
+                        label="Description *"
+                        id=""
+                        value={textField}
+                        isValid={isEmpty}
+                        errorText="This field cannot be empty."
+                    />
+                    <InputComp
+                        label="Website URL *"
+                        type="url"
+                        id=""
+                        value={textField}
+                        isValid={isEmpty}
+                        errorText="This field cannot be empty."
+                        onChange={(e) => handleTextsChange(e.target.value)}
+                    />
+                    <InputComp
+                        label="Tags *"
+                        type="text"
+                        id=""
+                        placeholder="e.g. Design, Learning, Tools"
+                        value={textField}
+                        isValid={isEmpty}
+                        errorText="This field cannot be empty."
+                        onChange={(e) => handleTextsChange(e.target.value)}
+                    />
                     <div className="flex justify-end gap-200">
                         <button
                             type="button"
@@ -61,12 +88,12 @@ const AddBookmark: React.FC<AddBookProps> = ({ title }) => {
                         </button>
                         <button
                             onClick={handleConfirm}
-                            type="button"
+                            type="submit"
                             className="w-fit pt-3 pb-3 pl-4 pr-4 
                     rounded-8 
                     bg-teal-700 
                     text-white cursor-pointer">
-                            {buttonCondition}
+                            Add Bookmark
                         </button>
                     </div>
                 </form>

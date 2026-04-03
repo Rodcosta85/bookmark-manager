@@ -1,19 +1,30 @@
 import { useState } from 'react'
 import useBookmarks from '../../hooks/useBookmark'
+import { useActions } from '../../hooks/useActions'
 
 interface textareCompProps {
-  label: string
+  label: string,
+  id: string,
+  value: string,
+  isValid: boolean,
+  errorText: string
 }
 
-const TextareaComp: React.FC<textareCompProps> = ({ label }) => {
+const TextareaComp: React.FC<textareCompProps> = ({ label, id, value, isValid, errorText, ...props }) => {
 
-  const { limit, activeTheme, setTextareaVal, setLimit } = useBookmarks()
+  const { handleTextsChange } = useActions()
+  const { limit, activeTheme, setTextareaVal } = useBookmarks()
   const [charCount, setCharCount] = useState(0);
 
   const handleCharCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     setTextareaVal(value);
     setCharCount(value.length);
+  }
+
+  const handleChanges = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    handleCharCount(e)
+    handleTextsChange(value)
   }
 
   return (
@@ -26,7 +37,7 @@ const TextareaComp: React.FC<textareCompProps> = ({ label }) => {
         {/* textarea */}
         <div className={`flex justify-start items-start gap-100 
       h-fit p-150 rounded-8 
-      border ${limit ? 'border-new-red-800' : `${activeTheme.inputBorder}`} 
+      border ${limit || isValid || !value ? `${activeTheme.inputBorder}` : "border-new-red-800"} 
       `}>
           <img
             src={activeTheme.iconSearch}
@@ -34,12 +45,12 @@ const TextareaComp: React.FC<textareCompProps> = ({ label }) => {
             className='w-5 h-5'
           />
           <textarea
-            placeholder='Search'
+            {...props}
             className={`w-full
             text-preset-4-medium ${activeTheme.paragraphTwo} placeholder-${activeTheme.paragraphOne}
             focus:outline-none border-none 
             bg-transparent`}
-            onChange={handleCharCount}
+            onChange={handleChanges}
           />
         </div>
         {/* textarea */}
@@ -47,7 +58,21 @@ const TextareaComp: React.FC<textareCompProps> = ({ label }) => {
       </div>
       {/* textarea + contador de caracteres */}
 
-      <p className={`text-left ${activeTheme.paragraphTwo}`}>This is a hint text to help the user.</p>
+      {
+        id !== "search-bar" ?
+          (
+            <p className={`
+              absolute -bottom-6
+              text-preset-4-medium text-left text-new-red-800
+              transition-all 0.2s ease-in-out
+              ${isValid || !value ? 'opacity-0' : 'opacity-100'}
+            `}>
+              {errorText}
+            </p>
+          )
+          :
+          null
+      }
     </div>
   )
 }
