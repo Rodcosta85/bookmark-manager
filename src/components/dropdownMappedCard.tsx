@@ -2,6 +2,7 @@ import { useState } from "react"
 import useBookmarks from "../hooks/useBookmark"
 import { useActions } from "../hooks/useActions"
 import type { DataTypes } from "../types/dataTypes"
+import EditBookmark from "./Forms/editBookmark"
 
 interface dropdownCardProps {
     item: DataTypes
@@ -9,7 +10,7 @@ interface dropdownCardProps {
 
 const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
 
-    const { activeTheme, archiveItems } = useBookmarks()
+    const { activeTheme, archiveItems, showBookmarkEditor, setShowBookmarkEditor } = useBookmarks()
     const { handleSelectItem, handleDeleteItem } = useActions()
 
     const isArchived = archiveItems.some(a => a.id === item.id);
@@ -69,9 +70,11 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
                 <img src={activeTheme.iconPin} alt="" />
                 Pin
             </button>
-
             {/* se já estiver arquivado, edit nao aparece mais */}
-            <button className={`flex justify-start items-center gap-125 
+            <button 
+            onClick={setShowBookmarkEditor}
+            className={`${isArchived ? 'hidden' : 'flex'}
+            justify-start items-center gap-125 
             p-100
             rounded-8
             border-2 border-transparent hover:border-teal-700
@@ -80,7 +83,7 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
                 <img src={activeTheme.iconEdit} alt="" />
                 Edit
             </button>
-
+            {showBookmarkEditor && <EditBookmark />}
             {/* se já estiver arquivado, o texto muda para "unarchive e o icone tbm" */}
             <button
                 onClick={() => handleSelectItem((item.id))}

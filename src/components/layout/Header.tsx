@@ -22,9 +22,6 @@ const Header = () => {
         appearprofDrop,
         showBookmarkEditor,
         isArchiving,
-        contentType,
-        archiveItems,
-        bookmarks,
         searchBar,
         isEmpty,
         setShowBookmarkEditor,
@@ -85,12 +82,9 @@ const Header = () => {
                 bg-teal-700
                 ">
                     <img src={IconPlus} alt="a plus icon" className="w-5 h-5" />
-                    {showBookmarkEditor &&
-                        <AddBookmark
-                            title={`${isArchiving ? "Archive" : "Unarchive"} bookmark`}
-                        />}
                     <p className="hidden sm:block md:block lg:block text-white">Add Bookmark</p>
                 </button>
+                {showBookmarkEditor && <AddBookmark />}
                 <div className="flex flex-col items-end w-fit relative">
                     <button onClick={setAppearprofDrop}>
                         <img

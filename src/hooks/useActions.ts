@@ -22,7 +22,12 @@ export const useActions = () => {
         setSearchBar,
         setEmailError,
         setPasswordError,
-        setIsEmpty
+        setIsEmpty,
+        setAddTitle,
+        setAddTags,
+        setAddURL,
+        setAddDescription,
+        setAddFavicon,
     } = useBookmarks();
 
     function handleSelectItem(id: string) {
@@ -64,12 +69,59 @@ export const useActions = () => {
         setIsEmpty(value.trim() === '')
     }
 
+    function handleTitleChange(value: string) {
+        setAddTitle(value);
+        setIsEmpty(value.trim() === '')
+    }
+
+    function handleDescriptionChange(value: string) {
+        setAddDescription(value);
+        setIsEmpty(value.trim() === '')
+    }
+
+    function handleTagsChange(value: string) {
+        setAddTags(value)
+        setIsEmpty(value.trim() === '')
+    }
+
+    function handleURLChange(value: string) {
+        setAddURL(value)
+        setIsEmpty(value.trim() === '')
+    }
+
+    const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // 1. Grab the first file the user selected
+    const file = e.target.files?.[0]; 
+
+    if (file) {
+      // 2. Create a FileReader to convert the image into a string
+      const reader = new FileReader();
+
+      // 3. Tell the reader what to do once it finishes reading the file
+      reader.onloadend = () => {
+        // reader.result is your Base64 string! Save it to state.
+        setAddFavicon(reader.result as string); 
+      };
+
+      // 4. Actually start reading the file
+      reader.readAsDataURL(file); 
+    }
+  };
+
+
+
+
     return {
         handleSelectItem,
         handleDeleteItem,
         handlePinnedItem,
         handleEmailChange,
         handlePasswordChange,
-        handleTextsChange
+        handleTextsChange,
+        handleTitleChange,
+        handleDescriptionChange,
+        handleTagsChange,
+        handleURLChange,
+        handleImageUpload
     };
 }

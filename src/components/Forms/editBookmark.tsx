@@ -4,7 +4,7 @@ import InputComp from "../input-and-textarea/inputComp"
 import TextareaComp from "../input-and-textarea/textareaComp"
 
 
-const AddBookmark: React.FC = ({ }) => {
+const EditBookmark: React.FC = ({ }) => {
 
     const {
         handleTitleChange,
@@ -22,7 +22,7 @@ const AddBookmark: React.FC = ({ }) => {
         addTags,
         addFavicon,
         setShowModal,
-        addBookmark,
+        editBookmark,
         setShowBookmarkEditor,
         setAddTitle,
         setAddURL,
@@ -40,7 +40,7 @@ const AddBookmark: React.FC = ({ }) => {
             .filter(tag => tag.length > 0); // Remove any empty strings if they typed ",,"
 
 
-        addBookmark({
+        editBookmark({
             id: Date.now().toString(),
             title: addTitle,
             url: addURL,
@@ -53,7 +53,6 @@ const AddBookmark: React.FC = ({ }) => {
             lastVisited: new Date().toISOString(),
             favicon: addFavicon
         });
-
         setAddTitle('')
         setAddDescription('')
         setAddTags('')
@@ -76,8 +75,10 @@ const AddBookmark: React.FC = ({ }) => {
                 <div className="flex justify-between gap-300">
                     <div className="flex flex-col gap-100
                     w-[90%] md:w-full lg:w-full">
-                        <h2 className={`text-left text-preset-1 ${activeTheme.headerText}`}>Add a Bookmark</h2>
-                        <p className={`text-left text-preset-4-medium ${activeTheme.paragraphOne}`}>Save a link with details to keep your collection organized.</p>
+                        <h2 className={`text-left text-preset-1 ${activeTheme.headerText}`}>Edit Bookmark</h2>
+                        <p className={`text-left text-preset-4-medium ${activeTheme.paragraphOne}`}>
+                            Update your saved link details — change the title, description, URL, or tags anytime.
+                        </p>
                     </div>
                     <button
                         className={`flex justify-center items-center self-start
@@ -167,7 +168,7 @@ const AddBookmark: React.FC = ({ }) => {
                     rounded-8 
                     bg-teal-700 
                     text-white cursor-pointer">
-                            Add Bookmark
+                            Edit Bookmark
                         </button>
                     </div>
                 </form>
@@ -177,4 +178,4 @@ const AddBookmark: React.FC = ({ }) => {
     )
 }
 
-export default AddBookmark
+export default EditBookmark

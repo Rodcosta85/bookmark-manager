@@ -12,19 +12,24 @@ interface textareCompProps {
 
 const TextareaComp: React.FC<textareCompProps> = ({ label, id, value, isValid, errorText, ...props }) => {
 
-  const { handleTextsChange } = useActions()
-  const { limit, activeTheme, setTextareaVal } = useBookmarks()
+  const { handleDescriptionChange } = useActions();
+  const { limit, activeTheme, setAddDescription } = useBookmarks();
   const [charCount, setCharCount] = useState(0);
 
-  const handleCharCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    const value = e.target.value;
-    setTextareaVal(value);
-    setCharCount(value.length);
-  }
-
+  // We delete handleCharCount and put everything inside handleChanges
   const handleChanges = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    handleCharCount(e)
-    handleTextsChange(value)
+    // 1. Define 'value' at the top level of this function
+    const value = e.target.value; 
+
+    // 2. Update your state from the useBookmarks hook
+    setAddDescription(value);
+
+    // 3. Update your local character count state
+    setCharCount(value.length);
+
+    // 4. Send the value to your useActions hook
+    // It now knows exactly what 'value' is!
+    handleDescriptionChange(value);
   }
 
   return (
