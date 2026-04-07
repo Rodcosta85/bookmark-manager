@@ -1,10 +1,15 @@
 import { useNavigate } from "react-router-dom"
+import type { BaseSyntheticEvent } from "react";
+
 import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../services/firebase';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from '../../services/firebase'; 
+import { doc, setDoc } from "firebase/firestore";
+
 import useBookmarks from "../../hooks/useBookmark"
 import { useActions } from "../../hooks/useActions";
 import InputComp from "../input-and-textarea/inputComp"
-import type { BaseSyntheticEvent } from "react";
+
 
 const InitialModal: React.FC = () => {
 
@@ -30,25 +35,42 @@ const InitialModal: React.FC = () => {
     e.preventDefault();
 
     try {
-      // 2. Pass the hardcoded variables here
       const userCredential = await signInWithEmailAndPassword(auth, emailLogin, passwordLogin);
-
       console.log("Success! Firebase logged in:", userCredential.user);
-
-      // 2. ONLY navigate to home if the login was successful
       navigate("/home");
-
     } catch (error: any) {
-      // 3. Catch wrong passwords or invalid emails
       console.error("Login failed:", error.message);
       alert("Invalid email or password!");
     }
   }
 
   async function handleCreateAccount(e: BaseSyntheticEvent) {
-    e.preventDefault();
+  e.preventDefault();
+  
+  try {
+    // 1. Create the user in Firebase Auth
+    const userCredential = await createUserWithEmailAndPassword(
+      auth, 
+      emailCreateAcc, 
+      passwordCreateAcc
+    );
+    
+    const user = userCredential.user;
+
+    // 2. Store additional info in Firestore using the Auth UID
+    // Notice we do NOT save the password here!
+    await setDoc(doc(db, 'users', user.uid), {
+      name: fullName,
+      email: emailCreateAcc,
+      createdAt: new Date()
+    });
+
+    alert('Account created!');
     navigate("/home");
+  } catch (error) {
+    console.error('The error is:', error);
   }
+}
 
   const isFormValid = !emailError || !passwordError || !emailLogin || !passwordLogin;
 

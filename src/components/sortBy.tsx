@@ -1,5 +1,4 @@
 import useBookmarks from "../hooks/useBookmark"
-import type { SortType } from "../hooks/useBookmark"
 
 const sortBy = () => {
 

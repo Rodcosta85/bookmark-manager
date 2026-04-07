@@ -7,6 +7,7 @@ import DialogModal from "../components/events//dialogModal"
 import DeleteDialogModal from "../components/events/deleteDialogModal"
 import Header from './../components/layout/Header'
 import DesktopSidebar from "../components/desktopSidebar"
+import NotificationPopup from "../components/events/notificationPopup"
 
 const loggedIn = () => {
 
@@ -20,6 +21,7 @@ const loggedIn = () => {
         showDeleteModal,
         isArchiving,
         searchBar,
+        appearNotif,
         setSortDropdown,
     } = useBookmarks()
 
@@ -69,10 +71,14 @@ const loggedIn = () => {
                                 )
                             )}
                         </h2>
-                        <div className="flex flex-col items-end relative">
-                            <SortButton />
-                            {sortDropdown && <SortBy />}
+                        <div className="flex gap-200">
+                            {appearNotif && <NotificationPopup />}
+                            <div className="flex flex-col items-end relative">
+                                <SortButton />
+                                {sortDropdown && <SortBy />}
+                            </div>
                         </div>
+
                     </div>
 
                     {itemsToMap.length === 0 ? (

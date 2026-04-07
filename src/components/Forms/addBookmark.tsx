@@ -132,7 +132,7 @@ const AddBookmark: React.FC = ({ }) => {
                         errorText="This field cannot be empty."
                         onChange={(e) => handleTagsChange(e.target.value)}
                     />
-                    <div className="flex justify-between gap-4">
+                    <div className="flex flex-col justify-between gap-4">
                         <input
                             type="file"
                             name=""
@@ -145,7 +145,7 @@ const AddBookmark: React.FC = ({ }) => {
                             <img
                                 src={addFavicon}
                                 alt="Preview"
-                                style={{ width: '50px', height: '50px', marginTop: '10px', display: 'block' }}
+                                className="w-12.5 h-12.5"
                             />
                         )}
                     </div>

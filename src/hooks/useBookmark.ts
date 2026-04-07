@@ -1,11 +1,11 @@
 import { create } from 'zustand'
-import { persist, createJSONStorage } from 'zustand/middleware';
+import { persist } from 'zustand/middleware';
 import data from './../data.json'
 import type { DataTypes } from '../types/dataTypes'
 import themes from './../styles/styles'
 
 // modal de "sort by"
-export type SortType = 'recently_added' | 'recently_visited' | 'most_visited'
+export type SortType = 'recently_added' | 'recently_visited' | 'most_visited' | 'restore_original'
 type HomeArchived = 'home' | 'archived'
 type themeChanger = typeof themes[number]
 
@@ -276,7 +276,7 @@ const useBookmarks = create<BookmarkStates>()(
                 const sortedArray = [...state.bookmarks].sort((a, b) => {
                     if (type === 'most_visited') return (b.visitCount || 0) - (a.visitCount || 0);
                     if (type === 'recently_added') return (new Date(b.createdAt).getTime() || 0) - (new Date(a.createdAt).getTime() || 0);
-                    if (type === 'recently_visited') return (new Date(b.lastVisited).getTime() || 0) - (new Date(a.lastVisited).getTime() || 0);
+                    if (type === 'recently_visited') return (new Date(b.lastVisited).getTime() || 0) - (new Date(a.lastVisited).getTime() || 0); 
                     return 0;
                 });
                 return {
@@ -306,7 +306,8 @@ const useBookmarks = create<BookmarkStates>()(
             }),
 
             addBookmark: (newBookmark: DataTypes) => set((state) => ({
-                bookmarks: [...state.bookmarks, newBookmark]
+                bookmarks: [...state.bookmarks, newBookmark],
+                appearNotif: true
             })),
 
             editBookmark: (updatedBookmark: DataTypes) => set((state) => ({
@@ -319,7 +320,7 @@ const useBookmarks = create<BookmarkStates>()(
                 const itemToRestore = state.archiveItems.find((item) => item.id === id);
                 if (!itemToRestore) return state;
                 const remainingArchive = state.archiveItems.filter((item) => item.id !== id);
-                const newBookmarks = [...state.bookmarks, itemToRestore];
+                const newBookmarks = [itemToRestore, ...state.bookmarks];
                 return {
                     archiveItems: remainingArchive,
                     bookmarks: newBookmarks
