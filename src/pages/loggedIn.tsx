@@ -16,7 +16,7 @@ const loggedIn = () => {
         sortDropdown,
         activeTheme,
         contentType,
-        archiveItems,
+        filteredArchiveItems,
         showModal,
         showDeleteModal,
         isArchiving,
@@ -25,7 +25,7 @@ const loggedIn = () => {
         setSortDropdown,
     } = useBookmarks()
 
-    const itemsToMap = contentType === 'home' ? bookmarks : archiveItems;
+    const itemsToMap = contentType === 'home' ? bookmarks : filteredArchiveItems;
 
     const filteredArrList = searchBar === ""
         ? itemsToMap                                      // If empty, show everything

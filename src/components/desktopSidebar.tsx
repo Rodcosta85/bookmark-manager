@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import useBookmarks from "../hooks/useBookmark"
+import data from "../data.json"
 
 const desktopSidebar = () => {
 
@@ -7,14 +8,13 @@ const desktopSidebar = () => {
         tagsFilters,
         contentType,
         activeTheme,
-        bookmarks,
         setHomeArchived,
         setSidebar,
         setTagsFilters,
     } = useBookmarks()
 
     const allTags = useMemo(() => {
-        return bookmarks.flatMap(item => item.tags);
+        return data.flatMap(item => item.tags);
     }, []);
 
     const elementCount = allTags.reduce((acc: Record<string, number>, tag) => {

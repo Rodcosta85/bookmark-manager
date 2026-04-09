@@ -110,7 +110,8 @@ const InitialModal: React.FC = () => {
               value={emailLogin}
               isValid={emailError}
               errorText="Enter a valid email address."
-              onChange={(e) => handleEmailChange(e.target.value)} />
+              onChange={(e) => handleEmailChange(e.target.value)}
+            />
             <InputComp
               label="Password"
               type="password"
@@ -118,7 +119,8 @@ const InitialModal: React.FC = () => {
               value={passwordLogin}
               isValid={passwordError}
               errorText="Must be at least 8 characters long."
-              onChange={(e) => handlePasswordChange(e.target.value)} />
+              onChange={(e) => handlePasswordChange(e.target.value)}
+            />
           </div>
           :
           <div className="flex flex-col gap-4">

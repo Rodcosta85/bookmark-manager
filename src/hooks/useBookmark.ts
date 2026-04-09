@@ -19,6 +19,7 @@ interface UserProfile {
 interface BookmarkStates {
     bookmarks: DataTypes[],
     archiveItems: DataTypes[],
+    filteredArchiveItems: DataTypes[],
     pinnedItems: DataTypes[],
 
     tagsFilters: string[],
@@ -79,6 +80,7 @@ interface BookmarkStates {
     setShowPassword: (visible: boolean) => void,
     setShowBookmarkEditor: () => void,
     setArchiveItems: (id: string) => void,
+    setFilteredArchiveItems: (id: string) => void,
     setPinnedItem: (id: string) => void,
     setBookmarks: (id: string) => void,
     addBookmark: (newBookmark: DataTypes) => void;
@@ -170,6 +172,9 @@ const useBookmarks = create<BookmarkStates>()(
             // array dos items do json que foram arquivados
             archiveItems: [] as DataTypes[],
 
+            // array dos items do json que foram arquivados e filtrados
+            filteredArchiveItems: [] as DataTypes[],
+
             // array dos items que foram "prendidos" + o resto
             pinnedItems: [] as DataTypes[],
 
@@ -237,15 +242,19 @@ const useBookmarks = create<BookmarkStates>()(
             addFavicon: '',
 
             // setTagsFilters: (tagsFilters) => set({ tagsFilters }),
-            setTagsFilters: (tagsFilters: string[]) => set(() => {
+            setTagsFilters: (tagsFilters: string[]) => set((state) => {
+                // const filteredArchiveItems = 
                 if (tagsFilters.length === 0) {
                     return {
+                        filteredArchiveItems: state.archiveItems,
                         bookmarks: data as DataTypes[],
                         tagsFilters: [],
                     }
                 }
                 const remainingBookmarks = (data as DataTypes[]).filter((item) => tagsFilters.some(tag => item.tags.includes(tag)));
+                const remainingArchived = state.archiveItems.filter((item) => tagsFilters.some(tag => item.tags.includes(tag)));
                 return {
+                    filteredArchiveItems: remainingArchived,
                     bookmarks: remainingBookmarks,
                     tagsFilters,
                 };
@@ -276,7 +285,7 @@ const useBookmarks = create<BookmarkStates>()(
                 const sortedArray = [...state.bookmarks].sort((a, b) => {
                     if (type === 'most_visited') return (b.visitCount || 0) - (a.visitCount || 0);
                     if (type === 'recently_added') return (new Date(b.createdAt).getTime() || 0) - (new Date(a.createdAt).getTime() || 0);
-                    if (type === 'recently_visited') return (new Date(b.lastVisited).getTime() || 0) - (new Date(a.lastVisited).getTime() || 0); 
+                    if (type === 'recently_visited') return (new Date(b.lastVisited).getTime() || 0) - (new Date(a.lastVisited).getTime() || 0);
                     return 0;
                 });
                 return {
@@ -292,7 +301,20 @@ const useBookmarks = create<BookmarkStates>()(
                 const newArchivedBucket = [...state.archiveItems, itemToArchive];
                 return {
                     bookmarks: remainingBookmarks,
-                    archiveItems: newArchivedBucket
+                    archiveItems: newArchivedBucket,
+                    filteredArchiveItems: newArchivedBucket,
+                };
+            }),
+
+            setFilteredArchiveItems: (id: string) => set((state) => {
+                const itemToArchive = state.bookmarks.find((item) => item.id === id);
+                if (!itemToArchive) return state;
+                const remainingBookmarks = state.bookmarks.filter((item) => item.id !== id);
+                const newArchivedBucket = [...state.filteredArchiveItems, itemToArchive];
+                console.log(newArchivedBucket);
+                return {
+                    bookmarks: remainingBookmarks,
+                    filteredArchiveItems: newArchivedBucket
                 };
             }),
 
@@ -323,6 +345,7 @@ const useBookmarks = create<BookmarkStates>()(
                 const newBookmarks = [itemToRestore, ...state.bookmarks];
                 return {
                     archiveItems: remainingArchive,
+                    filteredArchiveItems: remainingArchive,
                     bookmarks: newBookmarks
                 }
             }),

@@ -1,5 +1,4 @@
 import type { ButtonHTMLAttributes } from "react";
-import useBookmarks from "../../hooks/useBookmark";
 
 interface greenButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   label: string,
@@ -7,9 +6,6 @@ interface greenButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 
 const greenButton: React.FC<greenButtonProps> = ({ label, type, ...props }) => {
-
-  const { setArchiveItems } = useBookmarks()
-
   return (
     <button
       {...props}
