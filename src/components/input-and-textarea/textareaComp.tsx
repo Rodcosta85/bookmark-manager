@@ -13,13 +13,13 @@ interface textareCompProps {
 const TextareaComp: React.FC<textareCompProps> = ({ label, id, value, isValid, errorText, ...props }) => {
 
   const { handleDescriptionChange } = useActions();
-  const { limit, activeTheme, setAddDescription } = useBookmarks();
+  const { activeTheme, setAddDescription } = useBookmarks();
   const [charCount, setCharCount] = useState(0);
 
   // We delete handleCharCount and put everything inside handleChanges
   const handleChanges = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     // 1. Define 'value' at the top level of this function
-    const value = e.target.value; 
+    const value = e.target.value;
 
     // 2. Update your state from the useBookmarks hook
     setAddDescription(value);
@@ -42,7 +42,7 @@ const TextareaComp: React.FC<textareCompProps> = ({ label, id, value, isValid, e
         {/* textarea */}
         <div className={`flex justify-start items-start gap-100 
       h-fit p-150 rounded-8 
-      border ${limit || isValid || !value ? `${activeTheme.inputBorder}` : "border-new-red-800"} 
+      border ${charCount > 280 || !isValid || !value ? `${activeTheme.inputBorder}` : "border-new-red-800"} 
       `}>
           <img
             src={activeTheme.iconSearch}
@@ -62,6 +62,14 @@ const TextareaComp: React.FC<textareCompProps> = ({ label, id, value, isValid, e
         <p className={`text-preset-5 self-end ${activeTheme.paragraphOne}`}>{charCount}/280</p>
       </div>
       {/* textarea + contador de caracteres */}
+      
+      {charCount > 280 && (
+        <p className={`
+               -bottom-6
+              text-preset-4-medium text-left text-new-red-800
+              transition-all 0.2s ease-in-out opacity-100
+            `}>Limit exceeded</p>
+      )}
 
       {
         id !== "search-bar" ?
@@ -70,7 +78,7 @@ const TextareaComp: React.FC<textareCompProps> = ({ label, id, value, isValid, e
               absolute -bottom-6
               text-preset-4-medium text-left text-new-red-800
               transition-all 0.2s ease-in-out
-              ${isValid || !value ? 'opacity-0' : 'opacity-100'}
+              ${!isValid || !value ? 'opacity-0' : 'opacity-100'}
             `}>
               {errorText}
             </p>

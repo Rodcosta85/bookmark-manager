@@ -15,7 +15,10 @@ const AddBookmark: React.FC = ({ }) => {
 
     const {
         activeTheme,
-        isEmpty,
+        isTitleValid,
+        isDescriptionValid,
+        isURLValid,
+        isTagsValid,
         addTitle,
         addDescription,
         addURL,
@@ -102,7 +105,7 @@ const AddBookmark: React.FC = ({ }) => {
                         type="text"
                         id=""
                         value={addTitle}
-                        isValid={isEmpty}
+                        isValid={!isTitleValid}
                         errorText="This field cannot be empty."
                         onChange={(e) => handleTitleChange(e.target.value)}
                     />
@@ -110,7 +113,7 @@ const AddBookmark: React.FC = ({ }) => {
                         label="Description *"
                         id=""
                         value={addDescription}
-                        isValid={isEmpty}
+                        isValid={!isDescriptionValid}
                         errorText="This field cannot be empty."
                     />
                     <InputComp
@@ -118,7 +121,7 @@ const AddBookmark: React.FC = ({ }) => {
                         type="url"
                         id=""
                         value={addURL}
-                        isValid={isEmpty}
+                        isValid={!isURLValid}
                         errorText="This field cannot be empty."
                         onChange={(e) => handleURLChange(e.target.value)}
                     />
@@ -128,7 +131,7 @@ const AddBookmark: React.FC = ({ }) => {
                         id=""
                         placeholder="e.g. Design, Learning, Tools"
                         value={addTags}
-                        isValid={isEmpty}
+                        isValid={!isTagsValid}
                         errorText="This field cannot be empty."
                         onChange={(e) => handleTagsChange(e.target.value)}
                     />

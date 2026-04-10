@@ -65,6 +65,11 @@ interface BookmarkStates {
     passwordError: boolean,
     isEmpty: boolean,
 
+    isTitleValid: boolean,
+    isDescriptionValid: boolean,
+    isURLValid: boolean,
+    isTagsValid: boolean,
+
     setTagsFilters: (tagsFilters: string[]) => void,
     setActiveTheme: (theme: themeChanger) => void,
     setSidebar: () => void,
@@ -114,6 +119,11 @@ interface BookmarkStates {
     setEmailError: (emailError: boolean) => void,
     setPasswordError: (passwordError: boolean) => void
     setIsEmpty: (isEmpty: boolean) => void
+
+    setIsTitleValid: (isValid: boolean) => void
+    setIsDescriptionValid: (isValid: boolean) => void
+    setIsURLValid: (isValid: boolean) => void
+    setIsTagsValid: (isValid: boolean) => void
 }
 
 const useBookmarks = create<BookmarkStates>()(
@@ -225,6 +235,11 @@ const useBookmarks = create<BookmarkStates>()(
 
             // erro do campo de texto em geral
             isEmpty: false,
+
+            isTitleValid: false,
+            isDescriptionValid: false,
+            isURLValid: false,
+            isTagsValid: false,
 
             // input de title do add bookmarks
             addTitle: '',
@@ -391,9 +406,13 @@ const useBookmarks = create<BookmarkStates>()(
             setPasswordCreateAcc: (newValue: string) => set({ passwordCreateAcc: newValue }),
             setFullName: (newValue: string) => set({ fullName: newValue }),
             setTextField: (newValue: string) => set({ textField: newValue }),
-            setEmailError: () => set((state) => ({ emailError: !state.emailError })),
-            setPasswordError: () => set((state) => ({ passwordError: !state.passwordError })),
-            setIsEmpty: () => set((state) => ({ isEmpty: !state.isEmpty })),
+            setEmailError: (newValue: boolean) => set(() => ({ emailError: newValue })),
+            setPasswordError: (newValue: boolean) => set(() => ({ passwordError: newValue })),
+            setIsEmpty: (newValue: boolean) => set(() => ({ isEmpty: newValue })),
+            setIsTitleValid: (newValue: boolean) => set(() => ({ isTitleValid: newValue })),
+            setIsDescriptionValid: (isDescriptionValid: boolean) => set(() => ({ isDescriptionValid })),
+            setIsURLValid: (isURLValid: boolean) => set(() => ({ isURLValid })),
+            setIsTagsValid: (isTagsValid: boolean) => set(() => ({ isTagsValid })),
             setAddTitle: (newValue: string) => set({ addTitle: newValue }),
             setAddDescription: (newValue: string) => set({ addDescription: newValue }),
             setAddURL: (newValue: string) => set({ addURL: newValue }),

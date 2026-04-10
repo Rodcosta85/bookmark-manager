@@ -3,7 +3,7 @@ import type { BaseSyntheticEvent } from "react";
 
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from '../../services/firebase'; 
+import { auth, db } from '../../services/firebase';
 import { doc, setDoc } from "firebase/firestore";
 
 import useBookmarks from "../../hooks/useBookmark"
@@ -45,34 +45,34 @@ const InitialModal: React.FC = () => {
   }
 
   async function handleCreateAccount(e: BaseSyntheticEvent) {
-  e.preventDefault();
-  
-  try {
-    // 1. Create the user in Firebase Auth
-    const userCredential = await createUserWithEmailAndPassword(
-      auth, 
-      emailCreateAcc, 
-      passwordCreateAcc
-    );
-    
-    const user = userCredential.user;
+    e.preventDefault();
 
-    // 2. Store additional info in Firestore using the Auth UID
-    // Notice we do NOT save the password here!
-    await setDoc(doc(db, 'users', user.uid), {
-      name: fullName,
-      email: emailCreateAcc,
-      createdAt: new Date()
-    });
+    try {
+      // 1. Create the user in Firebase Auth
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        emailCreateAcc,
+        passwordCreateAcc
+      );
 
-    alert('Account created!');
-    navigate("/home");
-  } catch (error) {
-    console.error('The error is:', error);
+      const user = userCredential.user;
+
+      // 2. Store additional info in Firestore using the Auth UID
+      // Notice we do NOT save the password here!
+      await setDoc(doc(db, 'users', user.uid), {
+        name: fullName,
+        email: emailCreateAcc,
+        createdAt: new Date()
+      });
+
+      alert('Account created!');
+      navigate("/home");
+    } catch (error) {
+      console.error('The error is:', error);
+    }
   }
-}
 
-  const isFormValid = !emailError || !passwordError || !emailLogin || !passwordLogin;
+  const isFormValid = !emailError && !passwordError && emailLogin && passwordLogin;
 
   return (
     <div className={`
@@ -152,11 +152,11 @@ const InitialModal: React.FC = () => {
         }
         <button
           type="submit"
-          disabled={isFormValid}
+          disabled={!isFormValid}
           className={`w-full pl-200 pr-200 pt-150 pb-150
         rounded-8
         text-center text-preset-3 text-white
-        ${isFormValid ? 'bg-teal-700 opacity-30 cursor-not-allowed' : 'bg-teal-700 cursor-pointer'}
+        ${!isFormValid ? 'bg-teal-700 opacity-30 cursor-not-allowed' : 'bg-teal-700 cursor-pointer'}
         `}>
           {isLoggedIn ? "Log in" : "Create account"}
         </button>

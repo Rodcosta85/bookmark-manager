@@ -8,6 +8,10 @@ const REGEX = {
 export const useActions = () => {
     const {
         archiveItems,
+        setIsTitleValid,
+        setIsDescriptionValid,
+        setIsURLValid,
+        setIsTagsValid,
         setShowModal,
         setShowDeleteModal,
         setIsArchiving,
@@ -53,14 +57,14 @@ export const useActions = () => {
         setEmailLogin(value)
         setEmailCreateAcc(value)
         const isValid = REGEX.email.test(value);
-        setEmailError(isValid)
+        setEmailError(!isValid);
     }
 
     function handlePasswordChange(value: string) {
         setPasswordLogin(value)
         setPasswordCreateAcc(value)
         const isValid = REGEX.password.test(value);
-        setPasswordError(isValid);
+        setPasswordError(!isValid);
     }
 
     function handleTextsChange(value: string) {
@@ -71,42 +75,42 @@ export const useActions = () => {
 
     function handleTitleChange(value: string) {
         setAddTitle(value);
-        setIsEmpty(value.trim() === '')
+        setIsTitleValid(value.trim() !== '')
     }
 
     function handleDescriptionChange(value: string) {
         setAddDescription(value);
-        setIsEmpty(value.trim() === '')
+        setIsDescriptionValid(value.trim() !== '')
     }
 
     function handleTagsChange(value: string) {
         setAddTags(value)
-        setIsEmpty(value.trim() === '')
+        setIsTagsValid(value.trim() !== '')
     }
 
     function handleURLChange(value: string) {
         setAddURL(value)
-        setIsEmpty(value.trim() === '')
+        setIsURLValid(value.trim() !== '')
     }
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // 1. Grab the first file the user selected
-    const file = e.target.files?.[0]; 
+        // 1. Grab the first file the user selected
+        const file = e.target.files?.[0];
 
-    if (file) {
-      // 2. Create a FileReader to convert the image into a string
-      const reader = new FileReader();
+        if (file) {
+            // 2. Create a FileReader to convert the image into a string
+            const reader = new FileReader();
 
-      // 3. Tell the reader what to do once it finishes reading the file
-      reader.onloadend = () => {
-        // reader.result is your Base64 string! Save it to state.
-        setAddFavicon(reader.result as string); 
-      };
+            // 3. Tell the reader what to do once it finishes reading the file
+            reader.onloadend = () => {
+                // reader.result is your Base64 string! Save it to state.
+                setAddFavicon(reader.result as string);
+            };
 
-      // 4. Actually start reading the file
-      reader.readAsDataURL(file); 
-    }
-  };
+            // 4. Actually start reading the file
+            reader.readAsDataURL(file);
+        }
+    };
 
 
 
