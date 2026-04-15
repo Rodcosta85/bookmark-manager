@@ -4,6 +4,7 @@ import type { DataTypes } from "../types/dataTypes"
 import { formatBookmarkDates } from "../utils/utils"
 import Tag from "./tag"
 import DropdownMappedCard from "./dropdownMappedCard"
+import { useState } from "react"
 
 interface MappedCardProps {
     item: DataTypes,
@@ -11,6 +12,13 @@ interface MappedCardProps {
 }
 
 const MappedCard: React.FC<MappedCardProps> = ({ item }) => {
+
+    const [countNum, setCountNum] = useState(item.visitCount)
+
+    const increaseCount = () => {
+        setCountNum(countNum + 1)
+        console.log(countNum)
+    }
 
     const { activeTheme,
         cardDropdown,
@@ -63,7 +71,11 @@ const MappedCard: React.FC<MappedCardProps> = ({ item }) => {
                         >
                             <img src={activeTheme.iconThreeDots} alt="vertical three dots" />
                         </button>
-                        {isCardOpen && <DropdownMappedCard item={item} />}
+                        {isCardOpen && 
+                        <DropdownMappedCard 
+                        item={item} 
+                        increaseCount={increaseCount}
+                        />}
                     </div>
 
                 </div>
@@ -87,7 +99,7 @@ const MappedCard: React.FC<MappedCardProps> = ({ item }) => {
                 w-fit">
                     <div className="flex items-center gap-075 w-fit">
                         <img src={activeTheme.iconEye} alt="" />
-                        <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>{item.visitCount}</p>
+                        <p className={`text-preset-5 ${activeTheme.paragraphOne}`}>{countNum}</p>
                     </div>
                     <div className="flex items-center gap-075 w-fit">
                         <img src={activeTheme.iconClock} alt="" />

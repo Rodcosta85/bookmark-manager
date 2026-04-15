@@ -14,4 +14,3 @@ export const formatBookmarkDates = (createdAt: string, lastVisited: string) => {
     return newDates;
 };
 
-

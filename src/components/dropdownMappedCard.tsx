@@ -6,9 +6,12 @@ import EditBookmark from "./Forms/editBookmark"
 
 interface dropdownCardProps {
     item: DataTypes
+    increaseCount: () => void
 }
 
-const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
+const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item, increaseCount }) => {
+
+    const [copiedId, setCopiedId] = useState(null);
 
     const {
         activeTheme,
@@ -20,8 +23,6 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
     const { handleSelectItem, handleDeleteItem } = useActions()
 
     const isArchived = archiveItems.some(a => a.id === item.id);
-
-    const [copiedId, setCopiedId] = useState(null);
 
     const handleCopy = async (url: string, id: any) => {
         try {
@@ -42,7 +43,7 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
         rounded-8
         ${activeTheme.secondaryBg}
         border ${activeTheme.cardBorder}`}>
-            <a href={item.url} target="_blank">
+            <a href={item.url} target="_blank" onClick={increaseCount}>
                 <button className={`flex justify-start items-center gap-125 
                 w-full p-100
                 rounded-8
@@ -55,7 +56,10 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
             </a>
 
             <button
-                onClick={() => handleCopy(item.url, item.id)}
+                onClick={() => {
+                    handleCopy(item.url, item.id)
+                    increaseCount()
+                }}
                 className={`flex justify-start items-center gap-125 
             p-100
             rounded-8
