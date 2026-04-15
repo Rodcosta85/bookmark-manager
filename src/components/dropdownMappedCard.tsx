@@ -10,7 +10,13 @@ interface dropdownCardProps {
 
 const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
 
-    const { activeTheme, archiveItems, showBookmarkEditor, setShowBookmarkEditor } = useBookmarks()
+    const {
+        activeTheme,
+        archiveItems,
+        showBookmarkEditor,
+        selectedBookmark,
+        setSelectedBookmark,
+        setShowBookmarkEditor } = useBookmarks()
     const { handleSelectItem, handleDeleteItem } = useActions()
 
     const isArchived = archiveItems.some(a => a.id === item.id);
@@ -30,7 +36,7 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
     };
 
     return (
-        <div className={`absolute top-500 z-99
+        <div className={`absolute top-500 z-90
         flex flex-col gap-150
         w-50 h-fit p-100
         rounded-8
@@ -71,9 +77,12 @@ const dropdownMappedCard: React.FC<dropdownCardProps> = ({ item }) => {
                 Pin
             </button>
             {/* se já estiver arquivado, edit nao aparece mais */}
-            <button 
-            onClick={setShowBookmarkEditor}
-            className={`${isArchived ? 'hidden' : 'flex'}
+            <button
+                onClick={() => {
+                    setSelectedBookmark(item); // 1. Save the item to Zustand
+                    setShowBookmarkEditor();   // 2. Open the form UI
+                }}
+                className={`${isArchived ? 'hidden' : 'flex'}
             justify-start items-center gap-125 
             p-100
             rounded-8

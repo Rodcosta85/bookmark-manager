@@ -24,9 +24,11 @@ const AddBookmark: React.FC = ({ }) => {
         addURL,
         addTags,
         addFavicon,
+        cardDropdown,
+        cardId,
         setShowModal,
         addBookmark,
-        setShowBookmarkEditor,
+        setShowBookmarkAdder,
         setAddTitle,
         setAddURL,
         setAddDescription,
@@ -61,7 +63,7 @@ const AddBookmark: React.FC = ({ }) => {
         setAddDescription('')
         setAddTags('')
         setAddURL('')
-        setShowBookmarkEditor;
+        setShowBookmarkAdder;
     }
 
     return (
@@ -80,14 +82,16 @@ const AddBookmark: React.FC = ({ }) => {
                     <div className="flex flex-col gap-100
                     w-[90%] md:w-full lg:w-full">
                         <h2 className={`text-left text-preset-1 ${activeTheme.headerText}`}>Add a Bookmark</h2>
-                        <p className={`text-left text-preset-4-medium ${activeTheme.paragraphOne}`}>Save a link with details to keep your collection organized.</p>
+                        <p className={`text-left text-preset-4-medium ${activeTheme.paragraphOne}`}>
+                            Save a link with details to keep your collection organized.
+                        </p>
                     </div>
                     <button
                         className={`flex justify-center items-center self-start
                     w-8 h-8 
                     rounded-8 
                     border ${activeTheme.cardBorder}`}
-                        onClick={setShowBookmarkEditor}
+                        onClick={setShowBookmarkAdder}
                     >
                         <img src={activeTheme.iconClose} alt="" />
                     </button>
@@ -156,7 +160,7 @@ const AddBookmark: React.FC = ({ }) => {
                     <div className="flex justify-end gap-200">
                         <button
                             type="button"
-                            onClick={() => setShowModal(false)}
+                            onClick={setShowBookmarkAdder}
                             className={`w-fit pt-3 pb-3 pl-4 pr-4 
                     rounded-8 
                     border ${activeTheme.buttonBorder} 

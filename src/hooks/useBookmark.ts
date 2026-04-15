@@ -5,7 +5,7 @@ import type { DataTypes } from '../types/dataTypes'
 import themes from './../styles/styles'
 
 // modal de "sort by"
-export type SortType = 'recently_added' | 'recently_visited' | 'most_visited' | 'restore_original'
+export type SortType = 'recently_added' | 'recently_visited' | 'most_visited';
 type HomeArchived = 'home' | 'archived'
 type themeChanger = typeof themes[number]
 
@@ -24,7 +24,7 @@ interface BookmarkStates {
 
     tagsFilters: string[],
     activeTheme: themeChanger,
-    sidebar: boolean,
+    toggleSidebar: boolean,
     appearprofDrop: boolean,
     textareaVal: string,
     cardId: string | null,
@@ -36,6 +36,7 @@ interface BookmarkStates {
     appearNotif: boolean,
     isLoggedIn: boolean,
     showPassword: boolean,
+    showBookmarkAdder: boolean,
     showBookmarkEditor: boolean,
     user: UserProfile | null,
     showModal: boolean,
@@ -43,6 +44,8 @@ interface BookmarkStates {
     itemId: string | null,
     isArchiving: boolean,
     isDeleting: boolean,
+    selectedBookmark: DataTypes | null,
+    isDragging: boolean,
 
     // variáveis dos inputs e textarea
     searchBar: string,
@@ -70,9 +73,11 @@ interface BookmarkStates {
     isURLValid: boolean,
     isTagsValid: boolean,
 
+
+
     setTagsFilters: (tagsFilters: string[]) => void,
     setActiveTheme: (theme: themeChanger) => void,
-    setSidebar: () => void,
+    setToggleSidebar: () => void,
     setAppearprofDrop: () => void,
     setTextareaVal: (textareaVal: string) => void,
     setCardDropdown: (id: string) => void,
@@ -83,6 +88,7 @@ interface BookmarkStates {
     setAppearNotif: () => void,
     setIsLoggedIn: () => void,
     setShowPassword: (visible: boolean) => void,
+    setShowBookmarkAdder: () => void,
     setShowBookmarkEditor: () => void,
     setArchiveItems: (id: string) => void,
     setFilteredArchiveItems: (id: string) => void,
@@ -98,6 +104,8 @@ interface BookmarkStates {
     setIsArchiving: (isArchiving: boolean) => void,
     handleConfirm: () => void,
     setIsDeleting: (isDeleting: boolean) => void,
+    setSelectedBookmark: (bookmark: DataTypes | null) => void,
+    setIsDragging: (isDragging: boolean) => void,
 
     // funções dos inputs e textarea
     setSearchBar: (searchBar: string) => void,
@@ -138,7 +146,7 @@ const useBookmarks = create<BookmarkStates>()(
             activeTheme: themes[0],
 
             // barra lateral
-            sidebar: false,
+            toggleSidebar: false,
 
             // dropdown do perfil que faz aparecer o profileDropdown
             appearprofDrop: false,
@@ -159,7 +167,7 @@ const useBookmarks = create<BookmarkStates>()(
             sortDropdown: false,
 
             // sort em si
-            activeSort: 'recently_added',
+            activeSort: 'most_visited',
 
             // home ou archived dentro da sidebar
             contentType: 'home',
@@ -176,7 +184,10 @@ const useBookmarks = create<BookmarkStates>()(
             // alterna entre os tipos de input e olhos
             showPassword: false,
 
-            // abre o popup do "add bookmark"
+            // abre o popup do add bookmark
+            showBookmarkAdder: false,
+
+            // abre o popup do edit bookmark
             showBookmarkEditor: false,
 
             // array dos items do json que foram arquivados
@@ -236,9 +247,16 @@ const useBookmarks = create<BookmarkStates>()(
             // erro do campo de texto em geral
             isEmpty: false,
 
+            // erro do campo de titulo do add bookmark
             isTitleValid: false,
+
+            // erro do campo de descrição do add bookmark
             isDescriptionValid: false,
+
+            // erro do campo de url do add bookmark
             isURLValid: false,
+
+            // erro do campo de tags do add bookmark
             isTagsValid: false,
 
             // input de title do add bookmarks
@@ -256,9 +274,13 @@ const useBookmarks = create<BookmarkStates>()(
             // input de favicon/imagem do add bookmarks
             addFavicon: '',
 
-            // setTagsFilters: (tagsFilters) => set({ tagsFilters }),
+            // estado para entender o item que estamos editando
+            selectedBookmark: null,
+
+            // estado para controlar a draggable area do input de arquivo
+            isDragging: false,
+
             setTagsFilters: (tagsFilters: string[]) => set((state) => {
-                // const filteredArchiveItems = 
                 if (tagsFilters.length === 0) {
                     return {
                         filteredArchiveItems: state.archiveItems,
@@ -275,7 +297,7 @@ const useBookmarks = create<BookmarkStates>()(
                 };
             }),
             setActiveTheme: (activeTheme) => set({ activeTheme }),
-            setSidebar: () => set((state) => ({ sidebar: !state.sidebar })),
+            setToggleSidebar: () => set((state) => ({ toggleSidebar: !state.toggleSidebar })),
             setAppearprofDrop: () => set((state) => ({ appearprofDrop: !state.appearprofDrop })),
 
             setTextareaVal: (newValue: string) => set({ textareaVal: newValue }),
@@ -293,6 +315,7 @@ const useBookmarks = create<BookmarkStates>()(
             setAppearNotif: () => set((state) => ({ appearNotif: !state.appearNotif })),
             setIsLoggedIn: () => set((state) => ({ isLoggedIn: !state.isLoggedIn })),
             setShowPassword: () => set((state) => ({ showPassword: !state.showPassword })),
+            setShowBookmarkAdder: () => set((state) => ({ showBookmarkAdder: !state.showBookmarkAdder })),
             setShowBookmarkEditor: () => set((state) => ({ showBookmarkEditor: !state.showBookmarkEditor })),
 
             // organiza o array de bookmarks/faz o "sort"
@@ -347,11 +370,15 @@ const useBookmarks = create<BookmarkStates>()(
                 appearNotif: true
             })),
 
-            editBookmark: (updatedBookmark: DataTypes) => set((state) => ({
+            editBookmark: (updatedBookmark) => set((state) => ({
                 bookmarks: state.bookmarks.map((item) =>
-                    item.id === updatedBookmark.id ? updatedBookmark : item
-                )
+                    item.id === updatedBookmark.id ? { ...item, ...updatedBookmark } : item
+                ),
+                // Important: Reset selection so the app knows we are done editing
+                selectedBookmark: null
             })),
+
+            setSelectedBookmark: (bookmark) => set({ selectedBookmark: bookmark }),
 
             restoreItem: (id: string) => set((state) => {
                 const itemToRestore = state.archiveItems.find((item) => item.id === id);
@@ -418,6 +445,7 @@ const useBookmarks = create<BookmarkStates>()(
             setAddURL: (newValue: string) => set({ addURL: newValue }),
             setAddTags: (newValue: string) => set({ addTags: newValue }),
             setAddFavicon: (newValue: string) => set({ addFavicon: newValue }),
+            setIsDragging: (newValue: boolean) => set(() => ({ isDragging: newValue })),
         }),
         {
             name: 'bookmarks-store', // This is the key that will be used in localStorage

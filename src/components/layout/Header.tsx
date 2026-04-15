@@ -17,14 +17,13 @@ const Header = () => {
 
     const { handleTextsChange } = useActions()
 
-    const { sidebar,
+    const { toggleSidebar,
         activeTheme,
         appearprofDrop,
-        showBookmarkEditor,
-        isArchiving,
+        showBookmarkAdder,
         searchBar,
         isEmpty,
-        setShowBookmarkEditor,
+        setShowBookmarkAdder,
         setAppearprofDrop,
         setUser } = useBookmarks()
 
@@ -74,7 +73,7 @@ const Header = () => {
 
             <div className="flex justify-between items-center gap-125">
                 <button
-                    onClick={setShowBookmarkEditor}
+                    onClick={setShowBookmarkAdder}
                     className="
                 flex justify-center items-center gap-050
                 w-10 sm:w-fit md:w-fit lg:w-fit h-10 p-125
@@ -84,7 +83,7 @@ const Header = () => {
                     <img src={IconPlus} alt="a plus icon" className="w-5 h-5" />
                     <p className="hidden sm:block md:block lg:block text-white">Add Bookmark</p>
                 </button>
-                {showBookmarkEditor && <AddBookmark />}
+                {showBookmarkAdder && <AddBookmark />}
                 <div className="flex flex-col items-end w-fit relative">
                     <button onClick={setAppearprofDrop}>
                         <img
@@ -96,7 +95,7 @@ const Header = () => {
                 </div>
             </div>
 
-            {sidebar && <SidebarComp />}
+            {toggleSidebar && <SidebarComp />}
         </header>
     )
 }

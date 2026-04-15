@@ -2,14 +2,14 @@ import { useMemo } from "react";
 import useBookmarks from "../hooks/useBookmark"
 import data from "../data.json"
 
-const desktopSidebar = () => {
+const sidebar = () => {
 
     const {
         tagsFilters,
         contentType,
         activeTheme,
         setHomeArchived,
-        setSidebar,
+        setToggleSidebar,
         setTagsFilters,
     } = useBookmarks()
 
@@ -43,7 +43,7 @@ const desktopSidebar = () => {
                 <img src={activeTheme.logo} alt="the logo for Bookmark Manager" />
                 <button
                     type="button"
-                    onClick={setSidebar}
+                    onClick={setToggleSidebar}
                     className="cursor-pointer">
                     <img src={activeTheme.iconClose} alt="" />
                 </button>
@@ -121,4 +121,4 @@ const desktopSidebar = () => {
     )
 }
 
-export default desktopSidebar
+export default sidebar

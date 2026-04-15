@@ -6,7 +6,7 @@ import SortButton from "../components/Buttons/sortButton"
 import DialogModal from "../components/events//dialogModal"
 import DeleteDialogModal from "../components/events/deleteDialogModal"
 import Header from './../components/layout/Header'
-import DesktopSidebar from "../components/desktopSidebar"
+import DesktopSidebar from "../components/sidebar"
 import NotificationPopup from "../components/events/notificationPopup"
 
 const loggedIn = () => {
