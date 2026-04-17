@@ -1,9 +1,10 @@
 import { useEffect } from "react"
 import { onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc } from "firebase/firestore"; // Add these
-import { auth, db } from '../../services/firebase';
+import { ref, getDownloadURL } from "firebase/storage";
+import { auth, db, storage } from '../../services/firebase';
 import useBookmarks from "../../hooks/useBookmark"
-import ProfileDropdown from "../../components/profileDropdown"
+import ProfileDropdown from "../../components/ProfileDropdown"
 import SidebarComp from "../../components/sidebarComp"
 import HambMenu from "../../components/Buttons/hambMenu"
 import InputComp from "../../components/input-and-textarea/inputComp"
@@ -11,7 +12,6 @@ import IconPlus from "./../../assets/icon-plus.svg"
 import Avatar from "./../../assets/Avatar.png"
 import AddBookmark from "../Forms/addBookmark"
 import { useActions } from "../../hooks/useActions";
-
 
 const Header = () => {
 
@@ -30,6 +30,10 @@ const Header = () => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, async (firebaseUser) => {
             if (firebaseUser) {
+                const fileRef = ref(storage, 'blc 15-01-v2.jpg');
+                const url = await getDownloadURL(fileRef);
+                console.log(url);
+
                 const docRef = doc(db, "users", firebaseUser.uid);
                 const docSnap = await getDoc(docRef);
 

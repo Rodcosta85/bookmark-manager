@@ -47,11 +47,28 @@ const MappedCard: React.FC<MappedCardProps> = ({ item }) => {
                 pb-4
                 border-b ${activeTheme.cardBorder}`}>
                     <div className="flex gap-100">
-                        <img
-                            src={item.favicon}
-                            alt={`the logo of ${item.title}`}
-                            className={`w-11 h-11 rounded-8 bg-white border ${activeTheme.cardBorder}`}
-                        />
+                        {item.favicon && (
+                            <img
+                                src={item.favicon}
+                                alt={`the logo of ${item.title}`}
+                                className={`w-11 h-11 rounded-8 bg-white border ${activeTheme.cardBorder}`}
+                            />
+                        )}
+                        {!item.favicon && (
+                            <div
+                                style={{
+                                    width: 44,
+                                    height: 44,
+                                    borderRadius: 8,
+                                    backgroundColor: "#cecece",
+                                    display: "flex",
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                    fontSize: 22,
+                                    color: "#fff",
+                                }}
+                            >{item.title[0]}</div>
+                        )}
                         <div className="flex flex-col gap-050">
                             <h2 className={`text-preset-2 ${activeTheme.headerText}`}>{item.title}</h2>
                             <a href={item.url} target="_blank">
@@ -71,11 +88,11 @@ const MappedCard: React.FC<MappedCardProps> = ({ item }) => {
                         >
                             <img src={activeTheme.iconThreeDots} alt="vertical three dots" />
                         </button>
-                        {isCardOpen && 
-                        <DropdownMappedCard 
-                        item={item} 
-                        increaseCount={increaseCount}
-                        />}
+                        {isCardOpen &&
+                            <DropdownMappedCard
+                                item={item}
+                                increaseCount={increaseCount}
+                            />}
                     </div>
 
                 </div>
